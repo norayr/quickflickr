@@ -17,12 +17,13 @@ QmlLoader::QmlLoader():
     m_view = new QDeclarativeView(this);
 
     // Make sure that we use OpenGL    
+    /*
     QGLFormat format = QGLFormat::defaultFormat();
     format.setSampleBuffers(false);
     QGLWidget *glWidget = new QGLWidget(format);
     glWidget->setAutoFillBackground(false);
     m_view->setViewport(glWidget);
-    
+    */
     // Add paths to make sure that QML files are found
     m_view->engine()->addImportPath(QDir::currentPath() +"/qflickr");
     m_view->engine()->addImportPath(QDir::currentPath());
