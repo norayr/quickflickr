@@ -155,8 +155,8 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             //QDesktopServices::openUrl ( authUrl );            
             //QMessageBox msgBox;
             //msgBox.setText("Press Done button when you have completed authorization through web browser");            
-            //int result = msgBox.exec();
-            if( true || result == QMessageBox::Ok){
+            int result = QMessageBox::Ok;//msgBox.exec();
+            if( result == QMessageBox::Ok){
                 QtfMethod method;
                 method.method = "flickr.auth.getToken";
                 method.args.insert( "frob", frob );
