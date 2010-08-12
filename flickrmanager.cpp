@@ -151,11 +151,12 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             QUrl authUrl = d->m_qtFlickr->authorizationUrl(frob);
             // TODO MAke here something nice like make app to show QML
             // Web view
-            QDesktopServices::openUrl ( authUrl );
-            QMessageBox msgBox;
-            msgBox.setText("Press Ok button when you have completed authorization through web browser");
-            int result = msgBox.exec();
-            if( result == QMessageBox::Ok){
+            
+            //QDesktopServices::openUrl ( authUrl );            
+            //QMessageBox msgBox;
+            //msgBox.setText("Press Done button when you have completed authorization through web browser");            
+            //int result = msgBox.exec();
+            if( true || result == QMessageBox::Ok){
                 QtfMethod method;
                 method.method = "flickr.auth.getToken";
                 method.args.insert( "frob", frob );
