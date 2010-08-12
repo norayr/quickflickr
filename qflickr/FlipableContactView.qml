@@ -1,11 +1,12 @@
-import Qt 4.6
+import Qt 4.7
 
-Rectangle {    
 
+Rectangle{
+    //id: contactPhotos
     width:800
-    height:480
-    color: "#343434";
-    Image { source: "images/stripes.png"; fillMode: Image.Tile; anchors.fill: parent; opacity: 0.3 }
+    height:480    
+    Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
+    clip: true
 
 
     Flipable {
@@ -19,9 +20,9 @@ Rectangle {
              angle: mainFlipable.angle
          }
 
-         front:ContactList {
+         front: ContactList{
              id: contactList
-             anchors.fill: parent
+             anchors.fill: parent             
          }
 
 
@@ -36,8 +37,14 @@ Rectangle {
          }
 
          transitions: Transition {
-             NumberAnimation { properties: "angle"; duration: 900 }
+             NumberAnimation { properties: "angle"; duration: 800 }
          }
 
      }
 }
+
+
+
+
+
+

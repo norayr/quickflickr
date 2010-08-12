@@ -26,7 +26,8 @@
 #include "qtflickr.h"
 
 QtFlickrPrivate::QtFlickrPrivate( QtFlickr *parent )
-    : p_ptr(parent)
+    : p_ptr(parent),
+    requestCounter(0)
 {
     manager = new QNetworkAccessManager ( this );
     connect ( manager, SIGNAL ( finished ( QNetworkReply* ) ),
@@ -123,16 +124,18 @@ int QtFlickrPrivate::upload ( const QtfPhoto &photo,
     uploadRequest.setRawHeader ( "Content-Type","multipart/form-data; boundary="+boundary );
     uploadRequest.setRawHeader ( "Host","ww.api.flickr.com" );
 
+    requestCounter++;
     RequestData requestData;
     requestData.request = request.requests;
     requestData.userData = userData;
+    requestData.requestId = requestCounter;
 
     QNetworkReply *reply = manager->post ( uploadRequest,payload );
-    int replyId = reinterpret_cast<qint64>(reply);
     connect(reply,SIGNAL(uploadProgress ( qint64, qint64 )),
             this, SLOT(uploadProgress ( qint64, qint64 )));
-    requestDataMap.insert ( replyId,requestData );
-    return replyId;
+
+    requestDataMap.insert ( reply,requestData );
+    return requestData.requestId;
 }
 
 
@@ -141,11 +144,11 @@ int QtFlickrPrivate::upload ( const QtfPhoto &photo,
 void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
 {
     QByteArray data = reply->readAll();
+    
     qDebug()<<"*******************************RESPONSE*******************************";
     qDebug()<<data;
     qDebug()<<"**********************************************************************\n\n";
-
-    int replyId = reinterpret_cast<qint64>(reply);
+    
     response.tags.clear();
     err.code = 0;
     err.message = "No Errors";
@@ -157,12 +160,13 @@ void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
     }
     else
     {
-        parse ( data, "rsp" , requestDataMap.value ( replyId ).request );
+        parse ( data, "rsp" , requestDataMap.value ( reply ).request );
     }
 
-    void* userData = requestDataMap.value ( replyId ).userData;
+    void* userData = requestDataMap.value ( reply ).userData;
+    int replyId = requestDataMap.value ( reply ).requestId;
 
-    requestDataMap.remove ( replyId );
+    requestDataMap.remove ( reply );
     emit p_ptr->requestFinished ( replyId, response, err, userData );
 }
 
@@ -254,19 +258,20 @@ int QtFlickrPrivate::request ( const QtfMethod &method, const QtfRequest &reques
 
     url.addQueryItem ( "api_sig",  md5 ( apiSig ) );
 
+    requestCounter++;
     RequestData requestData;
     requestData.request = request.requests;
     requestData.userData = userData;
-    int replyId;
+    requestData.requestId = requestCounter;
 
+    QNetworkReply *reply;
     if ( !get )
-        replyId = ( qint64 ) manager->post ( QNetworkRequest ( QUrl("http://www.flickr.com/services/rest/") ),
-                                          url.encodedQuery () );
+        reply = manager->post ( QNetworkRequest ( QUrl("http://www.flickr.com/services/rest/") ), url.encodedQuery () );
     else
-        replyId = ( qint64 ) manager->get ( QNetworkRequest ( url ) );
+        reply = manager->get ( QNetworkRequest ( url ) );
 
-    requestDataMap.insert ( replyId,requestData );
-    return replyId;
+    requestDataMap.insert ( reply,requestData );
+    return requestData.requestId;
 }
 
 void QtFlickrPrivate::parse ( const QByteArray &data, const QString &startTag, const QMap<QString,QString> &request )
@@ -358,7 +363,6 @@ void QtFlickrPrivate::readError()
 
 void QtFlickrPrivate::readData(const QMap<QString,QString> &request)
 {
-
     QMap<QString, QString>::const_iterator i = request.find ( xml.name().toString() );
     if ( i != request.end() )
     {

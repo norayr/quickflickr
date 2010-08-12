@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDeclarativeView>
 
+
 class FlickrManager;
 class QmlLoader: public QWidget
 {
@@ -14,11 +15,14 @@ public:
 
 private Q_SLOTS:
     void statusChanged ( QDeclarativeView::Status status );
-    void modelUpdated();
-
+    void modelUpdated( const QList<QObject*> & model);
+    void photoStreamModelUpdated( const QList<QObject*> & model );
+    void localImageModelUpdated();
+    void recentActivityUpdated();
+    
 private:
     QDeclarativeView * m_view;
-    FlickrManager    * m_flickrManager;
+    FlickrManager    * m_flickrManager;    
 };
 
 #endif // QMLLOADER_H

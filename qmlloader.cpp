@@ -3,8 +3,10 @@
 
 #include <QDeclarativeError>
 #include <QDeclarativeContext>
+#include <QDeclarativeEngine>
 #include <QHBoxLayout>
 #include <QtDebug>
+#include <QGLContext>
 
 QmlLoader::QmlLoader():
         QWidget(),
@@ -13,17 +15,47 @@ QmlLoader::QmlLoader():
     QHBoxLayout * layout = new QHBoxLayout;
     layout->setContentsMargins(0,0,0,0);
     m_view = new QDeclarativeView(this);
+
+    // Make sure that we use OpenGL    
+    QGLFormat format = QGLFormat::defaultFormat();
+    format.setSampleBuffers(false);
+    QGLWidget *glWidget = new QGLWidget(format);
+    glWidget->setAutoFillBackground(false);
+    m_view->setViewport(glWidget);
+    
+    // Add paths to make sure that QML files are found
+    m_view->engine()->addImportPath(QDir::currentPath() +"/qflickr");
+    m_view->engine()->addImportPath(QDir::currentPath());
+    m_view->engine()->setImportPathList(QStringList() << QDir::currentPath() + QDir::separator() + "qflickr");
     connect( m_view, SIGNAL(statusChanged(QDeclarativeView::Status)),
              this, SLOT(statusChanged(QDeclarativeView::Status)));
     layout->addWidget(m_view);
 
-    QUrl url("QuickFlickrMain.qml");
+    // Load the main QML component which constructs the whole UI from other
+    // QML components
+    QUrl url("qflickr/QuickFlickrMain.qml");
     m_view->setSource(url);
     setLayout(layout);
-
+    
+    // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();
-    connect(m_flickrManager, SIGNAL(modelUpdated()),
-            this, SLOT(modelUpdated()));
+    bool isAuthenticated = m_flickrManager->isAuthenticated();
+        
+    connect(m_flickrManager, SIGNAL(modelUpdated(QList<QObject*>)),
+            this, SLOT(modelUpdated(QList<QObject*>)), Qt::QueuedConnection);
+
+    connect(m_flickrManager, SIGNAL(photoStreamModelUpdated(QList<QObject*>)),
+            this, SLOT(photoStreamModelUpdated(QList<QObject*>)));
+
+    QMetaObject::invokeMethod(m_flickrManager, "activate");
+    
+    if ( isAuthenticated ){
+        m_flickrManager->getLatestContactUploads();        
+    }
+    
+        
+    // Expose the C++ interface to QML
+    m_view->engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
 }
 
 
@@ -52,11 +84,43 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
     }
 }
 
-void QmlLoader::modelUpdated()
+void QmlLoader::modelUpdated( const QList<QObject*> & model)
 {
     qDebug() << "QmlLoader::modelUpdated";
-    QList<QObject*> model = m_flickrManager->model();
+    //QList<QObject*> model = m_flickrManager->model();
     QDeclarativeContext *ctxt = m_view->rootContext();
     ctxt->setContextProperty("contactModel", QVariant::fromValue(model));
 }
+
+void QmlLoader::photoStreamModelUpdated(  const QList<QObject*> & model )
+{
+    qDebug() << "QmlLoader::PhotoStreamModelUpdated";
+    //QList<QObject*> model = m_flickrManager->photoStreamModel();
+    QDeclarativeContext *ctxt = m_view->rootContext();
+    ctxt->setContextProperty("photoStreamModel", QVariant::fromValue(model));
+}
+
+void QmlLoader::localImageModelUpdated()
+{
+    qDebug() << "QmlLoader::localImageModelUpdated";
+    /*
+    QList<QObject*> model = m_localImageManager->model();
+    QDeclarativeContext *ctxt = m_view->rootContext();
+    ctxt->setContextProperty("localImageModel", QVariant::fromValue(model));
+    */
+}
+
+void QmlLoader::recentActivityUpdated()
+{
+    qDebug() << "QmlLoad::recentActivityUpdated.. NOT IMPLEMENTED!";
+    
+}
+
+
+
+
+
+
+
+
 

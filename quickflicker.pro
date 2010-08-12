@@ -5,9 +5,9 @@
 #-------------------------------------------------
 
 
-TARGET = QuickFlickr
+TARGET = quickflickr_
 CONFIG   -= app_bundle
-QT += declarative network xml
+QT += declarative network xml opengl webkit
 
 TEMPLATE = app
 
@@ -21,19 +21,27 @@ SOURCES += main.cpp \
     flickrmanager.cpp \
     flickritem.cpp \
     qtflickr.cpp \
-    qtflickr_p.cpp
+    qtflickr_p.cpp     
 
 HEADERS += \
     qmlloader.h \
     flickrmanager.h \
     flickritem.h \
     qtflickr.h \
-    qtflickr_p.h
+    qtflickr_p.h 
 
 
-OTHER_FILES = ContactList.qml \
-    QuickFlickrMain.qml \
-    FlickrItemDelegate.qml \
-    FullScreenViewer.qml \
-    FullScreenDelegate.qml \
-    Button.qml
+OTHER_FILES = \
+    qflickr/qmldir \
+    qflickr/QuickFlickrMain.qml \
+    qflickr/ContactList.qml \
+    qflickr/FlickrItemDelegate.qml \
+    qflickr/FullScreenViewer.qml \
+    qflickr/FullScreenDelegate.qml \
+    qflickr/Button.qml \
+    qflickr/FlipableContactView.qml \
+    qflickr/MainMenu.qml \
+    qflickr/MenuButton.qml \
+    qflickr/LocalImageDelegate.qml \
+    qflickr/LocalImageList.qml \
+    qflickr/RecentActivityView.qml

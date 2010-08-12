@@ -19,6 +19,7 @@ public:
         GetToken,
         GetContactsPublicPhotos,
         GetPhotosOfContact,
+        GetRecentActivity,
         RequestCount
 
     };
@@ -27,20 +28,29 @@ public:
 
     virtual ~ FlickrManager();
 
+    Q_INVOKABLE void activate();
+    
     void authenticate();
 
     void getFrob();
 
-    void getLatestContactUploads();
+    Q_INVOKABLE void getLatestContactUploads();
 
-    void getPhotosOfContact(const QString & userId);
+    Q_INVOKABLE void getPhotosOfContact(const QString & userId);
 
+    Q_INVOKABLE void getRecentActivity();
+    
     QList<QObject*> model() const;
 
-Q_SIGNALS:
-    void modelUpdated();
+    QList<QObject*> photoStreamModel() const;
+    
+    bool isAuthenticated() const;
 
-public Q_SLOTS:        
+Q_SIGNALS:
+    void modelUpdated(const QList<QObject*> & model);
+    void photoStreamModelUpdated(const QList<QObject*> & model);
+
+private Q_SLOTS:        
     void requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData );
 
 private:
@@ -49,3 +59,9 @@ private:
 };
 
 #endif // FLICKRMANAGER_H
+
+
+
+
+
+

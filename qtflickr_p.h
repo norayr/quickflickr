@@ -66,6 +66,7 @@ private:
     {
         void* userData;
         QMap<QString,QString> request;
+        int requestId;
     };
 
     QString md5 ( const QString &data );
@@ -74,10 +75,11 @@ private:
     QXmlStreamReader xml;
 
     QtfResponse response;
-    QMap<int,RequestData> requestDataMap;
+    QMap<QNetworkReply*,RequestData> requestDataMap;
 
     QtfError err;
     QtFlickr *p_ptr;
+    int requestCounter;
 };
 
 #endif // QTFLICKR_P_H

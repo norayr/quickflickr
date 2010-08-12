@@ -1,16 +1,29 @@
 #include "flickritem.h"
 #include "flickrmanager.h"
 #include <QtDebug>
+#include <QDesktopServices>
 
 FlickrItem::FlickrItem(FlickrManager *parent) :
     QObject(parent),
     m_parent( parent ),
     m_title(),
     m_url(),
-    m_userName()
+    m_userName(),
+    m_owner(),
+    m_dateTaken(),
+    m_thumbSize(),
+    m_description(),
+    m_views(),
+    m_tags()
+
 {
+    setObjectName("flickrItem");
 }
 
+FlickrItem::~FlickrItem()
+{
+    qDebug() << "Deleting flickr item";
+}
 
 QString FlickrItem::title() const
 {
@@ -82,12 +95,89 @@ void FlickrItem::setThumbSize( const QSize & size)
     m_thumbSize = size;
 }
 
-void FlickrItem::requestUserPhotos()
+QString FlickrItem::owner() const
 {
-    qDebug() << "requesting user photos for user: " << m_userName;
-    emit getUserPhotos( m_userName );
+    return m_owner;
+}
+
+void FlickrItem::setOwner( const QString & owner)
+{
+    m_owner = owner;
+}
+
+QString FlickrItem::description() const
+{
+    return m_description;
+}
+
+void FlickrItem::setDescription( const QString & description)
+{
+    m_description = description;
+}
+
+int FlickrItem::views() const
+{
+    return m_views;
+}
+
+void FlickrItem::setViews( int views )
+{
+    m_views = views;
+}
+
+QString FlickrItem::tags() const
+{
+    return m_tags;
+}
+void FlickrItem::setTags( const QString & tags)
+{
+    m_tags = tags;
+}
+
+QString FlickrItem::server() const
+{
+    return m_server;
+}
+
+void FlickrItem::setServer( const QString & server)
+{
+    m_server = server;
+}
+
+QString FlickrItem::farm() const
+{
+    return m_farm;
+}
+
+void FlickrItem::setFarm( const QString & farm)
+{
+     m_farm = farm;
+}
+
+QString FlickrItem::id() const
+{
+    return m_id;
+}
+
+void FlickrItem::setId( const QString & id)
+{
+    m_id = id;
+}
+
+QUrl FlickrItem::flickrPhotoUrl() const
+{
+    return QUrl("http://www.flickr.com/photos/"+m_owner+"/"+m_id); 
 }
 
 
 
 
+void FlickrItem::requestUserPhotos()
+{
+    emit getUserPhotos( m_userName );
+}
+
+void FlickrItem::openFlickrWeb()
+{
+    QDesktopServices::openUrl(flickrPhotoUrl());
+}
