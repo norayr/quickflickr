@@ -17,30 +17,21 @@ QmlLoader::QmlLoader():
     m_view = new QDeclarativeView(this);
 
     // Make sure that we use OpenGL    
-    /*
+    
     QGLFormat format = QGLFormat::defaultFormat();
     format.setSampleBuffers(false);
     QGLWidget *glWidget = new QGLWidget(format);
     glWidget->setAutoFillBackground(false);
     m_view->setViewport(glWidget);
-    */
-    // Add paths to make sure that QML files are found
-    m_view->engine()->addImportPath(QDir::currentPath() +"/qflickr");
-    m_view->engine()->addImportPath(QDir::currentPath());
-    m_view->engine()->setImportPathList(QStringList() << QDir::currentPath() + QDir::separator() + "qflickr");
+    
     connect( m_view, SIGNAL(statusChanged(QDeclarativeView::Status)),
              this, SLOT(statusChanged(QDeclarativeView::Status)));
     layout->addWidget(m_view);
 
-    // Load the main QML component which constructs the whole UI from other
-    // QML components
-    QUrl url("qflickr/QuickFlickrMain.qml");
-    m_view->setSource(url);
-    setLayout(layout);
     
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();
-    bool isAuthenticated = m_flickrManager->isAuthenticated();
+    //bool isAuthenticated = m_flickrManager->isAuthenticated();
         
     connect(m_flickrManager, SIGNAL(modelUpdated(QList<QObject*>)),
             this, SLOT(modelUpdated(QList<QObject*>)), Qt::QueuedConnection);
@@ -48,15 +39,22 @@ QmlLoader::QmlLoader():
     connect(m_flickrManager, SIGNAL(photoStreamModelUpdated(QList<QObject*>)),
             this, SLOT(photoStreamModelUpdated(QList<QObject*>)));
 
-    QMetaObject::invokeMethod(m_flickrManager, "activate");
     
+    /*
     if ( isAuthenticated ){
         m_flickrManager->getLatestContactUploads();        
     }
-    
+    */
         
     // Expose the C++ interface to QML
     m_view->engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
+    // Load the main QML component which constructs the whole UI from other
+    // QML components
+    QUrl url("qflickr/QuickFlickrMain.qml");
+    m_view->setSource(url);
+    setLayout(layout);
+    QMetaObject::invokeMethod(m_flickrManager, "activate");
+        
 }
 
 

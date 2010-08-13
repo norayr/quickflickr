@@ -32,7 +32,7 @@ HEADERS += \
 
 
 OTHER_FILES = \
-    qflickr/qmldir \
+    #qflickr/qmldir \
     qflickr/QuickFlickrMain.qml \
     qflickr/ContactList.qml \
     qflickr/FlickrItemDelegate.qml \
@@ -41,7 +41,6 @@ OTHER_FILES = \
     qflickr/Button.qml \
     qflickr/FlipableContactView.qml \
     qflickr/MainMenu.qml \
-    qflickr/MenuButton.qml \
-    qflickr/LocalImageDelegate.qml \
-    qflickr/LocalImageList.qml \
-    qflickr/RecentActivityView.qml
+    qflickr/MenuButton.qml \    
+    qflickr/RecentActivityView.qml \
+    qflickr/WebBrowser.qml

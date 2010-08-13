@@ -16,9 +16,10 @@ public:
     FlickrManagerPrivate():
             m_qtFlickr(0),
             m_requestId(),
-            m_settings("QtFlickrWidget","Authorization"),
+            m_settings("QuickFlickr","Authorization"),
             m_model(),
-            m_photoStreamModel()
+            m_photoStreamModel(),
+            m_frob()
     {
     }
 
@@ -36,9 +37,10 @@ public:
 
     QtFlickr * m_qtFlickr;
     QHash<int, FlickrManager::RequestId> m_requestId;    
-    QSettings            m_settings;
+    QSettings        m_settings;
     QList <QObject*> m_model;
     QList <QObject*> m_photoStreamModel;
+    QString m_frob;
 
 };
 
@@ -65,13 +67,16 @@ void FlickrManager::activate()
     connect(d->m_qtFlickr,SIGNAL(requestFinished ( int, QtfResponse, QtfError, void* )),
             this,SLOT(requestFinished ( int, QtfResponse, QtfError, void* )));
 
+    
     QString token = d->settingsValue("token");
     if(!token.isEmpty()){
         d->m_qtFlickr->setToken(token);        
         //getLatestContactUploads();
+        emit proceed();
     }else{
-        authenticate();
+        authenticate();        
     }
+    
 }
 
 void FlickrManager::authenticate()
@@ -139,6 +144,19 @@ void FlickrManager::getRecentActivity()
     d->m_requestId.insert(d->m_qtFlickr->post( method,request ), GetRecentActivity);
 }
 
+
+void FlickrManager::getToken()
+{
+    Q_D(FlickrManager);
+    QtfMethod method;
+    method.method = "flickr.auth.getToken";
+    method.args.insert( "frob", d->m_frob );
+    QtfRequest request;
+    request.requests.insert("token","");
+    request.requests.insert("user","username,fullname,nsid");
+    d->m_requestId.insert( d->m_qtFlickr->get(method, request), GetToken );   
+}
+
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
 {
     Q_UNUSED( userData );
@@ -147,25 +165,14 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
     switch( d->m_requestId.value(reqId)){
     case GetFrob:
         {
-            QString frob = data.tags.value("frob").value;
-            QUrl authUrl = d->m_qtFlickr->authorizationUrl(frob);
+            Q_D(FlickrManager);
+            d->m_frob = data.tags.value("frob").value;
+            QUrl authUrl = d->m_qtFlickr->authorizationUrl(d->m_frob);
             // TODO MAke here something nice like make app to show QML
             // Web view
             
-            QDesktopServices::openUrl ( authUrl );            
-            QMessageBox msgBox;
-            msgBox.setText("Press Done button when you have completed authorization through web browser");            
-            int result = msgBox.exec();
-            if( result == QMessageBox::Ok){
-                QtfMethod method;
-                method.method = "flickr.auth.getToken";
-                method.args.insert( "frob", frob );
-                QtfRequest request;
-                request.requests.insert("token","");
-                request.requests.insert("user","username,fullname,nsid");
-                d->m_requestId.insert( d->m_qtFlickr->get(method, request), GetToken );
-            }
-
+            emit authenticationRequired(authUrl);
+                       
         }break;
 
     case GetToken:
@@ -175,6 +182,12 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             QString username = data.tags.value("user").attrs.value("username");
             QString fullname = data.tags.value("user").attrs.value("fullname");
             QString nsid     = data.tags.value("user").attrs.value("nsid");
+            
+            qDebug() << "Token" << token
+                    << "userName" << username
+                    << "fullname" << fullname
+                    << "nsid" << nsid;
+            
             d->m_qtFlickr->setToken(token);
             d->setSettingsValue("username",username);
             d->setSettingsValue("token",token);

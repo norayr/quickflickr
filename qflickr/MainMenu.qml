@@ -3,17 +3,12 @@ import Qt 4.7
 
 Rectangle{
     id: mainMenu
+    property alias authUrl: webauth.urlString
+    
     anchors.fill: parent
     Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
     
-    // Make menu buttons to fly
-    Timer {        
-        interval: 500; running: true; repeat: false;
-        onTriggered: mainMenu.state = 'Menu';
-        
-    }
-
-    
+   
     Timer {    
         interval: 600; running: true; repeat: false;
         onTriggered: flickrManager.getLatestContactUploads();
@@ -42,6 +37,16 @@ Rectangle{
                 anchors.top: myPhotoStreamButton.top
                 anchors.leftMargin:50}
     
+    
+    WebBrowser{       
+        id: webauth        
+        x:0
+        y:480
+        urlString: parent.authUrl
+        onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
+    }    
+    
+
     // Contacts View
     FlipableContactView {
         id: contactsView                
@@ -60,6 +65,15 @@ Rectangle{
 
 
     states: [
+        State{
+            name: "Authenticate"
+            PropertyChanges{
+                target: webauth
+                y: 0
+            }                    
+            
+        },
+
         State{
             name: "Menu"
             

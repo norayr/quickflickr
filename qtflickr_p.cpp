@@ -144,11 +144,11 @@ int QtFlickrPrivate::upload ( const QtfPhoto &photo,
 void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
 {
     QByteArray data = reply->readAll();
-    
+    /*
     qDebug()<<"*******************************RESPONSE*******************************";
     qDebug()<<data;
     qDebug()<<"**********************************************************************\n\n";
-    
+    */
     response.tags.clear();
     err.code = 0;
     err.message = "No Errors";
