@@ -8,11 +8,6 @@ Rectangle{
     anchors.fill: parent
     Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
     
-   
-    Timer {    
-        interval: 600; running: true; repeat: false;
-        onTriggered: flickrManager.getLatestContactUploads();
-    }
     
     function recentActivityMode(){
         console.log("Recent Activity Mode")
@@ -53,10 +48,6 @@ Rectangle{
         opacity: 0
     }
 
-    LocalImageList{
-        id: localImageView
-        opacity: 0
-    }
     
     RecentActivityView{
         id: recentActivityView

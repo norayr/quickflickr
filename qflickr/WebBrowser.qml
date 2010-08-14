@@ -48,6 +48,10 @@ Rectangle {
     id: webBrowser
     signal close
     property string urlString : ""
+    property alias urlChanged: header.urlChanged
+    property alias showLocation: header.showLocation
+    property alias showNavigationButtons: header.showNavigationButtons
+    property alias showRefreshButton: header.showRefreshButton
 
     width: 800; height: 600
     color: "#343434"

@@ -164,9 +164,9 @@ void FlickrItem::setId( const QString & id)
     m_id = id;
 }
 
-QUrl FlickrItem::flickrPhotoUrl() const
+QString FlickrItem::flickrPhotoUrl() const
 {
-    return QUrl("http://www.flickr.com/photos/"+m_owner+"/"+m_id); 
+    return QUrl("http://www.flickr.com/photos/"+m_owner+"/"+m_id).toString(); 
 }
 
 

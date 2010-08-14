@@ -194,23 +194,37 @@ Rectangle {
         anchors.topMargin: 10
         opacity: 0
         anchors.rightMargin: 15
-        onClicked:{  console.log("Flickr clicked:"); openFlickrWeb();}
+        onClicked: { fullScreenDelegate.state = 'WebView'}
         z: 5
     }
 
+    WebBrowser{       
+        id: webview        
+        x:0
+        y:480
+        urlString: flickrPhotoUrl
+        onClose: {fullScreenDelegate.state = 'Details';}
+        z: 2
+        showNavigationButtons: true
+    }    
+    
     states:[
     State{
         name: "Details"
         PropertyChanges{
             target: thumbImage
             height: 250
-            width: 250
-            opacity: 0.5
+            width: 250       
+            opacity: 1
             anchors.leftMargin: 10
             anchors.topMargin: 10
         }
 
-
+        PropertyChanges {
+            target: fullScreenViewer
+            interactive: true
+        }
+        
         AnchorChanges{
             target: thumbImage
             anchors.left: fullScreenDelegate.left
@@ -262,7 +276,7 @@ Rectangle {
             x: (fullScreenDelegate.width - width) / 2
             y: (fullScreenDelegate.height - height) / 2
         }
-
+        
         AnchorChanges{
             target: description_
             anchors.left: fullScreenDelegate.right
@@ -281,7 +295,22 @@ Rectangle {
             target: flickrButton
             anchors.top: fullScreenDelegate.bottom
         }
-        }        
+        },
+    State{
+        name: 'WebView'
+        PropertyChanges {
+            target: webview            
+            x: 0 
+            y: 0                    
+        }
+        
+        PropertyChanges {
+            target: fullScreenViewer
+            interactive: false            
+        }
+        
+    }
+
     ]
 
 

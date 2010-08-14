@@ -9,21 +9,21 @@ class FlickrManager;
 class FlickrItem : public QObject
 {
 Q_OBJECT
-Q_PROPERTY(QString title READ title)// WRITE setTitle)
-Q_PROPERTY(QString userName READ userName)// WRITE setUserName)
-Q_PROPERTY(QUrl url READ url )//WRITE setUrl)
-Q_PROPERTY(QString dateTaken READ dateTaken )//WRITE setDateTaken)
-Q_PROPERTY(int thumbWidth READ thumbWidth )//WRITE setThumbWidth)
-Q_PROPERTY(int thumbHeight READ thumbHeight )//WRITE setThumbHeight)
-Q_PROPERTY(QSize thumbSize READ thumbSize )//WRITE setThumbSize)
-Q_PROPERTY(QString owner READ owner )//WRITE setOwner)
-Q_PROPERTY(QString description READ description )//WRITE setDescription)
-Q_PROPERTY(QString tags READ tags )//WRITE setTags)
-Q_PROPERTY(int views READ views )//WRITE setViews)
-Q_PROPERTY(QString server READ server )//WRITE setServer)
-Q_PROPERTY(QString farm READ farm )//WRITE setFarm)
-Q_PROPERTY(QString id READ id)//WRITE setFarm)
-Q_PROPERTY(QUrl flickrPhotoUrl READ flickrPhotoUrl )//WRITE setPhotoFlickrUrl)
+Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY updated)
+Q_PROPERTY(QString userName READ userName WRITE setUserName NOTIFY updated)
+Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY updated)
+Q_PROPERTY(QString dateTaken READ dateTaken WRITE setDateTaken NOTIFY updated)
+Q_PROPERTY(int thumbWidth READ thumbWidth WRITE setThumbWidth NOTIFY updated)
+Q_PROPERTY(int thumbHeight READ thumbHeight WRITE setThumbHeight NOTIFY updated)
+Q_PROPERTY(QSize thumbSize READ thumbSize WRITE setThumbSize NOTIFY updated)
+Q_PROPERTY(QString owner READ owner WRITE setOwner NOTIFY updated)
+Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY updated)
+Q_PROPERTY(QString tags READ tags WRITE setTags NOTIFY updated)
+Q_PROPERTY(int views READ views WRITE setViews NOTIFY updated)
+Q_PROPERTY(QString server READ server WRITE setServer NOTIFY updated)
+Q_PROPERTY(QString farm READ farm WRITE setFarm NOTIFY updated)
+Q_PROPERTY(QString id READ id WRITE setId NOTIFY updated)
+Q_PROPERTY(QString flickrPhotoUrl READ flickrPhotoUrl )// WRITE setPhotoFlickrUrl NOTIFY updated)
 
 public:
     explicit FlickrItem(FlickrManager *parent);
@@ -71,7 +71,7 @@ public:
     QString id() const;
     void setId( const QString & id);
     
-    QUrl flickrPhotoUrl() const;
+    QString flickrPhotoUrl() const;
     
     
 public Q_SLOTS:
@@ -80,6 +80,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void getUserPhotos( const QString & userId );
+    void updated();
 
 private:
     FlickrManager * m_parent;
