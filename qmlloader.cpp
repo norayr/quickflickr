@@ -30,8 +30,7 @@ QmlLoader::QmlLoader():
 
     
     // Setup the C++ side for providing data for QML
-    m_flickrManager = new FlickrManager();
-    //bool isAuthenticated = m_flickrManager->isAuthenticated();
+    m_flickrManager = new FlickrManager();    
         
     connect(m_flickrManager, SIGNAL(modelUpdated(QList<QObject*>)),
             this, SLOT(modelUpdated(QList<QObject*>)), Qt::QueuedConnection);
@@ -39,13 +38,7 @@ QmlLoader::QmlLoader():
     connect(m_flickrManager, SIGNAL(photoStreamModelUpdated(QList<QObject*>)),
             this, SLOT(photoStreamModelUpdated(QList<QObject*>)));
 
-    
-    /*
-    if ( isAuthenticated ){
-        m_flickrManager->getLatestContactUploads();        
-    }
-    */
-        
+            
     // Expose the C++ interface to QML
     m_view->engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
     // Load the main QML component which constructs the whole UI from other

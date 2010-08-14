@@ -1,5 +1,5 @@
 import Qt 4.7
-
+//import "content"
 
 Rectangle {
     id: fullScreenDelegate
@@ -26,11 +26,24 @@ Rectangle {
         x: (fullScreenDelegate.width) / 2
         y: (fullScreenDelegate.height) / 2
         onStatusChanged: {if(thumbImage.status == Image.Ready) fullScreenDelegate.state = 'ImageLoaded';}
+    
+        MouseArea{
+            anchors.fill: parent        
+            onClicked: {
+                console.log("xxx");
+                if ( fullScreenDelegate.state == "ImageLoaded"){
+                    fullScreenDelegate.state = 'Details';
+                }else{
+                    fullScreenDelegate.state = 'ImageLoaded';
+                }
+            }
+            
+            onPressAndHold: mainFlipable.state = 'front'
+        }
     }
-
     Text{
         id:progressText
-        text: Math.floor(thumbImage.progress*100) +"%"
+        text: "Loading... " + Math.floor(thumbImage.progress*100) +"%"
         font.family: "Helvetica"
         font.pointSize: 40
         color: "white"
@@ -75,37 +88,49 @@ Rectangle {
         anchors.topMargin: 10
         anchors.bottomMargin: 60
         anchors.left: parent.horizontalCenter
+        
 
-        Text{
-            id: descriptionTitle
-            text: "Description:"
-            font.family: "Helvetica"
-            font.pointSize: 22
-            color: "white"
-            smooth: true
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.topMargin: 10
-            anchors.leftMargin: 10
-        }
-
-        Text{
-            id: descriptionText
-            text: description
-            font.family: "Helvetica"
-            font.pointSize: 15            
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        Flickable{
+            id: flickable
+            flickableDirection: Flickable.VerticalFlick            
+            anchors.fill: description_
+            anchors.topMargin: 2
+            anchors.bottomMargin: 2
+            contentHeight: descriptionTitle.height + descriptionText.height + 30            
             clip: true
-            color: "white"
-            smooth: true
-            anchors.top: descriptionTitle.bottom
-            anchors.left: descriptionTitle.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.topMargin: 30
-            anchors.rightMargin: 10
-            anchors.bottomMargin: 10
-        }
+            
+            
+            Text{
+                id: descriptionTitle
+                text: "Description:"
+                font.family: "Helvetica"
+                font.pointSize: 22
+                color: "white"
+                smooth: true
+                
+                anchors.top: description.top
+                anchors.left: parent.left
+                anchors.topMargin: 10
+                anchors.leftMargin: 10
+                x:10
+                
+            }
+    
+            Text{
+                id: descriptionText
+                text: description
+                font.family: "Helvetica"
+                font.pointSize: 15            
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                clip: true
+                color: "white"
+                smooth: true
+                anchors.top: descriptionTitle.bottom
+                anchors.left: descriptionTitle.left
+                anchors.right: parent.right                
+                anchors.topMargin: 30
+            }                                          
+        }                
     }
 
     Text {
@@ -155,7 +180,7 @@ Rectangle {
             anchors.top: tagsTitle.bottom
             anchors.left: tagsTitle.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            //anchors.bottom: fullScreenDelegate.bottom
             anchors.topMargin: 5
         }
     }
@@ -206,6 +231,7 @@ Rectangle {
         onClose: {fullScreenDelegate.state = 'Details';}
         z: 2
         showNavigationButtons: true
+        opacity: 0
     }    
     
     states:[
@@ -219,7 +245,7 @@ Rectangle {
             anchors.leftMargin: 10
             anchors.topMargin: 10
         }
-
+        
         PropertyChanges {
             target: fullScreenViewer
             interactive: true
@@ -275,7 +301,7 @@ Rectangle {
             height: 470
             x: (fullScreenDelegate.width - width) / 2
             y: (fullScreenDelegate.height - height) / 2
-        }
+        }        
         
         AnchorChanges{
             target: description_
@@ -301,7 +327,8 @@ Rectangle {
         PropertyChanges {
             target: webview            
             x: 0 
-            y: 0                    
+            y: 0        
+            opacity: 1            
         }
         
         PropertyChanges {
@@ -324,25 +351,5 @@ Rectangle {
         AnchorAnimation {
 
         }
-        }]
-
-
-    // Handle mouse clicks
-    MouseArea {
-        anchors.fill: parent;        
-        //onClicked: { mainFlipable.state = 'front'}
-        onClicked: {
-            if ( fullScreenDelegate.state == "ImageLoaded"){
-                fullScreenDelegate.state = 'Details';
-            }else{
-                fullScreenDelegate.state = 'ImageLoaded';
-            }
-        }
-
-
-        onPressAndHold: mainFlipable.state = 'front'
-
-
-    }
-
+        }]    
 }
