@@ -41,6 +41,11 @@ QmlLoader::QmlLoader():
             
     // Expose the C++ interface to QML
     m_view->engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
+    
+    // The following two lines are here to get rid of warnings
+    m_view->engine()->rootContext()->setContextProperty("contactListModel", QVariant::fromValue(0));
+    m_view->engine()->rootContext()->setContextProperty("photoStreamModel", QVariant::fromValue(0));
+    
     // Load the main QML component which constructs the whole UI from other
     // QML components
     QUrl url("qflickr/QuickFlickrMain.qml");
