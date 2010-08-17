@@ -2,7 +2,7 @@ import Qt 4.7
 
 Rectangle{    
     id: fullScreenViewer
-    
+    Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
     
     ListView{    
         id: photoList
@@ -48,7 +48,7 @@ Rectangle{
     ]
     
     transitions: Transition {
-             PropertyAnimation { properties: "x,y,opacity"; duration: 800 }
+             PropertyAnimation { properties: "x,y,opacity"; duration: 600 }
          }
 }
 

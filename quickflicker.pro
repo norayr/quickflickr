@@ -43,4 +43,8 @@ OTHER_FILES = \
     qflickr/MainMenu.qml \
     qflickr/MenuButton.qml \    
     qflickr/RecentActivityView.qml \
-    qflickr/WebBrowser.qml
+    qflickr/WebBrowser.qml \
+    qflickr/FlickableWebView.qml \
+    qflickr/Header.qml \
+    qflickr/ScrollBar.qml \
+    qflickr/UrlInput.qml

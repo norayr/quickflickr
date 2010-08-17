@@ -59,6 +59,7 @@ Item {
         border { left: 10; top: 10; right: 10; bottom: 10 }
     }
 
+    // Progressbar
     Rectangle {
         anchors.bottom: bg.bottom
         x: 18; height: 4; color: "#63b1ed"

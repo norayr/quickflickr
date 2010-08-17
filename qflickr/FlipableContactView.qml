@@ -1,29 +1,32 @@
 import Qt 4.7
 
 
-Rectangle{
-    //id: contactPhotos
+Image{    
     width:800
-    height:480    
-    Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
-    clip: true
+    height:480            
+    //clip: true        
+    source: "images/quickflickr-bg.png"; 
+    
 
-
-    Flipable {
+    Flipable {                        
          id: mainFlipable
          property int angle: 0
-         anchors.fill: parent
+         anchors.fill: parent         
+         
          transform: Rotation {
              id: rotation
-             origin.x: mainFlipable.width/2; origin.y: mainFlipable.height/2
-             axis.x: 0; axis.y: 1; axis.z: 0     // rotate around y-axis
+             origin.x: mainFlipable.width/2 
+             origin.y: mainFlipable.height/2
+             axis.x: 0 
+             axis.y: 1 
+             axis.z: 0     // rotate around y-axis
              angle: mainFlipable.angle
          }
 
-         front: ContactList{
+         front:ContactList{
              id: contactList
              anchors.fill: parent             
-         }
+         }                                 
 
 
          back: FullScreenViewer{
@@ -37,7 +40,7 @@ Rectangle{
          }
 
          transitions: Transition {
-             NumberAnimation { properties: "angle"; duration: 800 }
+             NumberAnimation { properties: "angle"; duration: 600 }
          }
 
      }

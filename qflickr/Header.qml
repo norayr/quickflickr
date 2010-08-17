@@ -41,10 +41,11 @@
 
 import Qt 4.7
 
+
 Image {
     id: header
 
-    property alias editUrl: urlInput.url
+    //property alias editUrl: urlInput.url
     property bool urlChanged: false
     property bool showLocation: false
     property bool showNavigationButtons: false
@@ -52,7 +53,9 @@ Image {
 
     signal closeClicked
     
-    source: "pics/titlebar-bg.png"; fillMode: Image.TileHorizontally
+    source: "images/toolbutton.sci"; 
+    fillMode: Image.TileHorizontally
+    opacity: 0.5 
 
     x: webView.contentX < 0 ? -webView.contentX : webView.contentX > webView.contentWidth-webView.width
        ? -webView.contentX+webView.contentWidth-webView.width : 0
@@ -69,76 +72,50 @@ Image {
         width: parent.width
 
         Item {
-            width: parent.width; height: 20
+            width: parent.width; height: 20                        
             Text {
+                id: title
                 anchors.centerIn: parent
                 text: webView.title; font.pixelSize: 14; font.bold: true
                 color: "white"; styleColor: "black"; style: Text.Sunken
-            }
+            }                
         }
 
         Item {
             width: parent.width; height: 40
 
-            Button {
+            BrowserButton {
                 id: backButton
-                action: webView.back; image: "pics/go-previous-view.png"
+                action: webView.back; image: "images/go-previous-view.png"
                 anchors { left: parent.left; bottom: parent.bottom }
                 visible: showNavigationButtons
             }
 
-            Button {
+            BrowserButton {
                 id: nextButton
                 anchors.left: backButton.right
-                action: webView.forward; image: "pics/go-next-view.png"
+                action: webView.forward; image: "images/go-next-view.png"
                 visible: showNavigationButtons
             }
-
-            UrlInput {
-                id: urlInput
-                anchors { left: nextButton.right; right: reloadButton.left }
-                image: "pics/display.png"
-                onUrlEntered: {
-                    webBrowser.urlString = url
-                    webBrowser.focus = true
-                    header.urlChanged = false
-                }
-                onUrlChanged: header.urlChanged = true
-                visible: showLocation
+         
+            Rectangle {
+                anchors.centerIn: parent
+                //anchors.left: nextButton.right
+                //anchors.right: closeButton.left
+                x: 18; height: 8; color: "#63b1ed"
+                width: (parent.width - 20) * webView.progress
+                opacity: webView.progress == 1.0 ? 0.0 : 1.0
             }
+                        
 
-            Button {
-                id: reloadButton
-                anchors { right: parent.right; rightMargin: 4 }
-                action: webView.reload; image: "pics/view-refresh.png"
-                visible: webView.progress == 1.0 && !header.urlChanged && showRefreshButton
-            }
-
-            Button {
-                id: stopButton
-                anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "pics/edit-delete.png"
-                visible: false;//webView.progress < 1.0 && !header.urlChanged
-            }
-
-            Button {
+            BrowserButton {
                 id: closeButton
                 anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "pics/edit-delete.png"
+                action: webView.stop; image: "images/edit-delete.png"
                 onClicked: {console.log("Close Clicked from a header");header.closeClicked();}
             }
             
-            Button {
-                id: goButton
-                anchors { right: parent.right; rightMargin: 4 }
-                onClicked: {
-                    webBrowser.urlString = urlInput.url
-                    webBrowser.focus = true
-                    header.urlChanged = false
-                }
-                image: "pics/go-jump-locationbar.png";                 
-                visible: false
-            }
+            
         }
     }
 }

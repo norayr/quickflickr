@@ -42,7 +42,6 @@
 import Qt 4.7
 import QtWebKit 1.0
 
-import "content"
 
 Rectangle {
     id: webBrowser
@@ -67,8 +66,9 @@ Rectangle {
 
     Header {
         id: header
-        editUrl: webBrowser.urlString
-        width: headerSpace.width; height: headerSpace.height
+        //editUrl: webBrowser.urlString
+        width: headerSpace.width; 
+        height: headerSpace.height
         onCloseClicked: webBrowser.close();
     }
 

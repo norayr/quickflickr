@@ -95,7 +95,7 @@ Rectangle {
             anchors.fill: description_
             anchors.topMargin: 2
             anchors.bottomMargin: 2
-            contentHeight: descriptionTitle.height + descriptionText.height + 30            
+            contentHeight: descriptionTitle.height + descriptionText.height + 30                        
             clip: true
             
             
@@ -109,7 +109,7 @@ Rectangle {
                 
                 anchors.top: description.top
                 anchors.left: parent.left
-                anchors.topMargin: 10
+                anchors.topMargin: 15
                 anchors.leftMargin: 10
                 x:10
                 
@@ -129,7 +129,12 @@ Rectangle {
                 anchors.left: descriptionTitle.left
                 //anchors.right: parent.right                
                 anchors.topMargin: 30
-            }                                          
+            }   
+            
+            ScrollBar {            
+                scrollArea: flickable; width: 8
+                anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
+            }
         }                
     }
 

@@ -79,15 +79,13 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
 void QmlLoader::contactModelUpdated( const QList<QObject*> & model)
 {
     qDebug() << "QmlLoader::modelUpdated";
-    //QList<QObject*> model = m_flickrManager->model();
     QDeclarativeContext *ctxt = m_view->rootContext();
-    ctxt->setContextProperty("contactModel", QVariant::fromValue(model));
+    ctxt->setContextProperty("contactListModel", QVariant::fromValue(model));
 }
 
 void QmlLoader::photoStreamModelUpdated(  const QList<QObject*> & model )
 {
-    qDebug() << "QmlLoader::PhotoStreamModelUpdated";
-    //QList<QObject*> model = m_flickrManager->photoStreamModel();
+    qDebug() << "QmlLoader::PhotoStreamModelUpdated";    
     QDeclarativeContext *ctxt = m_view->rootContext();
     ctxt->setContextProperty("photoStreamModel", QVariant::fromValue(model));
 }
