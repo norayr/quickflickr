@@ -18,6 +18,14 @@ import "content"
             scrollArea: parent; width: 8
             anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
         }
+        
+        // TODO: This doesn't work for some reason. The slot is called, but model doesn't work
+        /*
+        Connections{
+            target: flickrManager
+            onContactModelUpdated: { listView.model = model;}            
+        }
+        */
     }
     
     

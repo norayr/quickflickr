@@ -48,26 +48,15 @@ Item{
         
     
         // Actual thumbnail image
-        Image{
-            // Simple function for calculating the correct width. If the
-            // widht is more than 250, the image will be forced to fit
-            // in it, otherwise it just scales down the image maintaining
-            // the aspect ratio.            
-            function getWidth( w, h ){            
-                width = w *(118/h);
-                if ( width > 250 )
-                    return 248;
-                else
-                    return width;
-            }
-            
+        Image{            
             id: thumbImage
             source: url
             smooth: true
-            width: getWidth(thumbWidth,thumbHeight); 
+            fillMode: Image.PreserveAspectFit
+            width: 250
             height: 118
             x: (parent.width - width) / 2
-            y: (parent.height - height ) / 2
+            y: (parent.height - height ) / 2            
         }
 
         Button{
@@ -131,13 +120,6 @@ Item{
 
         }
 
-        /*
-        AnchorChanges{
-            target: button_
-            anchors.bottom: thumbnail_.bottom
-            anchors.right: thumbnail_.right
-        }
-        */
 
         PropertyChanges{
             target: button_

@@ -32,8 +32,8 @@ QmlLoader::QmlLoader():
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();    
         
-    connect(m_flickrManager, SIGNAL(modelUpdated(QList<QObject*>)),
-            this, SLOT(modelUpdated(QList<QObject*>)), Qt::QueuedConnection);
+    connect(m_flickrManager, SIGNAL(contactModelUpdated(QList<QObject*>)),
+            this, SLOT(contactModelUpdated(QList<QObject*>)), Qt::QueuedConnection);
 
     connect(m_flickrManager, SIGNAL(photoStreamModelUpdated(QList<QObject*>)),
             this, SLOT(photoStreamModelUpdated(QList<QObject*>)));
@@ -76,7 +76,7 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
     }
 }
 
-void QmlLoader::modelUpdated( const QList<QObject*> & model)
+void QmlLoader::contactModelUpdated( const QList<QObject*> & model)
 {
     qDebug() << "QmlLoader::modelUpdated";
     //QList<QObject*> model = m_flickrManager->model();

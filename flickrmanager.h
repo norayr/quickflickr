@@ -40,14 +40,14 @@ public:
     
     Q_INVOKABLE void getToken();
     
-    QList<QObject*> model() const;
+    Q_INVOKABLE QList<QObject*> model() const;
 
     QList<QObject*> photoStreamModel() const;
     
     Q_INVOKABLE bool isAuthenticated() const;
 
 Q_SIGNALS:
-    void modelUpdated(const QList<QObject*> & model);
+    void contactModelUpdated(const QList<QObject*> & modelX);
     void photoStreamModelUpdated(const QList<QObject*> & model);
     void authenticationRequired(const QUrl & authUrl);
     void proceed();

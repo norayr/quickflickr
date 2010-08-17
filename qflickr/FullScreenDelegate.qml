@@ -10,10 +10,8 @@ Rectangle {
     border.width: 3
     color: "black"
     
-    
-
-
-
+   
+   
     // Actual thumbnail image. The size of
     // image is kept quite small untill it will be loaded
     Image{
@@ -25,12 +23,13 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
         x: (fullScreenDelegate.width) / 2
         y: (fullScreenDelegate.height) / 2
+        sourceSize.width:800
+        sourceSize.height:480
         onStatusChanged: {if(thumbImage.status == Image.Ready) fullScreenDelegate.state = 'ImageLoaded';}
     
         MouseArea{
             anchors.fill: parent        
-            onClicked: {
-                console.log("xxx");
+            onClicked: {                
                 if ( fullScreenDelegate.state == "ImageLoaded"){
                     fullScreenDelegate.state = 'Details';
                 }else{
@@ -125,9 +124,10 @@ Rectangle {
                 clip: true
                 color: "white"
                 smooth: true
+                width: description_.width - 5
                 anchors.top: descriptionTitle.bottom
                 anchors.left: descriptionTitle.left
-                anchors.right: parent.right                
+                //anchors.right: parent.right                
                 anchors.topMargin: 30
             }                                          
         }                
@@ -207,7 +207,7 @@ Rectangle {
         anchors.topMargin: 10
         anchors.rightMargin: 15
         opacity: 0
-        onClicked:{  console.log("Comments clicked");}//mainFlipable.state = 'front'}
+        onClicked:{  console.log("Comments clicked");}
         z: 5
     }
 
@@ -219,21 +219,10 @@ Rectangle {
         anchors.topMargin: 10
         opacity: 0
         anchors.rightMargin: 15
-        onClicked: { fullScreenDelegate.state = 'WebView'}
+        onClicked: { webview.urlString = flickrPhotoUrl; fullScreenViewer.state = 'WebView';}
         z: 5
     }
-
-    WebBrowser{       
-        id: webview        
-        x:0
-        y:480
-        urlString: flickrPhotoUrl
-        onClose: {fullScreenDelegate.state = 'Details';}
-        z: 2
-        showNavigationButtons: true
-        opacity: 0
-    }    
-    
+   
     states:[
     State{
         name: "Details"
@@ -244,11 +233,6 @@ Rectangle {
             opacity: 1
             anchors.leftMargin: 10
             anchors.topMargin: 10
-        }
-        
-        PropertyChanges {
-            target: fullScreenViewer
-            interactive: true
         }
         
         AnchorChanges{
@@ -321,22 +305,7 @@ Rectangle {
             target: flickrButton
             anchors.top: fullScreenDelegate.bottom
         }
-        },
-    State{
-        name: 'WebView'
-        PropertyChanges {
-            target: webview            
-            x: 0 
-            y: 0        
-            opacity: 1            
         }
-        
-        PropertyChanges {
-            target: fullScreenViewer
-            interactive: false            
-        }
-        
-    }
 
     ]
 

@@ -8,7 +8,7 @@
 #include <QHash>
 #include <QStringListModel>
 #include <QMapIterator>
-#include <QtConcurrentRun>
+#include <QVariant>
 
 
 class FlickrManagerPrivate{
@@ -228,10 +228,9 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
                 
                 d->m_model << item;              
             }
-            
-            
+                        
             // Notify the world that model contains something now.
-            emit modelUpdated(d->m_model);
+            emit contactModelUpdated( d->m_model );
         }break;
 
     case GetPhotosOfContact:
@@ -296,7 +295,7 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
     }
 }
 
-QList<QObject*> FlickrManager::model() const
+QList<QObject*>  FlickrManager::model() const
 {
     Q_D(const FlickrManager);
     return d->m_model;
