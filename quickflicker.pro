@@ -35,7 +35,7 @@ OTHER_FILES = \
     #qflickr/qmldir \
     qflickr/QuickFlickrMain.qml \
     qflickr/ContactList.qml \
-    qflickr/FlickrItemDelegate.qml \
+    qflickr/ContactListDelegate.qml \
     qflickr/FullScreenViewer.qml \
     qflickr/FullScreenDelegate.qml \
     qflickr/Button.qml \
