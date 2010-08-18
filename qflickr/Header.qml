@@ -42,10 +42,9 @@
 import Qt 4.7
 
 
-Image {
+BorderImage {
     id: header
-
-    //property alias editUrl: urlInput.url
+    
     property bool urlChanged: false
     property bool showLocation: false
     property bool showNavigationButtons: false
@@ -53,9 +52,10 @@ Image {
 
     signal closeClicked
     
-    source: "images/toolbutton.sci"; 
-    fillMode: Image.TileHorizontally
-    opacity: 0.5 
+    smooth: true
+    opacity: 0.5
+    source: "images/toolbutton.png"; 
+        
 
     x: webView.contentX < 0 ? -webView.contentX : webView.contentX > webView.contentWidth-webView.width
        ? -webView.contentX+webView.contentWidth-webView.width : 0

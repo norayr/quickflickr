@@ -94,7 +94,7 @@ Rectangle {
             flickableDirection: Flickable.VerticalFlick            
             anchors.fill: description_
             anchors.topMargin: 2
-            anchors.bottomMargin: 2
+            anchors.bottomMargin: description_.anchors.bottomMargin + 5
             contentHeight: descriptionTitle.height + descriptionText.height + 30                        
             clip: true
             
@@ -127,15 +127,18 @@ Rectangle {
                 width: description_.width - 5
                 anchors.top: descriptionTitle.bottom
                 anchors.left: descriptionTitle.left
-                //anchors.right: parent.right                
+                anchors.right: parent.right                
+                anchors.rightMargin: 5
                 anchors.topMargin: 30
-            }   
+            }  
             
             ScrollBar {            
                 scrollArea: flickable; width: 8
-                anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
+                anchors { right: parent.right; top: parent.top; bottom: parent.bottom; }                        
+                
             }
         }                
+                
     }
 
     Text {

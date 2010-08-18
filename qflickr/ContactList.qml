@@ -10,7 +10,7 @@ ListView {
     anchors.fill: parent        
     clip: true
     cacheBuffer: 900 // Removes flickring on top and the bottom        
-    delegate: FlickrItemDelegate{ id: flickrItemDelegate }        
+    delegate: ContactListDelegate{ id: contactListelegate }        
     
     ScrollBar {            
         scrollArea: parent; width: 8

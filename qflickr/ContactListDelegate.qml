@@ -2,8 +2,7 @@ import Qt 4.7
 // Simple delegate which displays some common information about a
 // single image from flickr. This delegate scales all the thumbnails
 // to fixed width.
-Item{
-    id: flickrItemDelegate
+Item{    
     width: contactList.width - 20
     height: 130
     x: 10    
@@ -71,96 +70,9 @@ Item{
             z: 3
         }
 
-        MouseArea{
-            anchors.fill:  thumbnail_
-            onClicked:{
-                ListView.currentIndex = index
-
-                if ( flickrItemDelegate.state == "Default")
-                    flickrItemDelegate.state = 'ViewState';
-                else
-                    flickrItemDelegate.state = 'Default';
-            }
-        }
+     
     }
 
-
-    states: [ State{
-        name: "ViewState"
-        PropertyChanges{
-            target: flickrItemDelegate
-            width: 800
-            height:480                        
-        }
-
-        PropertyChanges{
-            target: listView
-            contentX: flickrItemDelegate.x
-            contentY: flickrItemDelegate.y
-        }
-
-        PropertyChanges{
-            target: thumbnail_
-            width: 800
-            height: 480
-            anchors.leftMargin: 0
-            anchors.topMargin: 0
-            border.width:5
-        }
-
-        PropertyChanges{
-            target:title_
-            opacity: 0
-
-        }
-
-        PropertyChanges{
-            target: userName_
-            opacity: 0
-
-        }
-
-
-        PropertyChanges{
-            target: button_
-            opacity: 1
-
-        }
-
-
-        PropertyChanges{
-            target: dateTaken_
-            opacity: 0
-        }
-
-        PropertyChanges{
-            target: thumbImage
-            opacity: 1
-            width: thumbWidth * 2 - 10
-            height: thumbHeight * 2 - 10
-            x: (listView.width - (thumbWidth * 2)  ) / 2
-            y: (listView.height - (thumbHeight * 2) ) / 2 + thumbnail_.border.width
-        }
-
-
-    }
-    ]
-
-    transitions: Transition{
-    ParallelAnimation{
-
-        PropertyAnimation {
-            properties: "x,y,width,height,contentX,contentY,color,border.width,opacity"
-            easing.type: "OutCubic"
-            duration: 700
-        }      
-
-    }
-    // This is bit weird, but it works
-    AnchorAnimation {
-
-    }
-    }
 
     // Title section
     Text{
@@ -179,6 +91,8 @@ Item{
     // Username section
     Text{
         id: userName_
+        elide: Text.ElideRight
+        width: parent.width - thumbnail_.width - 10
         text: qsTr("by ") + userName;
         font.family: "Helvetica";
         font.pointSize: 20;
