@@ -15,10 +15,6 @@ public:
 
 private Q_SLOTS:
     void statusChanged ( QDeclarativeView::Status status );
-    void contactModelUpdated( const QList<QObject*> & model);
-    void photoStreamModelUpdated( const QList<QObject*> & model );
-    void localImageModelUpdated();
-    void recentActivityUpdated();
     
 private:
     QDeclarativeView * m_view;

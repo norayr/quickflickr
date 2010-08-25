@@ -5,7 +5,7 @@ import Qt 4.7
 // List for showing uploads from contacts
 ListView {
     id: listView
-    model: contactListModel
+    model: ContactListModel{id:contactListModel }
     spacing: 10
     anchors.fill: parent        
     clip: true
@@ -17,13 +17,12 @@ ListView {
         anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
     }
     
-    // TODO: This doesn't work for some reason. The slot is called, but model doesn't work
-    /*
+    
     Connections{
         target: flickrManager
-        onContactModelUpdated: { listView.model = model;}            
+        onContactsUploadsUpdated: {contactListModel.xml = xml;}
     }
-    */
+        
 }
 
 

@@ -28,23 +28,15 @@ QmlLoader::QmlLoader():
              this, SLOT(statusChanged(QDeclarativeView::Status)));
     layout->addWidget(m_view);
 
+    connect(m_view->engine(),SIGNAL(quit()),qApp,SLOT(quit()));
     
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();    
         
-    connect(m_flickrManager, SIGNAL(contactModelUpdated(QList<QObject*>)),
-            this, SLOT(contactModelUpdated(QList<QObject*>)), Qt::QueuedConnection);
-
-    connect(m_flickrManager, SIGNAL(photoStreamModelUpdated(QList<QObject*>)),
-            this, SLOT(photoStreamModelUpdated(QList<QObject*>)));
-
-            
+    
     // Expose the C++ interface to QML
     m_view->engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
     
-    // The following two lines are here to get rid of warnings
-    m_view->engine()->rootContext()->setContextProperty("contactListModel", QVariant::fromValue(0));
-    m_view->engine()->rootContext()->setContextProperty("photoStreamModel", QVariant::fromValue(0));
     
     // Load the main QML component which constructs the whole UI from other
     // QML components
@@ -80,37 +72,6 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
         break;
     }
 }
-
-void QmlLoader::contactModelUpdated( const QList<QObject*> & model)
-{
-    qDebug() << "QmlLoader::modelUpdated";
-    QDeclarativeContext *ctxt = m_view->rootContext();
-    ctxt->setContextProperty("contactListModel", QVariant::fromValue(model));
-}
-
-void QmlLoader::photoStreamModelUpdated(  const QList<QObject*> & model )
-{
-    qDebug() << "QmlLoader::PhotoStreamModelUpdated";    
-    QDeclarativeContext *ctxt = m_view->rootContext();
-    ctxt->setContextProperty("photoStreamModel", QVariant::fromValue(model));
-}
-
-void QmlLoader::localImageModelUpdated()
-{
-    qDebug() << "QmlLoader::localImageModelUpdated";
-    /*
-    QList<QObject*> model = m_localImageManager->model();
-    QDeclarativeContext *ctxt = m_view->rootContext();
-    ctxt->setContextProperty("localImageModel", QVariant::fromValue(model));
-    */
-}
-
-void QmlLoader::recentActivityUpdated()
-{
-    qDebug() << "QmlLoad::recentActivityUpdated.. NOT IMPLEMENTED!";
-    
-}
-
 
 
 

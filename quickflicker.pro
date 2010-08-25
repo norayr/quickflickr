@@ -19,14 +19,12 @@ OBJECTS_DIR = objs
 SOURCES += main.cpp \
     qmlloader.cpp \
     flickrmanager.cpp \
-    flickritem.cpp \
     qtflickr.cpp \
     qtflickr_p.cpp     
 
 HEADERS += \
     qmlloader.h \
     flickrmanager.h \
-    flickritem.h \
     qtflickr.h \
     qtflickr_p.h 
 
@@ -47,4 +45,8 @@ OTHER_FILES = \
     qflickr/FlickableWebView.qml \
     qflickr/Header.qml \
     qflickr/ScrollBar.qml \
-    qflickr/UrlInput.qml
+    qflickr/UrlInput.qml \
+    qflickr/RecentActivityModel.qml \
+    qflickr/RecentActivityDelegate.qml \
+    qflickr/ContactListModel.qml \
+    qflickr/FullScreenModel.qml

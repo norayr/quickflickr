@@ -5,8 +5,7 @@
 #include "qtflickr.h"
 
 class FlickrManagerPrivate;
-class QAbstractItemModel;
-class FlickrItem;
+
 
 class FlickrManager : public QObject
 {
@@ -39,22 +38,21 @@ public:
     Q_INVOKABLE void getRecentActivity();
     
     Q_INVOKABLE void getToken();
-    
-    Q_INVOKABLE QList<QObject*> model() const;
-
-    QList<QObject*> photoStreamModel() const;
-    
+        
     Q_INVOKABLE bool isAuthenticated() const;
 
 Q_SIGNALS:
-    void contactModelUpdated(const QList<QObject*> & modelX);
-    void photoStreamModelUpdated(const QList<QObject*> & model);
     void authenticationRequired(const QUrl & authUrl);
     void proceed();
+        
+    void contactsUploadsUpdated(const QString & xml);
+    void photostreamUpdated( const QString & xml);
+    void recentActivityUpdated( const QString & xml);
 
 private Q_SLOTS:        
     void requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData );
-
+    void requestFinished ( int reqId, QString xmlData, QtfError err, void* userData );
+    
 private:
     FlickrManagerPrivate * d_ptr;
     Q_DECLARE_PRIVATE( FlickrManager );

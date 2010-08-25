@@ -4,9 +4,14 @@ Rectangle{
     id: fullScreenViewer
     Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
     
+    Connections{
+        target: flickrManager
+        onPhotostreamUpdated: {fullScreenModel.xml = xml;}
+    }
+    
     ListView{    
         id: photoList
-        model: photoStreamModel
+        model: FullScreenModel{ id: fullScreenModel }
         delegate: FullScreenDelegate { id: fullScreenDelegate}
         width: 800
         height: 480
@@ -18,7 +23,18 @@ Rectangle{
                  
 
     }
-        
+            
+    Text{
+        anchors.fill: parent
+        text: "Loading..."
+        font.family: "Helvetica"
+        font.pixelSize: 40
+        color: "white"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        opacity: 1 - fullScreenModel.progress
+    }
+
 
     // Create only one WebBrowser instance     
     WebBrowser{       

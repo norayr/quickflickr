@@ -26,7 +26,9 @@ Image{
          front:ContactList{
              id: contactList
              anchors.fill: parent             
-         }                                 
+            }
+          
+         
 
 
          back: FullScreenViewer{
@@ -34,7 +36,7 @@ Image{
              anchors.fill: parent
          }
 
-         states: State {
+         states:  State {
              name: "back"
              PropertyChanges { target: mainFlipable; angle: -180 }
          }

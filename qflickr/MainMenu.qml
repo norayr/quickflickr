@@ -31,6 +31,18 @@ Rectangle{
                 anchors.left: myPhotoStreamButton.right
                 anchors.top: myPhotoStreamButton.top
                 anchors.leftMargin:50}
+    Image {
+            id: quitButton
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.rightMargin:10
+            source: "images/quit.png"
+            MouseArea {
+                anchors.fill: parent
+                onClicked:{console.log("quit clicked"); Qt.quit()}
+            }
+    }
     
     
     WebBrowser{       

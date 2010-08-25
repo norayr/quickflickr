@@ -144,11 +144,11 @@ int QtFlickrPrivate::upload ( const QtfPhoto &photo,
 void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
 {
     QByteArray data = reply->readAll();
-    /*
-    qDebug()<<"*******************************RESPONSE*******************************";
-    qDebug()<<data;
-    qDebug()<<"**********************************************************************\n\n";
-    */
+    
+    //qDebug()<<"*******************************RESPONSE*******************************";
+    //qDebug()<<data;
+    //qDebug()<<"**********************************************************************\n\n";
+    
     response.tags.clear();
     err.code = 0;
     err.message = "No Errors";
@@ -158,16 +158,27 @@ void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
         err.code = 1001;
         err.message = reply->errorString ();
     }
-    else
-    {
-        parse ( data, "rsp" , requestDataMap.value ( reply ).request );
-    }
+    
+    
 
     void* userData = requestDataMap.value ( reply ).userData;
-    int replyId = requestDataMap.value ( reply ).requestId;
-
-    requestDataMap.remove ( reply );
-    emit p_ptr->requestFinished ( replyId, response, err, userData );
+    int replyId    = requestDataMap.value ( reply ).requestId;
+    bool parseData = requestDataMap.value( reply ).parse;
+    
+    if (parseData)
+    {        
+        // Parse data and wrap it in the structs        
+        parse ( data, "rsp" , requestDataMap.value ( reply ).request );
+        emit p_ptr->requestFinished ( replyId, response, err, userData );
+    }else{
+        // Just pass the data (xml) as it is and let the receiver to handle it
+        emit p_ptr->requestFinished(replyId, QString(data), err, userData );
+    }
+    
+    requestDataMap.remove ( reply );    
+    
+   
+    
 }
 
 void QtFlickrPrivate::uploadProgress ( qint64 bytesSent, qint64 bytesTotal )
@@ -229,7 +240,7 @@ QByteArray QtFlickrPrivate::constructField ( QString name,
 }
 
 
-int QtFlickrPrivate::request ( const QtfMethod &method, const QtfRequest &request, bool get, void* userData )
+int QtFlickrPrivate::request ( const QtfMethod &method, const QtfRequest &request, bool get, void* userData, bool parse )
 {
     QMap<QString,QString> map = method.args;
     map.insert("method", method.method);
@@ -263,7 +274,8 @@ int QtFlickrPrivate::request ( const QtfMethod &method, const QtfRequest &reques
     requestData.request = request.requests;
     requestData.userData = userData;
     requestData.requestId = requestCounter;
-
+    requestData.parse = parse;
+    
     QNetworkReply *reply;
     if ( !get )
         reply = manager->post ( QNetworkRequest ( QUrl("http://www.flickr.com/services/rest/") ), url.encodedQuery () );
@@ -367,7 +379,6 @@ void QtFlickrPrivate::readData(const QMap<QString,QString> &request)
     if ( i != request.end() )
     {
         QtfTag tagData;
-
         QList<QString> attrKeys = i.value().split(",");
         for ( int j = 0; j < attrKeys.size(); ++j )
         {
@@ -377,7 +388,7 @@ void QtFlickrPrivate::readData(const QMap<QString,QString> &request)
 
         if ( xml.readNext() == QXmlStreamReader::Characters )
         {
-            tagData.value =  xml.text ().toString();
+            tagData.value =  xml.text ().toString();            
         }
         response.tags.insertMulti ( i.key(),tagData );
     }

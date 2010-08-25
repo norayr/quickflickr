@@ -37,9 +37,17 @@ Rectangle {
                 }
             }
             
-            onPressAndHold: mainFlipable.state = 'front'
+            onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}
         }
     }
+    
+    Timer{
+        id: clearTimer
+        interval: 600; running: false; repeat: false
+        onTriggered: fullScreenModel.xml = ""
+    }
+    
+    
     Text{
         id:progressText
         text: "Loading... " + Math.floor(thumbImage.progress*100) +"%"
@@ -93,8 +101,7 @@ Rectangle {
             id: flickable
             flickableDirection: Flickable.VerticalFlick            
             anchors.fill: description_
-            anchors.topMargin: 2
-            anchors.bottomMargin: description_.anchors.bottomMargin + 5
+            anchors.topMargin: 2            
             contentHeight: descriptionTitle.height + descriptionText.height + 30                        
             clip: true
             
@@ -107,9 +114,9 @@ Rectangle {
                 color: "white"
                 smooth: true
                 
-                anchors.top: description.top
+                anchors.top: description.top                
                 anchors.left: parent.left
-                anchors.topMargin: 15
+                anchors.topMargin: 20
                 anchors.leftMargin: 10
                 x:10
                 
@@ -134,7 +141,7 @@ Rectangle {
             
             ScrollBar {            
                 scrollArea: flickable; width: 8
-                anchors { right: parent.right; top: parent.top; bottom: parent.bottom; }                        
+                anchors { right: parent.right; top: parent.top; bottom: parent.bottom; bottomMargin:5; topMargin:5 }                        
                 
             }
         }                
@@ -227,7 +234,7 @@ Rectangle {
         anchors.topMargin: 10
         opacity: 0
         anchors.rightMargin: 15
-        onClicked: { webview.urlString = flickrPhotoUrl; fullScreenViewer.state = 'WebView';}
+        onClicked: { webview.urlString = "http://www.flickr.com/photos/"+owner+"/"+id; fullScreenViewer.state = 'WebView';}
         z: 5
     }
    

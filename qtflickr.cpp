@@ -47,14 +47,14 @@ QUrl QtFlickr::authorizationUrl ( const QString &frob, const QString &perms )
     return d->authorizationUrl(frob, perms);
 }
 
-int QtFlickr::get ( const QtfMethod &method, const QtfRequest &req, void* userData )
+int QtFlickr::get ( const QtfMethod &method, const QtfRequest &req, void* userData, bool parse )
 {
-    return d->request ( method, req, true, userData );
+    return d->request ( method, req, true, userData, parse );
 }
 
-int QtFlickr::post ( const QtfMethod &method, const QtfRequest &req, void* userData )
+int QtFlickr::post ( const QtfMethod &method, const QtfRequest &req, void* userData, bool parse )
 {
-    return d->request ( method, req, false, userData );
+    return d->request ( method, req, false, userData, parse );
 }
 
 int QtFlickr::upload ( const QtfPhoto &photo, const QtfRequest &req, void* userData )

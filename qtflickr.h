@@ -268,11 +268,14 @@ public:
      * @param request XML request data
      * @param userData user data to be transfered through signal/slots mechanism,
      * this parametr has no effect on this function
+     * @param parse by default the response will be parsed to QtfResponse structure. Setting this
+     * parameter to false, returns the XML response as it is.
      * @return request id
      */
     int get ( const QtfMethod &method,
               const QtfRequest &request = QtfRequest(),
-              void* userData = 0 );
+              void* userData = 0,
+              bool parse = true);
 
     /**
      * Fetches data from Flickr API with POST method
@@ -280,11 +283,14 @@ public:
      * @param request XML request data
      * @param userData user data to be transfered through signal/slots mechanism,
      * this parametr has no effect on this function
+     * @param parse by default the response will be parsed to QtfResponse structure. Setting this
+     * parameter to false, returns the XML response as it is.
      * @return request id
      */
     int post ( const QtfMethod &method,
                const QtfRequest &request = QtfRequest(),
-               void* userData = 0 );
+               void* userData = 0,
+               bool parse=true);
 
     /**
      * Uploads or replaces photo
@@ -314,6 +320,16 @@ signals:
      * progress.
      */
     void uploadProgress ( int percent );
+    
+    /**
+      * Emitted after get(), pos() functions if user has set \p parse attribute to false.
+      * @param reqId The request id
+      * @param xmlResponse Returned XML response from Flickr.
+      * @param err possible error
+      * @param userData user data transfered trough signla/slot mechanism
+      */
+    void requestFinished ( int reqId, QString const & xmlResponse, QtfError err, void* userData );
+    
 
 private:
     QtFlickrPrivate * const d;

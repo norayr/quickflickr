@@ -1,5 +1,5 @@
 #include "flickrmanager.h"
-#include "flickritem.h"
+
 
 #include <QList>
 #include <QDesktopServices>
@@ -17,8 +17,6 @@ public:
             m_qtFlickr(0),
             m_requestId(),
             m_settings("QuickFlickr","Authorization"),
-            m_model(),
-            m_photoStreamModel(),
             m_frob()
     {
     }
@@ -38,8 +36,6 @@ public:
     QtFlickr * m_qtFlickr;
     QHash<int, FlickrManager::RequestId> m_requestId;    
     QSettings        m_settings;
-    QList <QObject*> m_model;
-    QList <QObject*> m_photoStreamModel;
     QString m_frob;
 
 };
@@ -66,7 +62,9 @@ void FlickrManager::activate()
 
     connect(d->m_qtFlickr,SIGNAL(requestFinished ( int, QtfResponse, QtfError, void* )),
             this,SLOT(requestFinished ( int, QtfResponse, QtfError, void* )));
-
+    connect(d->m_qtFlickr,SIGNAL(requestFinished(int,QString,QtfError,void*)),
+            this,SLOT(requestFinished(int,QString,QtfError,void*)));
+    
     
     QString token = d->settingsValue("token");
     if(!token.isEmpty()){
@@ -102,7 +100,7 @@ void FlickrManager::getLatestContactUploads()
 
     // Define in request section which fields are include the the response
     QtfRequest request ( "photo","url_s,username,owner,title,datetaken,height_s,width_s" );
-    d->m_requestId.insert(d->m_qtFlickr->post( method, request ), GetContactsPublicPhotos);
+    d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContactsPublicPhotos);
     qDebug() << "Request for uploads send";
 
 }
@@ -111,12 +109,7 @@ void FlickrManager::getPhotosOfContact(const QString & userId)
 {
     // Clear the old stuff    
     Q_D(FlickrManager);    
-
-    qDeleteAll(d->m_photoStreamModel);
-    d->m_photoStreamModel.clear();
-    d->m_photoStreamModel << new FlickrItem(0);    
-    emit photoStreamModelUpdated(d->m_photoStreamModel);
-
+    
     qDebug() << "getPhotosOfContact() Method";
     QtfMethod method("flickr.people.getPublicPhotos");
     method.args.insert("api_key", "ee829960cd89d099");
@@ -126,22 +119,23 @@ void FlickrManager::getPhotosOfContact(const QString & userId)
     QtfRequest request;
     request.requests.insert("photo","title,url_m,original_format,geo,tags,views,username,owner,id,farm,server");
     request.requests.insert("description",QString(""));    
-    d->m_requestId.insert(d->m_qtFlickr->post( method,request ), GetPhotosOfContact);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetPhotosOfContact);
 }
 
 
 void FlickrManager::getRecentActivity()
 {
     Q_D(FlickrManager);
-    QtfMethod method("flickr.activity.userComments");
+    QtfMethod method("flickr.activity.userComments");    
     method.args.insert("api_key", "ee829960cd89d099");    
     method.args.insert("time_frame","2d");
-    method.args.insert("per_page","50");    
+    method.args.insert("per_page","10");    
     QtfRequest request;
-    request.requests.insert("item","type,id,owner,ownername,comments,secret,server,farm,views,faves");
-    //request.requests.insert("title",QString(""));    
-    request.requests.insert("event","type,username");
-    d->m_requestId.insert(d->m_qtFlickr->post( method,request ), GetRecentActivity);
+    request.requests.insert("item","type,id,owner,ownername,comments,secret,server,farm,views,faves,activity/event");
+    request.requests.insert("title","");
+    request.requests.insert("activity","");    
+    request.requests.insert("event","type,username");    
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetRecentActivity);
 }
 
 
@@ -168,9 +162,6 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             Q_D(FlickrManager);
             d->m_frob = data.tags.value("frob").value;
             QUrl authUrl = d->m_qtFlickr->authorizationUrl(d->m_frob);
-            // TODO MAke here something nice like make app to show QML
-            // Web view
-            
             emit authenticationRequired(authUrl);
                        
         }break;
@@ -183,10 +174,6 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             QString fullname = data.tags.value("user").attrs.value("fullname");
             QString nsid     = data.tags.value("user").attrs.value("nsid");
             
-            qDebug() << "Token" << token
-                    << "userName" << username
-                    << "fullname" << fullname
-                    << "nsid" << nsid;
             
             d->m_qtFlickr->setToken(token);
             d->setSettingsValue("username",username);
@@ -197,94 +184,7 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
             getLatestContactUploads();
         }
         break;
-    case GetContactsPublicPhotos:
-        {
-            
-            // Make sure that we delete the existing items first
-            Q_D(FlickrManager);
-            qDeleteAll(d->m_model);
-            d->m_model.clear();
-            
-            // Go through each tag and create an item for model.
-            // Add items backward to the model. I didn't figure out
-            // how to make ListView to sort items in a model.r
-            QMapIterator<QString, QtfTag> iterator(data.tags);
-            iterator.toBack();
-            while (iterator.hasPrevious()){
-                iterator.previous();                
-                QtfTag tag = iterator.value();                
-                FlickrItem * item = new FlickrItem(0);
-                item->setTitle( tag.attrs.value("title") );
-                item->setUserName( tag.attrs.value("username") );
-                item->setUrl(QUrl( tag.attrs.value("url_s")));
-                item->setDateTaken( tag.attrs.value("datetaken"));
-                item->setThumbWidth( tag.attrs.value("width_s").toInt());
-                item->setThumbHeight( tag.attrs.value("height_s").toInt());
-                item->setOwner( tag.attrs.value("owner"));
-                item->setId( tag.attrs.value("id"));
-                item->setServer( tag.attrs.value("server"));
-                item->setFarm(tag.attrs.value("farm"));
-                item->setOwner( tag.attrs.value("owner"));
-                
-                d->m_model << item;              
-            }
-                        
-            // Notify the world that model contains something now.
-            emit contactModelUpdated( d->m_model );
-        }break;
-
-    case GetPhotosOfContact:
-        {
-        
-        qDeleteAll(d->m_photoStreamModel);
-        d->m_photoStreamModel.clear();        
-        QList<QtfTag> tagList = data.tags.values("photo");
-        QList<QtfTag> descList = data.tags.values("description");
-        
-        int i=tagList.size()-1;
-        for ( ; i > 0; i--){                                    
-            QtfTag tag = tagList.at(i);
-            FlickrItem * item = new FlickrItem(0);
-            item->setTitle( tag.attrs.value("title") );
-            item->setUserName( tag.attrs.value("username") );
-            item->setUrl(QUrl( tag.attrs.value("url_m")));
-            item->setDateTaken( tag.attrs.value("datetaken"));
-            item->setThumbWidth( tag.attrs.value("width_m").toInt());
-            item->setThumbHeight( tag.attrs.value("height_m").toInt());
-            item->setDescription( descList.at(i).value);
-            item->setTags( tag.attrs.value("tags"));
-            item->setViews( tag.attrs.value("views").toInt());
-            item->setId( tag.attrs.value("id"));
-            item->setServer( tag.attrs.value("server"));
-            item->setFarm(tag.attrs.value("farm"));
-            item->setOwner( tag.attrs.value("owner"));
-            d->m_photoStreamModel << item;            
-            
-        }
-        emit photoStreamModelUpdated(d->m_photoStreamModel);
-            
-        }break;
-        
-    case GetRecentActivity:
-        {
-            qDebug() << "GetRecentActivity";
-            QList<QtfTag> tagList = data.tags.values("item");
-            QList<QtfTag> descList = data.tags.values("event");
-            
-            for( int i=0; i < tagList.size(); i++){
-                QtfTag tag = tagList.at(i);
-                qDebug() << tag.attrs.value("type") << "Views: " << tag.attrs.value("views") 
-                        << "Faves:" << tag.attrs.value("faves") << "Comments: " << tag.attrs.value("comments") 
-                        << "Owner:" << tag.attrs.value("ownername");
-                int commentCount = tag.attrs.value("comments").toInt();
-                if ( commentCount > 0){
-                    //qDebug() << "Comment:" << descList.at(i).value;    
-                }
-                
-            }
-        
-        }
-        break;
+    
     default:
         {
             if ( !err.code){
@@ -295,17 +195,35 @@ void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err,
     }
 }
 
-QList<QObject*>  FlickrManager::model() const
+
+void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, void* userData )
 {
-    Q_D(const FlickrManager);
-    return d->m_model;
+    Q_UNUSED(userData);    
+    Q_D(FlickrManager);
+    switch( d->m_requestId.value(reqId)){
+    case GetContactsPublicPhotos:        
+        emit contactsUploadsUpdated(xmlData);                                
+        break;
+
+    case GetPhotosOfContact:
+        emit photostreamUpdated(xmlData);
+        break;        
+        
+    case GetRecentActivity:        
+        qDebug() << xmlData;
+        emit recentActivityUpdated(xmlData);
+        break;
+        
+    default:
+        {
+            if ( !err.code){
+                qWarning()<<"Error: "<<err.message;
+            }
+        }
+        break;
+    }
 }
 
-QList<QObject*> FlickrManager::photoStreamModel() const
-{
-    Q_D(const FlickrManager);
-    return d->m_photoStreamModel;
-}
 
 
 bool FlickrManager::isAuthenticated() const

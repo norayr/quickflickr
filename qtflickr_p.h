@@ -42,7 +42,7 @@ public:
     QString apiKey;
     QString apiSecret;
     QUrl authorizationUrl ( const QString &frob, const QString &perms );
-    int request ( const QtfMethod &method, const QtfRequest &request, bool get, void* userData );
+    int request ( const QtfMethod &method, const QtfRequest &request, bool get, void* userData, bool parse );
     int upload ( const QtfPhoto &photo, const QtfRequest &request, void* userData );
 private slots:
     void replyFinished ( QNetworkReply *reply );
@@ -67,6 +67,7 @@ private:
         void* userData;
         QMap<QString,QString> request;
         int requestId;
+        bool parse;
     };
 
     QString md5 ( const QString &data );

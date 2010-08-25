@@ -3,21 +3,25 @@ import Qt 4.7
 // single image from flickr. This delegate scales all the thumbnails
 // to fixed width.
 Item{    
+    id: contactListDelegate
     width: contactList.width - 20
     height: 130
     x: 10    
     state: "Default"    
 
     BorderImage{
+        id: background
         source: "images/toolbutton.sci"
         smooth: true
-        opacity: 0.5
+        opacity: 0.3
         anchors.fill: parent
     }
 
     MouseArea{
         anchors.fill: parent
 
+        onPressed: { parent.state = 'Pressed' }
+        onReleased: { parent.state = 'Default'}
         onClicked: {
             mainFlipable.state = 'back';
             flickrManager.getPhotosOfContact(owner);            
@@ -93,7 +97,7 @@ Item{
         id: userName_
         elide: Text.ElideRight
         width: parent.width - thumbnail_.width - 10
-        text: qsTr("by ") + userName;
+        text: qsTr("by ") + username;
         font.family: "Helvetica";
         font.pointSize: 20;
         color: "white"
@@ -107,7 +111,7 @@ Item{
     // Date taken section
     Text{
         id: dateTaken_
-        text: qsTr("Date Taken: ") + dateTaken;
+        text: qsTr("Date Taken: ") + datetaken;
         font.family: "Helvetica";
         font.pointSize: 15;
         color: "white"
@@ -116,7 +120,22 @@ Item{
         anchors.topMargin: 5
         anchors.leftMargin: 5
     }
+        
 
+    states: [
+    State {
+        name: "Pressed"
+        PropertyChanges {
+            target: background
+            opacity: 0.8     
+            
+        }                
+    }
+    ]
+
+    transitions: Transition {
+             PropertyAnimation { properties: "opacity";  easing.type: "OutCubic"; duration:200 }
+         }    
 }
 
 
