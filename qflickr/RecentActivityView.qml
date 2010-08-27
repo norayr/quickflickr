@@ -20,6 +20,12 @@ Image {
         delegate: RecentActivityDelegate{}
         anchors.fill: parent
         spacing: 10
+        
+        ScrollBar {            
+            scrollArea: parent; width: 8
+            anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
+        }
+        
     }
 
     /*

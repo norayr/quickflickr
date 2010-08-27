@@ -126,10 +126,10 @@ void FlickrManager::getPhotosOfContact(const QString & userId)
 void FlickrManager::getRecentActivity()
 {
     Q_D(FlickrManager);
-    QtfMethod method("flickr.activity.userComments");    
+    QtfMethod method("flickr.activity.userPhotos");    
     method.args.insert("api_key", "ee829960cd89d099");    
-    method.args.insert("time_frame","2d");
-    method.args.insert("per_page","10");    
+    method.args.insert("timeframe","30d");
+    method.args.insert("per_page","30");    
     QtfRequest request;
     request.requests.insert("item","type,id,owner,ownername,comments,secret,server,farm,views,faves,activity/event");
     request.requests.insert("title","");

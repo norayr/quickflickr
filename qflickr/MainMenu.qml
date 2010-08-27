@@ -21,7 +21,7 @@ Rectangle{
                 x:-750;y:140 }
     MenuButton{ id: myPhotoStreamButton; 
                 text: "My Photostream"; 
-                onClicked: photostreamMode(); 
+                onClicked: console.log("NOT IMPLEMENTED"); 
                 anchors.left: contactsButton.right
                 anchors.top: contactsButton.top
                 anchors.leftMargin:50}

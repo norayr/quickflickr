@@ -54,7 +54,7 @@ BorderImage {
     
     smooth: true
     opacity: 0.5
-    source: "images/toolbutton.png"; 
+    source: "images/toolbutton.sci"; 
         
 
     x: webView.contentX < 0 ? -webView.contentX : webView.contentX > webView.contentWidth-webView.width

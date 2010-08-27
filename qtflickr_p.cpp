@@ -172,7 +172,7 @@ void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
         emit p_ptr->requestFinished ( replyId, response, err, userData );
     }else{
         // Just pass the data (xml) as it is and let the receiver to handle it
-        emit p_ptr->requestFinished(replyId, QString(data), err, userData );
+        emit p_ptr->requestFinished(replyId, QString::fromUtf8(data), err, userData );
     }
     
     requestDataMap.remove ( reply );    

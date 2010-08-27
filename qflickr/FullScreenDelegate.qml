@@ -26,7 +26,7 @@ Rectangle {
         sourceSize.width:800
         sourceSize.height:480
         onStatusChanged: {if(thumbImage.status == Image.Ready) fullScreenDelegate.state = 'ImageLoaded';}
-    
+        
         MouseArea{
             anchors.fill: parent        
             onClicked: {                
@@ -38,6 +38,7 @@ Rectangle {
             }
             
             onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}
+            
         }
     }
     
@@ -137,6 +138,9 @@ Rectangle {
                 anchors.right: parent.right                
                 anchors.rightMargin: 5
                 anchors.topMargin: 30
+                textFormat: Text.RichText
+                
+                onLinkActivated:{webview.urlString = link; fullScreenViewer.state = 'WebView'; }
             }  
             
             ScrollBar {            
