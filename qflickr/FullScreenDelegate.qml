@@ -209,12 +209,12 @@ Rectangle {
     
     Button {
         id: backButton
-        text: "Contacts"
+        text: "Add Fave!"
         anchors.top: description_.bottom
         anchors.right: description_.right
         anchors.topMargin: 10
         opacity: 0
-        onClicked:{  mainFlipable.state = 'front'}
+        onClicked:{  flickrManager.addFavorite(id) }
         z: 5
     }
     

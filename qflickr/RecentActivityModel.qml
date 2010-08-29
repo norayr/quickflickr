@@ -15,17 +15,6 @@ XmlListModel {
     XmlRole { name: "comments"; query: "@comments/string()" }
     XmlRole { name: "faves"; query: "@faves/string()" }
     XmlRole { name: "views"; query: "@views/string()" }
-    XmlRole { name: "notes"; query: "@notes/string()" }    
-    XmlRole { name: "eventowner"; query: "@ownername[1]/string()" }
-    
-    // Some hardcoding. I couldn't figure out how to get correct data out
-    // from XML using query. It' might also be a bug in QML side, but not sure.
-    XmlRole { name: "event1"; query: "activity/event[1]/string()" }
-    XmlRole { name: "event2"; query: "activity/event[2]/string()" }
-    XmlRole { name: "event3"; query: "activity/event[3]/string()" }
-    XmlRole { name: "event4"; query: "activity/event[4]/string()" }
-    XmlRole { name: "event5"; query: "activity/event[5]/string()" }
-    XmlRole { name: "event6"; query: "activity/event[6]/string()" }
-    
- 
+    XmlRole { name: "notes"; query: "@notes/string()" }        
+     
 }

@@ -2,12 +2,12 @@ import Qt 4.7
 
 Item {
    
-    
+    id: activityDelegate
     width: parent.width - 20
-    height: thumb_s.height + activityDlgViews.height + activityDlgComments.height + activityDlgFaves.height + 50
-    
+    //height: thumb_s.height + activityDlgViews.height + activityDlgComments.height + activityDlgFaves.height + 50
+    height: thumb_s.height + 20
     x: 10   
-    
+    state: 'Default'
 
     BorderImage{
         id: activityDelegateBg
@@ -54,67 +54,72 @@ Item {
     
     Text{    
         id: activityDlgViews
-        text: "Views: " + views
+        text: "Views: " + views + " Comments: " + comments + " Favorites: " + faves
         font.family: "Helvetica"; font.bold: true; font.pointSize: 16;
         smooth: true
-        anchors.left: thumb_s.left        
-        anchors.top: thumb_s.bottom                
+        anchors.left: thumb_s.right
+        anchors.leftMargin: 10
+        anchors.top: activityDlgOwner.bottom                
         anchors.topMargin:10
         color: "white"
     }
     
-    Text{    
-        id: activityDlgComments
-        text: "Comments: " + comments
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 16;
-        smooth: true
-        anchors.left: thumb_s.left
-        anchors.top: activityDlgViews.bottom                
-        anchors.topMargin:10
-        color: "white"
-    }
-    
-    Text{    
-        id: activityDlgFaves
-        text: "Faves: " + faves
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 16;
-        smooth: true
-        anchors.left: thumb_s.left        
-        anchors.top: activityDlgComments.bottom                
-        anchors.topMargin:10
-        color: "white"
-    }
-    
-    function check(x){
-        if ( x == ""){
-            return "";
+    function itemClicked(){        
+        activityComments.photoId = id;        
+        flickrManager.getComments(id);
+
+        if( recentActivityView.state == 'Default'){        
+            recentActivityView.state = 'Comments';
         }else{
-            return "- Comment: " + x + "<br>";
+            recentActivityView.state = 'Default';
+        }
+        
+        if ( state == 'Default'){
+            state = 'CommentView';
+        }else{
+            state = 'Default';              
         }
     }
-
-    
-    Text{    
-        id: activityDlgEventsC
-        text:  check(event1) + check(event2) + check(event3) + check(event4) + check(event5) + check(event6)
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 16;
-        smooth: true
-        anchors.left:  activityDlgComments.right
-        anchors.leftMargin: 10
-        anchors.top: thumb_s.bottom                
-        anchors.topMargin:10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        wrapMode: Text.WordWrap
-        textFormat: Text.StyledText
-        color: "white"
-    }
-    
     
     MouseArea{
         anchors.fill: parent
-        onPressAndHold: {            
-            mainMenu.state = 'Menu';  
+        onPressAndHold: {   
+            if ( recentActivityView.state == 'Default'){
+                mainMenu.state = 'Menu';  
+                console.log("menu...");
+            }else{
+                recentActivityView.state = 'Default'    
+                console.log("Default");
+            }
+        }
+        
+        onClicked:{
+            itemClicked();    
         }
     }
+    
+    states:[
+        State {
+            name: "CommentView"            
+            ParentChange { target: activityDelegate; x: 10; y: 10; parent: recentActivityView }            
+        }                
+    ]
+    
+    transitions: [
+    /*     
+    Transition {
+        from: 'Default'; to: 'CommentView';
+        ParentAnimation {        
+            NumberAnimation { properties: "x,y"; duration: 500 }
+        }
+     },
+    */ 
+    Transition {      
+        ParentAnimation {        
+            NumberAnimation { properties: "x,y"; duration: 500 }
+        }
+     }
+    ]
+
+    
 }

@@ -172,6 +172,15 @@ void FlickrManager::addComment(const QString & photoId, const QString & commentT
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), AddComment);
 }
 
+void FlickrManager::addFavorite( const QString & photoId )
+{
+    QtfMethod method("flickr.favorites.add");    
+    method.args.insert("api_key", "ee829960cd89d099");    
+    method.args.insert("photo_id", photoId);    
+    QtfRequest request;    
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), AddFavorite); 
+}
 
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
 {
@@ -245,6 +254,11 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
     case AddComment:
         Q_UNUSED(xmlData);
         emit commentAdded();
+        break;
+        
+    case AddFavorite:
+        Q_UNUSED(xmlData);
+        // No specific response
         break;
     default:
         {

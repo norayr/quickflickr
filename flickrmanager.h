@@ -21,6 +21,7 @@ public:
         GetRecentActivity,
         GetComments,
         AddComment,
+        AddFavorite,
         RequestCount
 
     };
@@ -46,6 +47,9 @@ public:
     Q_INVOKABLE void getComments( const QString & photoId );
 
     Q_INVOKABLE void addComment(const QString & photoId, const QString & commentText );
+
+    Q_INVOKABLE void addFavorite( const QString & photoId );
+    
     
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
