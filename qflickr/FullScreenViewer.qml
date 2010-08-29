@@ -46,6 +46,14 @@ Rectangle{
         opacity: 0
     }
     
+    CommentsView{
+        id: commentsView;
+        x:0
+        y:480
+        onClose: {fullScreenViewer.state = 'Default'}        
+        opacity: 0        
+    }
+    
     states:[
     State {
         name: "WebView"
@@ -60,7 +68,21 @@ Rectangle{
             y:-480            
         }
         
-    }        
+    },
+    State{
+        name: "CommentsView"
+        PropertyChanges { 
+            target: commentsView;
+            y: 0
+            opacity: 1
+        }
+
+        PropertyChanges {
+            target: photoList
+            y:-480            
+        }        
+    }
+
     ]
     
     transitions: Transition {

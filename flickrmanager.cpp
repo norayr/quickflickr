@@ -151,6 +151,28 @@ void FlickrManager::getToken()
     d->m_requestId.insert( d->m_qtFlickr->get(method, request), GetToken );   
 }
 
+void FlickrManager::getComments(const QString & photoId)
+{
+    QtfMethod method("flickr.photos.comments.getList");    
+    method.args.insert("api_key", "ee829960cd89d099");    
+    method.args.insert("photo_id", photoId);
+    QtfRequest request;    
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetComments);
+}
+    
+void FlickrManager::addComment(const QString & photoId, const QString & commentText )
+{
+    QtfMethod method("flickr.photos.comments.addComment");    
+    method.args.insert("api_key", "ee829960cd89d099");    
+    method.args.insert("photo_id", photoId);
+    method.args.insert("comment_text", commentText);
+    QtfRequest request;    
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), AddComment);
+}
+
+
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
 {
     Q_UNUSED( userData );
@@ -206,6 +228,7 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         break;
 
     case GetPhotosOfContact:
+        qDebug() << xmlData;
         emit photostreamUpdated(xmlData);
         break;        
         
@@ -214,6 +237,15 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         emit recentActivityUpdated(xmlData);
         break;
         
+    case GetComments:
+        qDebug() << xmlData;
+        emit commentsUpdated(xmlData);
+        break;
+        
+    case AddComment:
+        Q_UNUSED(xmlData);
+        emit commentAdded();
+        break;
     default:
         {
             if ( !err.code){

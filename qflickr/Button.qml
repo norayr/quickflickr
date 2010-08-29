@@ -1,4 +1,6 @@
 import Qt 4.7
+
+// TODO: Add support for disabling and enabling the button
 BorderImage {
 
     signal clicked

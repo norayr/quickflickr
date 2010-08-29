@@ -49,4 +49,7 @@ OTHER_FILES = \
     qflickr/RecentActivityModel.qml \
     qflickr/RecentActivityDelegate.qml \
     qflickr/ContactListModel.qml \
-    qflickr/FullScreenModel.qml
+    qflickr/FullScreenModel.qml \
+    qflickr/CommentsView.qml \
+    qflickr/CommentModel.qml \
+    qflickr/CommentDelegate.qml

@@ -19,6 +19,8 @@ public:
         GetContactsPublicPhotos,
         GetPhotosOfContact,
         GetRecentActivity,
+        GetComments,
+        AddComment,
         RequestCount
 
     };
@@ -40,7 +42,11 @@ public:
     Q_INVOKABLE void getToken();
         
     Q_INVOKABLE bool isAuthenticated() const;
+    
+    Q_INVOKABLE void getComments( const QString & photoId );
 
+    Q_INVOKABLE void addComment(const QString & photoId, const QString & commentText );
+    
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
     void proceed();
@@ -48,7 +54,9 @@ Q_SIGNALS:
     void contactsUploadsUpdated(const QString & xml);
     void photostreamUpdated( const QString & xml);
     void recentActivityUpdated( const QString & xml);
-
+    void commentsUpdated( const QString & xml);
+    void commentAdded();
+    
 private Q_SLOTS:        
     void requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData );
     void requestFinished ( int reqId, QString xmlData, QtfError err, void* userData );

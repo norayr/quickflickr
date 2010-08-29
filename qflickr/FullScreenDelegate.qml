@@ -226,7 +226,11 @@ Rectangle {
         anchors.topMargin: 10
         anchors.rightMargin: 15
         opacity: 0
-        onClicked:{  console.log("Comments clicked");}
+        onClicked:{ 
+            commentsView.photoId = id;
+            flickrManager.getComments(id); 
+            fullScreenViewer.state = 'CommentsView' 
+        }
         z: 5
     }
 
