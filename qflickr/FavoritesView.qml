@@ -4,8 +4,10 @@ Item{
     id: favoritesView
     anchors.fill: parent
     state: "Default"
+    property string photoId
     
     function showFullScreenFave( id, title, ownername, width, height, source ){        
+        photoId = id;
         imageTitle.text =  title;
         author.text = "by " + ownername;
         favoriteFullScreenImage.width  = width;        
@@ -19,7 +21,7 @@ Item{
     // Basic grid for thumbnails
     GridView{
         id:favoritesGrid
-        anchors.fill: parent
+        anchors.fill: parent        
         anchors.topMargin: 10        
 
         model: FavoritesModel{id: favoritesModel}
@@ -30,6 +32,7 @@ Item{
         Connections{
             target: flickrManager
             onFavoritesUpdated: { favoritesModel.xml = xml; }        
+            onFavoriteRemoved: flickrManager.getFavorites();
         }
         
         ScrollBar {            
@@ -41,7 +44,7 @@ Item{
     
     
     
-    // Details layer for favorites
+    // Fullscree image for viewing a favorite. 
     FlickrImage{
         id: favoriteFullScreenImage
         property int maxHeight: parent.height
@@ -101,6 +104,11 @@ Item{
         opacity: 0        
         x: parent.width - width - 10        
         y: parent.height+50
+        
+        onClicked:{            
+            flickrManager.removeFavorite( parent.photoId )
+            parent.state = 'Default'
+        }
     }
 
     states: [        
@@ -144,13 +152,5 @@ Item{
         
         
 
-    ]
-    
-    /*
-    MouseArea{
-        anchors.fill: parent
-        onPressAndHold: mainMenu.state = 'Menu'
-    }
-    */
-    
+    ]        
 }

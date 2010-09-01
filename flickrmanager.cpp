@@ -193,6 +193,16 @@ void FlickrManager::getFavorites()
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetFavorites); 
 }
 
+void FlickrManager::removeFavorite( const QString & photoId )
+{
+    QtfMethod method("flickr.favorites.remove");    
+    method.args.insert("api_key", "ee829960cd89d099");        
+    method.args.insert("photo_id",photoId);
+    QtfRequest request;    
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), RemoveFavorite); 
+}
+
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
 {
     Q_UNUSED( userData );
@@ -276,6 +286,10 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
     case GetFavorites:
         qDebug() << xmlData;
         emit favoritesUpdated(xmlData);
+        break;
+    
+    case RemoveFavorite:
+        emit favoriteRemoved();
         break;
         
     default:
