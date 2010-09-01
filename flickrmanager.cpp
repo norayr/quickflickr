@@ -182,6 +182,17 @@ void FlickrManager::addFavorite( const QString & photoId )
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), AddFavorite); 
 }
 
+
+void FlickrManager::getFavorites()
+{
+    QtfMethod method("flickr.favorites.getList");    
+    method.args.insert("api_key", "ee829960cd89d099");        
+    method.args.insert("extras","url_m,owner_name");
+    QtfRequest request;    
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetFavorites); 
+}
+
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
 {
     Q_UNUSED( userData );
@@ -233,6 +244,7 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
     Q_D(FlickrManager);
     switch( d->m_requestId.value(reqId)){
     case GetContactsPublicPhotos:        
+        qDebug() << xmlData;
         emit contactsUploadsUpdated(xmlData);                                
         break;
 
@@ -260,6 +272,12 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         Q_UNUSED(xmlData);
         // No specific response
         break;
+        
+    case GetFavorites:
+        qDebug() << xmlData;
+        emit favoritesUpdated(xmlData);
+        break;
+        
     default:
         {
             if ( !err.code){

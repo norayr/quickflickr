@@ -29,8 +29,7 @@ HEADERS += \
     qtflickr_p.h 
 
 
-OTHER_FILES = \
-    #qflickr/qmldir \
+OTHER_FILES = \    
     qflickr/QuickFlickrMain.qml \
     qflickr/ContactList.qml \
     qflickr/ContactListDelegate.qml \
@@ -52,4 +51,8 @@ OTHER_FILES = \
     qflickr/FullScreenModel.qml \
     qflickr/CommentsView.qml \
     qflickr/CommentModel.qml \
-    qflickr/CommentDelegate.qml
+    qflickr/CommentDelegate.qml \
+    qflickr/FavoritesView.qml \
+    qflickr/FavoritesModel.qml \
+    qflickr/FavoriteDelegate.qml \
+    qflickr/FlickrImage.qml

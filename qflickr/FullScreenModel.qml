@@ -12,7 +12,7 @@ XmlListModel {
     XmlRole { name: "height"; query: "@height_m/string()" }     
     XmlRole { name: "description"; query: "description/string()" }     
     XmlRole { name: "tags"; query: "@tags/string()" }     
-    XmlRole { name: "views"; query: "@views_m/string()" }     
+    XmlRole { name: "views"; query: "@views/string()" }     
     XmlRole { name: "server"; query: "@server/string()" }     
     XmlRole { name: "farm"; query: "@farm/string()" }     
     XmlRole { name: "id"; query: "@id/string()" }     

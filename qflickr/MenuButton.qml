@@ -20,7 +20,7 @@ Item{
     Text{
         id: menuButtonText
         anchors.fill: parent
-        font.family: "Helvetica"; font.pointSize: 22;
+        font.family: "Helvetica"; font.pixelSize: 22;
         color: "white"
         smooth: true
         font.bold: true

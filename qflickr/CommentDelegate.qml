@@ -5,6 +5,7 @@ Item{
     id: commentListDelegate
     width: commentsList.width
     height: getHeight(commentText.paintedHeight + commentAuthor.paintedHeight + commentDate.paintedHeight)
+        
     
     function getHeight( textHeight ){
         if ( textHeight <= 48 ){
@@ -76,20 +77,15 @@ Item{
         onLinkActivated:{console.log("Link activated" + link); webview.urlString = link; fullScreenViewer.state = 'WebView'; }
     }
     
-    Rectangle{
-        id: buddyIcon
-        color: "black"
+    FlickrImage{
+        id: buddyIcon    
         anchors.top: background.top
         anchors.left: background.left
         anchors.topMargin: 10
         anchors.leftMargin: 10
         width: 48
         height: 48
-        
-        Image {            
-            source: "http://www.flickr.com/buddyicons/"+author+".jpg"
-            anchors.fill : parent                   
-        }
+        source: "http://www.flickr.com/buddyicons/"+author+".jpg"        
     }
     
     MouseArea{

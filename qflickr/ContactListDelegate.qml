@@ -6,8 +6,8 @@ Item{
     id: contactListDelegate
     width: contactList.width - 20
     height: 130
-    x: 10    
-    state: "Default"    
+    x: 10        
+
 
     BorderImage{
         id: background
@@ -15,13 +15,24 @@ Item{
         smooth: true
         opacity: 0.3
         anchors.fill: parent
+        
+        states: [
+            State {
+                name: "Pressed"
+                PropertyChanges { target: background; opacity: 0.8}                
+            }
+        ]
+        
+        transitions: Transition {
+                 PropertyAnimation { properties: "opacity";  easing.type: "OutCubic"; duration:200 }              
+        }
     }
 
     MouseArea{
         anchors.fill: parent
 
-        onPressed: { parent.state = 'Pressed' }
-        onReleased: { parent.state = 'Default'}
+        onPressed: { background.state = 'Pressed' }
+        onReleased: { background.state = 'Default'}
         onClicked: {
             mainFlipable.state = 'back';
             flickrManager.getPhotosOfContact(owner);            
@@ -35,49 +46,20 @@ Item{
 
     // Container for an image so that we can center
     // all the images and make texts align perfectly
-    Rectangle{
+    FlickrImage{
         id: thumbnail_
-        width: 250
+        width: 120
         height: 120
-        color: "black"
-        border.width: 1
-        border.color: "white"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: 5
-        anchors.leftMargin: 10
-
+        anchors.leftMargin: 10     
+        fillMode: Image.PreserveAspectCrop         
+        source: url
+        clip: true
         
-        
-    
-        // Actual thumbnail image
-        Image{            
-            id: thumbImage
-            source: url
-            smooth: true
-            fillMode: Image.PreserveAspectFit
-            width: 250
-            height: 118
-            x: (parent.width - width) / 2
-            y: (parent.height - height ) / 2            
-        }
-
-        Button{
-            id: button_
-            text: qsTr("Show more")
-            anchors.right: thumbnail_.right
-            anchors.bottom: thumbnail_.bottom
-            anchors.rightMargin: 10
-            anchors.bottomMargin: 10
-            onClicked: {mainFlipable.state = 'back'; flickrManager.getPhotosOfContact(owner); }
-            opacity: 0
-            z: 3
-        }
-
-     
     }
-
-
+    
     // Title section
     Text{
         id: title_
@@ -87,7 +69,7 @@ Item{
         anchors.top: parent.top
         anchors.left: thumbnail_.right
         anchors.right: parent.right
-        anchors.leftMargin: 5
+        anchors.leftMargin: 20
         anchors.topMargin: 10
         anchors.rightMargin: 10
     }
@@ -105,7 +87,7 @@ Item{
         anchors.top: title_.bottom
         anchors.left: thumbnail_.right
         anchors.topMargin: 5
-        anchors.leftMargin: 5
+        anchors.leftMargin: 20
     }
 
     // Date taken section
@@ -118,24 +100,13 @@ Item{
         anchors.top: userName_.bottom
         anchors.left: thumbnail_.right
         anchors.topMargin: 5
-        anchors.leftMargin: 5
+        anchors.leftMargin: 20
     }
         
-
-    states: [
-    State {
-        name: "Pressed"
-        PropertyChanges {
-            target: background
-            opacity: 0.8     
-            
-        }                
-    }
-    ]
-
-    transitions: Transition {
-             PropertyAnimation { properties: "opacity";  easing.type: "OutCubic"; duration:200 }
-         }    
+    ListView.onAdd: NumberAnimation { target: contactListDelegate; property: "scale"; from: 0.0; to: 1.0; duration: 250; easing.type: Easing.InOutQuad }                 
+             
+         
+    
 }
 
 

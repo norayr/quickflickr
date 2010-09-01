@@ -18,7 +18,7 @@ BorderImage {
     Text {
      id: textElement
      anchors.centerIn: parent
-     font.pointSize: 20
+     font.pixelSize: 20
      style: Text.Raised
      color: "white"
     }

@@ -8,20 +8,27 @@ Rectangle{
     anchors.fill: parent
     Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
     
+    function contactsMode(){
+        mainMenu.state = 'Contacts'; 
+    }
     
-    function recentActivityMode(){
-        console.log("Recent Activity Mode")
+    function favoritesMode(){
+        mainMenu.state = 'Favorites';
+        flickrManager.getFavorites();
+    }
+    
+    function recentActivityMode(){        
         mainMenu.state = 'RecentActivity'
         flickrManager.getRecentActivity();
     }
     
     MenuButton{ id: contactsButton; 
                 text: "Contacts";
-                onClicked: mainMenu.state = 'Contacts'; 
+                onClicked: parent.contactsMode();
                 x:-750;y:140 }
     MenuButton{ id: myPhotoStreamButton; 
-                text: "My Photostream"; 
-                onClicked: console.log("NOT IMPLEMENTED"); 
+                text: "My Favorites"; 
+                onClicked: parent.favoritesMode();
                 anchors.left: contactsButton.right
                 anchors.top: contactsButton.top
                 anchors.leftMargin:50}
@@ -66,6 +73,10 @@ Rectangle{
         opacity: 0
     }
 
+    FavoritesView{
+        id: favoritesView
+        opacity: 0
+    }
 
     states: [
         State{
@@ -93,7 +104,8 @@ Rectangle{
                 y: 140
                 
             }
-           
+            
+                       
         },
 
         State{
@@ -108,7 +120,19 @@ Rectangle{
         },
 
         State{
-            name: "MyPhotostream"
+            name: "Favorites"
+            PropertyChanges{
+                target: favoritesView
+                x: 0
+                y: 0
+                opacity: 1
+            }
+            
+            AnchorChanges{
+                target: quitButton
+                anchors.bottom: favoritesView.top
+            }
+            
         },
 
         State{
@@ -120,6 +144,9 @@ Rectangle{
                 y: 0
                 opacity: 1
             }
+            
+            
+            
         }
     ]
 
@@ -138,7 +165,10 @@ Rectangle{
                 duration: 700
                 easing.type: "OutCubic"
             }
-
+            
+            AnchorAnimation{
+                
+            }
         }
     }
 

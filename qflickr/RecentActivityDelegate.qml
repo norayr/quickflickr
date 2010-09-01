@@ -17,22 +17,21 @@ Item {
         anchors.fill: parent        
     }        
     
-    
-    Image{
+    FlickrImage{
         id: thumb_s
-        source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_s.jpg"
         anchors.left: activityDelegateBg.left
         anchors.top: activityDelegateBg.top
         anchors.topMargin:10
         anchors.leftMargin:10
         width: 75
-        height: 75
+        height: 75        
+        source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_s.jpg"                    
     }
-
+    
     Text{    
         id: activityDlgTitle
         text: title 
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 22;
+        font.family: "Helvetica"; font.bold: true; font.pixelSize: 22;
         smooth: true
         anchors.left: thumb_s.right
         anchors.leftMargin: 10
@@ -43,7 +42,7 @@ Item {
     Text{    
         id: activityDlgOwner
         text: "by " + ownername 
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 20;
+        font.family: "Helvetica"; font.bold: true; font.pixelSize: 20;
         smooth: true
         anchors.left: thumb_s.right
         anchors.leftMargin: 10
@@ -55,7 +54,7 @@ Item {
     Text{    
         id: activityDlgViews
         text: "Views: " + views + " Comments: " + comments + " Favorites: " + faves
-        font.family: "Helvetica"; font.bold: true; font.pointSize: 16;
+        font.family: "Helvetica"; font.bold: true; font.pixelSize: 16;
         smooth: true
         anchors.left: thumb_s.right
         anchors.leftMargin: 10
@@ -105,18 +104,10 @@ Item {
         }                
     ]
     
-    transitions: [
-    /*     
-    Transition {
-        from: 'Default'; to: 'CommentView';
-        ParentAnimation {        
-            NumberAnimation { properties: "x,y"; duration: 500 }
-        }
-     },
-    */ 
+    transitions: [     
     Transition {      
         ParentAnimation {        
-            NumberAnimation { properties: "x,y"; duration: 500 }
+            NumberAnimation { properties: "x,y"; duration: 400 }
         }
      }
     ]

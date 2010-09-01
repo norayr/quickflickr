@@ -22,6 +22,7 @@ public:
         GetComments,
         AddComment,
         AddFavorite,
+        GetFavorites,
         RequestCount
 
     };
@@ -50,6 +51,7 @@ public:
 
     Q_INVOKABLE void addFavorite( const QString & photoId );
     
+    Q_INVOKABLE void getFavorites();
     
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
@@ -60,6 +62,7 @@ Q_SIGNALS:
     void recentActivityUpdated( const QString & xml);
     void commentsUpdated( const QString & xml);
     void commentAdded();
+    void favoritesUpdated( const QString & xml);
     
 private Q_SLOTS:        
     void requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData );
