@@ -5,7 +5,10 @@ Item{
     property alias clip: image.clip
     property alias fillMode: image.fillMode
     property alias smooth: image.smooth
+    property alias sourceSize: image.sourceSize
     
+    //property alias sourceWidth: image.sourceSize.width
+    //property alias sourceHeight: image.sourceSize.height
     signal clicked
     signal pressAndHold
     

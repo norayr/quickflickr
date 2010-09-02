@@ -8,4 +8,7 @@ XmlListModel {
     XmlRole { name: "title"; query: "@title/string()" }
     XmlRole { name: "username"; query: "@username/string()" }
     XmlRole { name: "datetaken"; query: "@datetaken/string()" }     
+    XmlRole { name: "width_s"; query: "@width_s/string()" }
+    XmlRole { name: "height_s"; query: "@height_s/string()" }
+    
 }

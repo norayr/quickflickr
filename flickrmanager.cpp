@@ -93,7 +93,7 @@ void FlickrManager::getLatestContactUploads()
     Q_D(FlickrManager);    
     QtfMethod method("flickr.photos.getContactsPublicPhotos");
     method.args.insert("user_id", d->settingsValue("nsid"));
-    method.args.insert("count", "100" );
+    method.args.insert("count", "30" );
     method.args.insert("include_self", "1");
     method.args.insert("single_photo", "true");
     method.args.insert("extras", "url_s,url_w,date_taken" );
@@ -115,7 +115,7 @@ void FlickrManager::getPhotosOfContact(const QString & userId)
     method.args.insert("api_key", "ee829960cd89d099");
     method.args.insert("user_id", userId);
     method.args.insert("extras", "description,date_taken,username,original_format,last_update,geo,tags,o_dims,views,url_m" );
-    method.args.insert("per_page","100");    
+    method.args.insert("per_page","30");    
     QtfRequest request;
     request.requests.insert("photo","title,url_m,original_format,geo,tags,views,username,owner,id,farm,server");
     request.requests.insert("description",QString(""));    

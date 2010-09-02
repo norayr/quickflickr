@@ -2,15 +2,13 @@ import Qt 4.7
 
 Item{
     id: commentsView
-    property string photoId
-    
-    
-    
+    property string photoId            
     width: 800
-    height: 480
-    
-    
+    height: 480        
     signal close
+    
+    
+    
     
     MouseArea{
         anchors.fill: parent

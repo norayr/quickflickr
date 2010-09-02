@@ -50,6 +50,8 @@ Item{
         id: thumbnail_
         width: 120
         height: 120
+        sourceSize.height: height_s
+        sourceSize.width: width_s
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: 5

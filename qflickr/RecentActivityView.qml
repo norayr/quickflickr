@@ -24,6 +24,7 @@ Image {
         width: parent.width
         height: parent.height
         spacing: 10
+        cacheBuffer: 480
         
         ScrollBar {            
             scrollArea: parent; width: 8
@@ -36,7 +37,7 @@ Image {
     CommentsView{
         id: activityComments
         x: 800
-        y: 105
+        y: 115
         width: parent.width
         height: parent.height - activityComments.y - 10
     }

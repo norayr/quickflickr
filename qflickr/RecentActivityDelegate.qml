@@ -47,7 +47,7 @@ Item {
         anchors.left: thumb_s.right
         anchors.leftMargin: 10
         anchors.top: activityDlgTitle.bottom                
-        anchors.topMargin:10
+        anchors.topMargin:5
         color: "white"
     }
     
@@ -84,11 +84,9 @@ Item {
         anchors.fill: parent
         onPressAndHold: {   
             if ( recentActivityView.state == 'Default'){
-                mainMenu.state = 'Menu';  
-                console.log("menu...");
-            }else{
-                recentActivityView.state = 'Default'    
-                console.log("Default");
+                mainMenu.state = 'Menu';                  
+            }else{                
+                recentActivityView.state = 'Default'                             
             }
         }
         
