@@ -21,7 +21,10 @@ Item{
     // Basic grid for thumbnails
     GridView{
         id:favoritesGrid
-        anchors.fill: parent        
+        width: parent.width
+        height: favoritesModel.count / 10 * 80 
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 10        
 
         model: FavoritesModel{id: favoritesModel}

@@ -40,11 +40,10 @@ Rectangle{
                 anchors.leftMargin:50}
     Image {
             id: quitButton
-            anchors.right: parent.right
-            anchors.top: parent.top
+            source: "images/quit.png"
             anchors.topMargin: 10
             anchors.rightMargin:10
-            source: "images/quit.png"
+            anchors.bottomMargin: 10            
             MouseArea {
                 anchors.fill: parent
                 onClicked:{console.log("quit clicked"); Qt.quit()}
@@ -105,6 +104,11 @@ Rectangle{
                 
             }
             
+            AnchorChanges{
+                target: quitButton
+                anchors.right: parent.right
+                anchors.top: parent.top                
+            }
                        
         },
 
