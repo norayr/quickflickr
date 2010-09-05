@@ -2,7 +2,7 @@ import Qt 4.7
 
 Rectangle{    
     id: fullScreenViewer
-    Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
+    Image { source: "qrc:/images/quickflickr-bg.png"; anchors.fill: parent }    
     
     Connections{
         target: flickrManager

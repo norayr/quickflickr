@@ -18,7 +18,7 @@ Item{
     
     
     BorderImage {
-        source: "images/toolbutton.sci"
+        source: "qrc:/images/toolbutton.sci"
         smooth: true
         opacity: 0.3
         

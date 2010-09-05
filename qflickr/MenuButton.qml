@@ -11,7 +11,7 @@ Item{
 
     BorderImage{
         id: background
-        source: "images/toolbutton.sci"
+        source: "qrc:/images/toolbutton.sci"
         smooth: true
         opacity: 0.5
         anchors.fill: parent

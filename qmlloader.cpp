@@ -39,9 +39,8 @@ QmlLoader::QmlLoader():
     
     
     // Load the main QML component which constructs the whole UI from other
-    // QML components
-    QUrl url("qflickr/QuickFlickrMain.qml");
-    m_view->setSource(url);
+    // QML components    
+    m_view->setSource(QUrl(":qflickr/QuickFlickrMain.qml"));
     setLayout(layout);
     QMetaObject::invokeMethod(m_flickrManager, "activate");
         

@@ -6,7 +6,7 @@ Rectangle{
     property alias authUrl: webauth.urlString
     
     anchors.fill: parent
-    Image { source: "images/quickflickr-bg.png"; anchors.fill: parent }    
+    Image { source: "qrc:/images/quickflickr-bg.png"; anchors.fill: parent }    
     
     function contactsMode(){
         mainMenu.state = 'Contacts'; 
@@ -40,7 +40,7 @@ Rectangle{
                 anchors.leftMargin:50}
     Image {
             id: quitButton
-            source: "images/quit.png"
+            source: "qrc:/images/quit.png"
             anchors.topMargin: 10
             anchors.rightMargin:10
             anchors.bottomMargin: 10            

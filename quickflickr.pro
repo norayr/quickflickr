@@ -56,3 +56,7 @@ OTHER_FILES = \
     qflickr/FavoritesModel.qml \
     qflickr/FavoriteDelegate.qml \
     qflickr/FlickrImage.qml
+
+
+RESOURCES += \
+    quickflickr.qrc

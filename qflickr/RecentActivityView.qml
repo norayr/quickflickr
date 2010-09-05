@@ -4,7 +4,7 @@ Image {
     id: recentActivityView
     width: 800
     height: 480
-    source: "images/quickflickr-bg.png"; 
+    source: "qrc:/images/quickflickr-bg.png"; 
     state: 'Default'
         
     // Listen FlickrManager::recentActivityUpdated() signal and update

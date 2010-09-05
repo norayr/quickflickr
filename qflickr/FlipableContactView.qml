@@ -5,7 +5,7 @@ Image{
     width:800
     height:480            
     //clip: true        
-    source: "images/quickflickr-bg.png"; 
+    source: "qrc:/images/quickflickr-bg.png"; 
     
 
     Flipable {                        

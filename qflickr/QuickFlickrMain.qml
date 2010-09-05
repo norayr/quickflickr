@@ -6,6 +6,7 @@ Rectangle{
     width:800; height: 480;    
     color: "black";        
     
+    
     // Create a MainMenu
     MainMenu{ id: mainMenu }
     
@@ -16,6 +17,7 @@ Rectangle{
         onProceed: {mainMenu.state = 'Menu'; flickrManager.getLatestContactUploads(); }
         onAuthenticationRequired: {mainMenu.authUrl = authUrl; mainMenu.state = 'Authenticate';}
     }
-
+    
+    
     
 }

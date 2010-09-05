@@ -86,7 +86,7 @@ Rectangle {
     // Description field
     BorderImage{
         id: description_
-        source: "images/toolbutton.sci"
+        source: "qrc:/images/toolbutton.sci"
         smooth: true
         opacity: 0        
         anchors.right: parent.right

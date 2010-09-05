@@ -9,7 +9,7 @@ BorderImage {
     property alias text: textElement.text
     width: 120;
     height: 45;
-    source: "images/toolbutton.sci"
+    source: "qrc:/images/toolbutton.sci"
     smooth: true
     opacity: 0.7
 
