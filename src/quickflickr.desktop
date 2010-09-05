@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=QuickFlickr
+Exec=/opt/quickflickr/quickflickr
+Type=Application
+Icon = quickflickr
+x-Window-Icon = quickflickr
+x-Window-Icon-Dimmed = quickflickr
+StartupWMClass=quickflickr
+#X-Osso-Service=org.maemo.liqcalc
+X-Osso-Type=application/x-executable
+StartupNotify=false
