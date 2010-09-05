@@ -5,8 +5,8 @@
 #-------------------------------------------------
 
 
-TARGET = quickflickr_
-CONFIG   -= app_bundle
+TARGET = quickflickr
+CONFIG   -= app_bundle release
 QT += declarative network xml opengl webkit
 
 TEMPLATE = app

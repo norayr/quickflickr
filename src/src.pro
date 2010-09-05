@@ -22,17 +22,17 @@ unix {
     DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"
 
     #MAKE INSTALL    
-    INSTALLS += target desktop qml image 
+    INSTALLS += target desktop #qml image 
 	#iconxpm icon26 icon40 icon64
 
     target.path =$$BINDIR
     
-    qml.path = $$BINDIR/qflickr
-    qml.files = $$OTHER_FILES	
+    #qml.path = $$BINDIR/qflickr
+    #qml.files = $$OTHER_FILES	
 
 
-    image.path = $$BINDIR/qflickr
-    image.files = qflickr/images
+    #image.path = $$BINDIR/qflickr
+    #image.files = qflickr/images
   
 
     desktop.path = $$DATADIR/applications/hildon

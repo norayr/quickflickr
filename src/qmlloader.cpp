@@ -40,7 +40,7 @@ QmlLoader::QmlLoader():
     
     // Load the main QML component which constructs the whole UI from other
     // QML components    
-    m_view->setSource(QUrl(":qflickr/QuickFlickrMain.qml"));
+    m_view->setSource(QUrl("qrc:///qml/qflickr/QuickFlickrMain.qml"));
     setLayout(layout);
     QMetaObject::invokeMethod(m_flickrManager, "activate");
         
@@ -61,7 +61,7 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
 
     case QDeclarativeView::Ready:
         qDebug() << "QmlLoader is Ready";
-        show();
+        showFullScreen();
         break;
     case QDeclarativeView::Loading:
         qDebug() << "QmlLoader is loading...";
