@@ -1,0 +1,11 @@
+Source: quickflickr
+Section: user/graphics
+Priority: optional
+Maintainer: Marko Mattila <marko.a.mattila@gmail.com>
+Build-Depends: debhelper (>= 5), libqt4-experimental-declarative-dev
+Standards-Version: 3.7.2
+
+Package: quickflickr
+Architecture: armel
+Depends: libqt4-experimental-declarative
+Description: QtQuick based Flickr client for N900. 
