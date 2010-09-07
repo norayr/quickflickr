@@ -21,7 +21,7 @@ unix {
     DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"
 
     #MAKE INSTALL    
-    INSTALLS += target desktop icon64 
+    INSTALLS += target desktop icon64  iconScalable
 	#iconxpm icon26 icon40 icon64
 
     target.path =$$BINDIR
@@ -41,5 +41,7 @@ unix {
 
     icon64.path = $$DATADIR/icons/hicolor/64x64/apps
     icon64.files += images/quickflickr.png
-    
+
+    iconScalable.path = $$DATADIR/icons/hicolor/scalable/hildon/
+    iconScalable.files += images/quickflickr.png    
 }
