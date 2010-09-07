@@ -58,8 +58,7 @@ public:
     
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
-    void proceed();
-        
+    void proceed();        
     void contactsUploadsUpdated(const QString & xml);
     void photostreamUpdated( const QString & xml);
     void recentActivityUpdated( const QString & xml);

@@ -41,9 +41,12 @@ Rectangle{
     Image {
             id: quitButton
             source: "qrc:/images/quit.png"
+            opacity: 1
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.rightMargin: 10
             anchors.topMargin: 10
-            anchors.rightMargin:10
-            anchors.bottomMargin: 10            
+            
             MouseArea {
                 anchors.fill: parent
                 onClicked:{console.log("quit clicked"); Qt.quit()}
@@ -104,10 +107,9 @@ Rectangle{
                 
             }
             
-            AnchorChanges{
+            PropertyChanges{
                 target: quitButton
-                anchors.right: parent.right
-                anchors.top: parent.top                
+                opacity: 1
             }
                        
         },
@@ -121,6 +123,11 @@ Rectangle{
                 y: 0
                 opacity: 1
             }
+            
+            PropertyChanges{
+                target: quitButton
+                opacity: 0
+            }
         },
 
         State{
@@ -132,9 +139,9 @@ Rectangle{
                 opacity: 1
             }
             
-            AnchorChanges{
+            PropertyChanges{
                 target: quitButton
-                anchors.bottom: favoritesView.top
+                opacity: 0
             }
             
         },
@@ -147,10 +154,7 @@ Rectangle{
                 x: 0
                 y: 0
                 opacity: 1
-            }
-            
-            
-            
+            }                                   
         }
     ]
 

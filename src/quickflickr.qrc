@@ -35,5 +35,9 @@
         <file>images/titlebar.png</file>
         <file>images/toolbutton.png</file>
         <file>images/toolbutton.sci</file>
+        <file>images/go-jump-locationbar.png</file>
+        <file>images/go-next-view.png</file>
+        <file>images/go-previous-view.png</file>
+        <file>images/edit-delete.png</file>
     </qresource>
 </RCC>

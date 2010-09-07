@@ -68,8 +68,7 @@ void FlickrManager::activate()
     
     QString token = d->settingsValue("token");
     if(!token.isEmpty()){
-        d->m_qtFlickr->setToken(token);        
-        //getLatestContactUploads();
+        d->m_qtFlickr->setToken(token);                
         emit proceed();
     }else{
         authenticate();        
@@ -100,8 +99,7 @@ void FlickrManager::getLatestContactUploads()
 
     // Define in request section which fields are include the the response
     QtfRequest request ( "photo","url_s,username,owner,title,datetaken,height_s,width_s" );
-    d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContactsPublicPhotos);
-    qDebug() << "Request for uploads send";
+    d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContactsPublicPhotos);    
 
 }
 

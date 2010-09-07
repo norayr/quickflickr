@@ -55,7 +55,8 @@ OTHER_FILES = \
     qflickr/FavoritesView.qml \
     qflickr/FavoritesModel.qml \
     qflickr/FavoriteDelegate.qml \
-    qflickr/FlickrImage.qml
+    qflickr/FlickrImage.qml \
+    qflickr/BrowserButton.qml 
 
 
 RESOURCES += \

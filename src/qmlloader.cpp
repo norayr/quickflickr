@@ -61,7 +61,11 @@ void QmlLoader::statusChanged ( QDeclarativeView::Status status )
 
     case QDeclarativeView::Ready:
         qDebug() << "QmlLoader is Ready";
+#ifdef Q_WS_MAC
+        show();
+#else
         showFullScreen();
+#endif
         break;
     case QDeclarativeView::Loading:
         qDebug() << "QmlLoader is loading...";

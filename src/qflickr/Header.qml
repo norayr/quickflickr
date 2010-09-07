@@ -86,7 +86,7 @@ BorderImage {
 
             BrowserButton {
                 id: backButton
-                action: webView.back; image: "images/go-previous-view.png"
+                action: webView.back; image: "qrc:/images/go-previous-view.png"
                 anchors { left: parent.left; bottom: parent.bottom }
                 visible: showNavigationButtons
             }
@@ -94,7 +94,7 @@ BorderImage {
             BrowserButton {
                 id: nextButton
                 anchors.left: backButton.right
-                action: webView.forward; image: "images/go-next-view.png"
+                action: webView.forward; image: "qrc:/images/go-next-view.png"
                 visible: showNavigationButtons
             }
          
@@ -111,7 +111,7 @@ BorderImage {
             BrowserButton {
                 id: closeButton
                 anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "images/edit-delete.png"
+                action: webView.stop; image: "qrc:/images/edit-delete.png"
                 onClicked: {console.log("Close Clicked from a header");header.closeClicked();}
             }
             
