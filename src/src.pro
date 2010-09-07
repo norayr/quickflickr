@@ -16,24 +16,16 @@ unix {
     #    PREFIX = /opt/quickflickr
     #}
     BINDIR = $$PREFIX/quickflickr
-    #BINDIR = /opt/quickflickr
     DATADIR = /usr/share
 
     DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"
 
     #MAKE INSTALL    
-    INSTALLS += target desktop #qml image 
+    INSTALLS += target desktop icon64 
 	#iconxpm icon26 icon40 icon64
 
     target.path =$$BINDIR
     
-    #qml.path = $$BINDIR/qflickr
-    #qml.files = $$OTHER_FILES	
-
-
-    #image.path = $$BINDIR/qflickr
-    #image.files = qflickr/images
-  
 
     desktop.path = $$DATADIR/applications/hildon
     desktop.files += quickflickr.desktop
@@ -45,9 +37,9 @@ unix {
     #icon26.files += data/26x26/qt-maemo-example.png 
 
     #icon40.path = $$DATADIR/icons/hicolor/40x40/apps
-    #icon40.files += data/40x40/qt-maemo-example.png
+    #icon40.files += images/quickflickr.png
 
-    #icon64.path = $$DATADIR/icons/hicolor/64x64/apps
-    #icon64.files += data/64x64/qt-maemo-example.png
+    icon64.path = $$DATADIR/icons/hicolor/64x64/apps
+    icon64.files += images/quickflickr.png
     
 }

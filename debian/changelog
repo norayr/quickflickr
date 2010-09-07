@@ -1,4 +1,11 @@
-quickflickr (0.1) unstable; urgency=low
+quickflickr (1.0.1) unstable; urgency=low
+
+  * Added missing images to qrc files
+  * Fixed a bug in close button positioning.
+
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 7 Aug 2010 22:33:22 +0300
+
+quickflickr (1.0.0) unstable; urgency=low
 
   * Initial release 
 
