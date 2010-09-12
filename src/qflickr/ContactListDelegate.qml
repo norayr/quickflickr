@@ -63,7 +63,7 @@ Item{
         id: title_
         elide: Text.ElideRight
         width: parent.width - thumbnail_.width - 10
-        text: title; font.family: "Helvetica"; font.bold: true; font.pointSize: 22; color: "white"
+        text: title; font.family: "Helvetica"; font.bold: true; font.pixelSize: 22; color: "white"
         anchors.top: parent.top
         anchors.left: thumbnail_.right
         anchors.right: parent.right
@@ -79,7 +79,7 @@ Item{
         width: parent.width - thumbnail_.width - 10
         text: qsTr("by ") + username;
         font.family: "Helvetica";
-        font.pointSize: 20;
+        font.pixelSize: 20;
         color: "white"
         smooth: true
         anchors.top: title_.bottom
@@ -93,7 +93,7 @@ Item{
         id: dateTaken_
         text: qsTr("Date Taken: ") + datetaken;
         font.family: "Helvetica";
-        font.pointSize: 15;
+        font.pixelSize: 15;
         color: "white"
         anchors.top: userName_.bottom
         anchors.left: thumbnail_.right
