@@ -29,13 +29,16 @@ QmlLoader::QmlLoader():
     
     // Expose the C++ interface to QML
     engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
-    
+    engine()->rootContext()->setContextProperty("mainWindow", this );
     
     // Load the main QML component which constructs the whole UI from other
     // QML components    
     setSource(QUrl("qrc:///qml/qflickr/QuickFlickrMain.qml"));    
     m_flickrManager->activate();
 }
+
+
+
 
 
 

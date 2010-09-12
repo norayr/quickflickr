@@ -53,7 +53,7 @@ BorderImage {
     signal closeClicked
     
     smooth: true
-    opacity: 0.5
+    //opacity: 0.2
     source: "qrc:/images/toolbutton.sci"; 
         
 
@@ -83,25 +83,12 @@ BorderImage {
 
         Item {
             width: parent.width; height: 40
-
-            BrowserButton {
-                id: backButton
-                action: webView.back; image: "qrc:/images/go-previous-view.png"
-                anchors { left: parent.left; bottom: parent.bottom }
-                visible: showNavigationButtons
-            }
-
-            BrowserButton {
-                id: nextButton
-                anchors.left: backButton.right
-                action: webView.forward; image: "qrc:/images/go-next-view.png"
-                visible: showNavigationButtons
-            }
-         
+            
             Rectangle {
                 anchors.centerIn: parent
-                //anchors.left: nextButton.right
-                //anchors.right: closeButton.left
+                anchors.left: parent.left
+                anchors.right: closeButton.left
+                
                 x: 18; height: 8; color: "#63b1ed"
                 width: (parent.width - 20) * webView.progress
                 opacity: webView.progress == 1.0 ? 0.0 : 1.0
@@ -111,8 +98,8 @@ BorderImage {
             BrowserButton {
                 id: closeButton
                 anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "qrc:/images/edit-delete.png"
-                onClicked: {console.log("Close Clicked from a header");header.closeClicked();}
+                action: webView.stop; image: "qrc:/images/quit.png"
+                onClicked: {header.closeClicked();}
             }
             
             

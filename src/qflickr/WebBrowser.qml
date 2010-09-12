@@ -65,8 +65,7 @@ Rectangle {
     Item { id: headerSpace; width: parent.width; height: 62 }
 
     Header {
-        id: header
-        //editUrl: webBrowser.urlString
+        id: header        
         width: headerSpace.width; 
         height: headerSpace.height
         onCloseClicked: webBrowser.close();

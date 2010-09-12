@@ -6,7 +6,10 @@ Rectangle{
     
     Connections{
         target: flickrManager
-        onPhotostreamUpdated: {fullScreenModel.xml = xml;}
+        onPhotostreamUpdated: {
+            fullScreenModel.xml = xml;            
+            fullScreenViewer.state = "Default"
+        }
     }
     
     ListView{    
@@ -20,28 +23,29 @@ Rectangle{
         spacing: 20
         focus: true
         cacheBuffer: 1600
-                 
-
+        opacity: 0
+                         
     }
+        
+    Rectangle{
+        id: loaderIndicator
+        color: "black"        
+        anchors.fill: parent
+        visible: true
+        border.color: "white"
+        border.width: 3
+        
+        Row{
+            id: indicatorRow            
             
-    Loader{
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter        
-        visible: fullScreenModel.status != XmlListModel.Ready
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter        
+            Loading{                     
+                visible: loaderIndicator.visible
+            }             
+        }
     }
     
-    Text{
-        anchors.fill: parent
-        text: "Loading..."
-        font.family: "Helvetica"
-        font.pixelSize: 40
-        color: "white"
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        opacity: 1 - fullScreenModel.progress
-    }
-
-
     // Create only one WebBrowser instance     
     WebBrowser{       
         id: webview        
@@ -61,6 +65,19 @@ Rectangle{
     }
     
     states:[
+    State{
+        name: "Default"  
+        PropertyChanges {
+            target: photoList
+            opacity: 1
+        }
+        PropertyChanges {
+            target: loaderIndicator
+            opacity: 0
+            visible: false
+        }        
+    },
+
     State {
         name: "WebView"
         PropertyChanges {
@@ -74,6 +91,11 @@ Rectangle{
             y:-480            
         }
         
+        PropertyChanges {
+            target: loaderIndicator
+            opacity: 0
+            visible: false
+        }
     },
     State{
         name: "CommentsView"
@@ -87,6 +109,12 @@ Rectangle{
             target: photoList
             y:-480            
         }        
+        
+        PropertyChanges {
+            target: loaderIndicator
+            opacity: 0
+            visible: false
+        }
     }
 
     ]

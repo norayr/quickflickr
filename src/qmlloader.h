@@ -12,6 +12,7 @@ class QmlLoader: public QDeclarativeView
 public:
     QmlLoader();
 
+    
 private:
     FlickrManager    * m_flickrManager;    
 };

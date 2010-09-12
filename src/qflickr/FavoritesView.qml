@@ -17,6 +17,11 @@ Item{
         state = 'Details';
     }
 
+    // This is needed here in order to get back if the image doesn't get loaded
+    MouseArea{
+        anchors.fill: parent                
+        onPressAndHold: { mainMenu.state = 'Menu' }            
+    }
     
     // Basic grid for thumbnails
     GridView{
@@ -31,12 +36,7 @@ Item{
         delegate: FavoriteDelegate{ }
         cellHeight: 80
         cellWidth: 80
-        
-        Connections{
-            target: flickrManager
-            onFavoritesUpdated: { favoritesModel.xml = xml; }        
-            onFavoriteRemoved: flickrManager.getFavorites();
-        }
+                
         
         ScrollBar {            
             scrollArea: parent; width: 8
@@ -45,7 +45,17 @@ Item{
                 
     }
     
+    Connections{
+        target: flickrManager
+        onFavoritesUpdated: { favoritesModel.xml = xml; loaderIndicator.visible = false; }        
+        onFavoriteRemoved: flickrManager.getFavorites();
+    }
     
+    Loading{        
+        id: loaderIndicator        
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
     
     // Fullscree image for viewing a favorite. 
     FlickrImage{

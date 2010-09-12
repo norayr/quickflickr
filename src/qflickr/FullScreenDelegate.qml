@@ -1,5 +1,5 @@
 import Qt 4.7
-//import "content"
+
 
 Rectangle {
     id: fullScreenDelegate
@@ -10,6 +10,11 @@ Rectangle {
     border.width: 3
     color: "black"
     
+    // This is needed here in order to get back if the image doesn't get loaded
+    MouseArea{
+        anchors.fill: parent                
+        onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}            
+    }
    
    
     // Actual thumbnail image. The size of
@@ -37,15 +42,14 @@ Rectangle {
                 }
             }
             
-            onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}
-            
+            onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}            
         }
     }
     
     Timer{
         id: clearTimer
         interval: 600; running: false; repeat: false
-        onTriggered: fullScreenModel.xml = ""
+        onTriggered: { fullScreenModel.xml = ""; fullScreenViewer.state = ""; }
     }
     
     

@@ -13,7 +13,7 @@ Item{
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "#343434"
+        color: "black"
         border.width: 2
         border.color: "white"
         
@@ -28,8 +28,7 @@ Item{
             
         }   
         
-        Loading{
-            id: loading
+        Loading{            
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             visible: image.status != Image.Ready            

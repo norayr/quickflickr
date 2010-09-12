@@ -12,7 +12,7 @@ Item{
     
     MouseArea{
         anchors.fill: parent
-        onPressAndHold: {console.log("Comments view close clicked"); commentsView.close()}
+        onPressAndHold: { commentsView.close()}
     }
     
     
@@ -63,8 +63,7 @@ Item{
         TextEdit {
             id:textEdit
             width: textField.width
-            height: textField.height
-            focus: true
+            height: textField.height            
             wrapMode: TextEdit.Wrap
             onCursorRectangleChanged: textField.ensureVisible(cursorRectangle)
             color: "white"
