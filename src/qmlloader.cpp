@@ -9,7 +9,8 @@
 #include <QGLContext>
 
 #ifndef Q_WS_MAC
-#include <QDBus>
+#include <QDBusConnection>
+#include <QDBusMessage>
 #endif
 
 QmlLoader::QmlLoader():
