@@ -12,6 +12,12 @@ ListView {
     cacheBuffer: 900 // Removes flickring on top and the bottom        
     delegate: ContactListDelegate{ id: contactListelegate }        
     
+    Loader{
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter        
+        visible: contactListModel.status != XmlListModel.Ready
+    }
+    
     ScrollBar {            
         scrollArea: parent; width: 8
         anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        

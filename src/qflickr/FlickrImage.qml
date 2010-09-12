@@ -5,10 +5,7 @@ Item{
     property alias clip: image.clip
     property alias fillMode: image.fillMode
     property alias smooth: image.smooth
-    property alias sourceSize: image.sourceSize
-    
-    //property alias sourceWidth: image.sourceSize.width
-    //property alias sourceHeight: image.sourceSize.height
+    property alias sourceSize: image.sourceSize    
     signal clicked
     signal pressAndHold
     
@@ -16,7 +13,7 @@ Item{
     Rectangle {
         id: background
         anchors.fill: parent
-        color: "black"
+        color: "#343434"
         border.width: 2
         border.color: "white"
         
@@ -29,7 +26,14 @@ Item{
             anchors.leftMargin: background.border.width
             anchors.rightMargin: background.border.width
             
-        }        
+        }   
+        
+        Loading{
+            id: loading
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: image.status != Image.Ready            
+        }
     }
     
     

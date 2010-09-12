@@ -1,13 +1,21 @@
+quickflickr (1.0.2) unstable; urgency=low
+
+  * Added loading indicator here and there.
+  * ContactListDelegate uses smaller icons now.
+
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 12 Sep 2010 22:33:22 +0300
+
+
 quickflickr (1.0.1) unstable; urgency=low
 
   * Added missing images to qrc files
   * Fixed a bug in close button positioning.
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 7 Aug 2010 22:33:22 +0300
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 12 Sep 2010 22:33:22 +0300
 
 quickflickr (1.0.0) unstable; urgency=low
 
   * Initial release 
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Fri, 3 Aug 2010 00:33:22 +0300
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Fri, 3 Sep 2010 00:33:22 +0300
 

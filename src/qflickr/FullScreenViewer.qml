@@ -24,6 +24,12 @@ Rectangle{
 
     }
             
+    Loader{
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter        
+        visible: fullScreenModel.status != XmlListModel.Ready
+    }
+    
     Text{
         anchors.fill: parent
         text: "Loading..."

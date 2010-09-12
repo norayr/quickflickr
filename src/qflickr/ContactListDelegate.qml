@@ -5,7 +5,7 @@ import Qt 4.7
 Item{    
     id: contactListDelegate
     width: contactList.width - 20
-    height: 130
+    height: 100
     x: 10        
 
 
@@ -48,18 +48,14 @@ Item{
     // all the images and make texts align perfectly
     FlickrImage{
         id: thumbnail_
-        width: 120
-        height: 120
-        sourceSize.height: height_s
-        sourceSize.width: width_s
-        anchors.top: parent.top
+        width: 75
+        height: 75
+        sourceSize.height: height
+        sourceSize.width: width
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.topMargin: 5
-        anchors.leftMargin: 10     
-        fillMode: Image.PreserveAspectCrop         
-        source: url
-        clip: true
-        
+        anchors.leftMargin: 10
+        source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_s.jpg"        
     }
     
     // Title section

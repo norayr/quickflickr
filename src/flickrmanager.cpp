@@ -95,10 +95,8 @@ void FlickrManager::getLatestContactUploads()
     method.args.insert("count", "30" );
     method.args.insert("include_self", "1");
     method.args.insert("single_photo", "true");
-    method.args.insert("extras", "url_s,url_w,date_taken" );
-
-    // Define in request section which fields are include the the response
-    QtfRequest request ( "photo","url_s,username,owner,title,datetaken,height_s,width_s" );
+    method.args.insert("extras", "date_taken" );    
+    QtfRequest request;
     d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContactsPublicPhotos);    
 
 }
@@ -115,8 +113,6 @@ void FlickrManager::getPhotosOfContact(const QString & userId)
     method.args.insert("extras", "description,date_taken,username,original_format,last_update,geo,tags,o_dims,views,url_m" );
     method.args.insert("per_page","30");    
     QtfRequest request;
-    request.requests.insert("photo","title,url_m,original_format,geo,tags,views,username,owner,id,farm,server");
-    request.requests.insert("description",QString(""));    
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetPhotosOfContact);
 }
 

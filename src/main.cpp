@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_MAC
         loader.show();
 #else
+        app.setGraphicsSystem("raster");
         loader.showFullScreen();
 #endif
     

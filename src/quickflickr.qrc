@@ -27,6 +27,7 @@
         <file>qflickr/ScrollBar.qml</file>
         <file>qflickr/UrlInput.qml</file>
         <file>qflickr/WebBrowser.qml</file>
+        <file>qflickr/Loading.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>images/quickflickr-bg.png</file>
@@ -39,5 +40,6 @@
         <file>images/go-next-view.png</file>
         <file>images/go-previous-view.png</file>
         <file>images/edit-delete.png</file>
+        <file>images/loading.png</file>
     </qresource>
 </RCC>

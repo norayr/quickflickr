@@ -29,7 +29,7 @@ HEADERS += \
     qtflickr_p.h 
 
 
-OTHER_FILES = \    
+OTHER_FILES += \    
     qflickr/QuickFlickrMain.qml \
     qflickr/ContactList.qml \
     qflickr/ContactListDelegate.qml \
@@ -56,7 +56,10 @@ OTHER_FILES = \
     qflickr/FavoritesModel.qml \
     qflickr/FavoriteDelegate.qml \
     qflickr/FlickrImage.qml \
-    qflickr/BrowserButton.qml 
+    qflickr/BrowserButton.qml \
+    qflickr/Loading.qml
+
+
 
 
 RESOURCES += \
