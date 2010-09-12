@@ -64,7 +64,7 @@ Rectangle{
             
             MouseArea {
                 anchors.fill: parent
-                onClicked:{ mainWindow.showMinimized(); }
+                onClicked:{ mainWindow.minimize(); }
             }
     }
     

@@ -8,6 +8,10 @@
 #include <QtDebug>
 #include <QGLContext>
 
+#ifndef Q_WS_MAC
+#include <QDBus>
+#endif
+
 QmlLoader::QmlLoader():
         QDeclarativeView()       
 {
@@ -38,7 +42,16 @@ QmlLoader::QmlLoader():
 }
 
 
-
+void QmlLoader::minimize()
+{
+#ifndef Q_WS_MAC
+     QDBusConnection c = QDBusConnection::sessionBus();
+     QDBusMessage m = QDBusMessage::createSignal("/", "com.nokia.hildon_desktop", "exit_app_view");
+     c.send(m);
+#else
+     showMinimized();
+#endif
+}
 
 
 
