@@ -7,7 +7,11 @@
 
 TARGET = quickflickr
 CONFIG   -= app_bundle release
-QT += declarative network xml opengl webkit dbus
+QT += declarative network xml opengl webkit 
+
+!isEmpty( Q_WS_MAC ){
+    Qt += dbus
+}
 
 TEMPLATE = app
 
