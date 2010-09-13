@@ -120,7 +120,11 @@ Rectangle{
     ]
     
     transitions: Transition {
-             PropertyAnimation { properties: "x,y,opacity"; duration: 600 }
+            ParallelAnimation{
+                PropertyAnimation{ target: photoList; property: "opacity"; duration: 1000;}
+                PropertyAnimation{ target: loaderIndicator; property: "opacity"; duration: 1500; }                
+                PropertyAnimation { properties: "x,y"; duration: 600 }
+            }
          }
 }
 

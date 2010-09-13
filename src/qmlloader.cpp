@@ -24,9 +24,7 @@ QmlLoader::QmlLoader():
     glWidget->setAutoFillBackground(false);
     setViewport(glWidget);
     
-    
 
-    connect(engine(),SIGNAL(quit()),qApp,SLOT(quit()));
     
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();    
@@ -42,6 +40,11 @@ QmlLoader::QmlLoader():
     m_flickrManager->activate();
 }
 
+QmlLoader::~QmlLoader()
+{
+    delete m_flickrManager;
+    m_flickrManager = 0;
+}
 
 void QmlLoader::minimize()
 {

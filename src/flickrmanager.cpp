@@ -248,22 +248,22 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
     Q_D(FlickrManager);
     switch( d->m_requestId.value(reqId)){
     case GetContactsPublicPhotos:        
-        qDebug() << xmlData;
+        //qDebug() << xmlData;
         emit contactsUploadsUpdated(xmlData);                                
         break;
 
     case GetPhotosOfContact:
-        qDebug() << xmlData;
+        //qDebug() << xmlData;
         emit photostreamUpdated(xmlData);
         break;        
         
     case GetRecentActivity:        
-        qDebug() << xmlData;
+        //qDebug() << xmlData;
         emit recentActivityUpdated(xmlData);
         break;
         
     case GetComments:
-        qDebug() << xmlData;
+        //qDebug() << xmlData;
         emit commentsUpdated(xmlData);
         break;
         

@@ -49,7 +49,7 @@ Rectangle{
             
             MouseArea {
                 anchors.fill: parent
-                onClicked:{Qt.quit()}
+                onClicked:{mainWindow.close();}//Qt.quit()}
             }
     }
     

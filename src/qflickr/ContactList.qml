@@ -9,8 +9,7 @@ Item{
         id: listView
         model: ContactListModel{id:contactListModel }
         spacing: 10
-        anchors.fill: parent        
-        //clip: true
+        anchors.fill: parent                
         //cacheBuffer: 900 // Removes flickring on top and the bottom        
         delegate: ContactListDelegate{ id: contactListelegate }        
         
