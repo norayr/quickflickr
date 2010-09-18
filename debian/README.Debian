@@ -1,6 +1,5 @@
-qt-maemo-example for Debian
+Debian packaging for QuickFlickr
 ---------------------------
 
-<possible notes regarding this package - if none, delete this file>
-
- -- unknown <gnuton@gnuton.org>  Wed, 13 Aug 2008 14:17:22 +0300
+Build debian package with command: dpkg-buildpackage -rfakeroot
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Wed, 18 Sep 2010 14:17:22 +0300
