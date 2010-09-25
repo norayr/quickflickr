@@ -1,9 +1,12 @@
 quickflickr (1.0.2) unstable; urgency=low
 
-  * Added loading indicator here and there.
+  * Added loading indicators here and there.
   * ContactListDelegate uses smaller icons now.
+  * Added minimize button to the main view
+  * Removed next and back buttons from WebView
+  * Fine tuned the user experience little bit... To better I hope 
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 12 Sep 2010 22:33:22 +0300
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Sun, 12 Sep 2010 22:33:22 +0300
 
 
 quickflickr (1.0.1) unstable; urgency=low

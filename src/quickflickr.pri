@@ -7,7 +7,8 @@
 
 TARGET = quickflickr
 CONFIG   -= app_bundle release
-QT += declarative network xml opengl webkit
+QT += declarative network xml opengl webkit dbus
+
 
 TEMPLATE = app
 

@@ -176,9 +176,7 @@ void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
     }
     
     requestDataMap.remove ( reply );    
-    
-   
-    
+    reply->deleteLater();       
 }
 
 void QtFlickrPrivate::uploadProgress ( qint64 bytesSent, qint64 bytesTotal )

@@ -49,9 +49,26 @@ Rectangle{
             
             MouseArea {
                 anchors.fill: parent
-                onClicked:{Qt.quit()}
+                onClicked:{mainWindow.close();}//Qt.quit()}
             }
     }
+    
+    Image {
+            id: minimizeButton
+            source: "qrc:/images/minimize.png"
+            opacity: 1
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: 10
+            anchors.topMargin: 10
+            
+            MouseArea {
+                anchors.fill: parent
+                onClicked:{ mainWindow.minimize(); }
+            }
+    }
+    
+    
     
     
     WebBrowser{       
@@ -111,7 +128,11 @@ Rectangle{
                 target: quitButton
                 opacity: 1
             }
-                       
+             
+            PropertyChanges{
+                target: minimizeButton
+                opacity: 1
+            }
         },
 
         State{
@@ -126,6 +147,11 @@ Rectangle{
             
             PropertyChanges{
                 target: quitButton
+                opacity: 0
+            }
+            
+            PropertyChanges{
+                target: minimizeButton
                 opacity: 0
             }
         },
@@ -144,6 +170,10 @@ Rectangle{
                 opacity: 0
             }
             
+            PropertyChanges{
+                target: minimizeButton
+                opacity: 0
+            }
         },
 
         State{

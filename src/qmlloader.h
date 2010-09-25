@@ -11,7 +11,11 @@ class QmlLoader: public QDeclarativeView
     Q_OBJECT
 public:
     QmlLoader();
-
+    virtual ~QmlLoader();
+    
+public slots:
+    void minimize();
+    
 private:
     FlickrManager    * m_flickrManager;    
 };

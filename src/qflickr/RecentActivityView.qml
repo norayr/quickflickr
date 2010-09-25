@@ -11,7 +11,10 @@ Image {
     // the xml to the model 
     Connections{
         target: flickrManager
-        onRecentActivityUpdated: {recentActivityModel.xml = xml;}
+        onRecentActivityUpdated: {
+            recentActivityModel.xml = xml;
+            loaderIndicator.visible = false;
+        }
     }
     
     
@@ -34,6 +37,13 @@ Image {
     }
 
 
+    Loading{        
+        id: loaderIndicator        
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+        
     CommentsView{
         id: activityComments
         x: 800

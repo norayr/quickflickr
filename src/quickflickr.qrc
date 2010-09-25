@@ -41,5 +41,6 @@
         <file>images/go-previous-view.png</file>
         <file>images/edit-delete.png</file>
         <file>images/loading.png</file>
+        <file>images/minimize.png</file>
     </qresource>
 </RCC>
