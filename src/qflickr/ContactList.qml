@@ -10,7 +10,8 @@ Item{
         model: ContactListModel{id:contactListModel }
         spacing: 10
         anchors.fill: parent                
-        //cacheBuffer: 900 // Removes flickring on top and the bottom        
+        cacheBuffer: 900 // Removes flickring on top and the bottom        
+        clip: true
         delegate: ContactListDelegate{ id: contactListelegate }        
         
         

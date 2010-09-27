@@ -7,7 +7,7 @@
 
 TARGET = quickflickr
 CONFIG   -= app_bundle release
-QT += declarative network xml opengl webkit dbus
+QT += declarative network xml opengl webkit #dbus
 
 
 TEMPLATE = app
@@ -58,7 +58,9 @@ OTHER_FILES += \
     qflickr/FavoriteDelegate.qml \
     qflickr/FlickrImage.qml \
     qflickr/BrowserButton.qml \
-    qflickr/Loading.qml
+    qflickr/Loading.qml \
+    qflickr/Page.qml \
+    qflickr/NavigationBar.qml
 
 
 

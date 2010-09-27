@@ -1,8 +1,7 @@
 import Qt 4.7
 
-Rectangle{    
-    id: fullScreenViewer
-    Image { source: "qrc:/images/quickflickr-bg.png"; anchors.fill: parent }    
+Item{    
+    id: fullScreenViewer    
     
     Connections{
         target: flickrManager
@@ -11,7 +10,42 @@ Rectangle{
             fullScreenViewer.state = "Default"
         }
     }
-    
+    /*
+    PathView {     
+        id:photoList       
+        anchors.fill: parent
+        //model: FavoritesModel{ id: favoritesModel }
+        //delegate: FavoriteDelegate{}
+        model: FullScreenModel{ id: fullScreenModel }
+        delegate: FullScreenDelegate { id: fullScreenDelegate}
+        
+         path: Path{      
+             
+             startX: -(pathView.count*140)/2; startY: 200                                                                                     
+             PathAttribute { name: "iconScale"; value: 0.6 }                             
+             
+             PathLine{ x: 100; y: 200 }
+             PathAttribute { name: "iconScale"; value: 1.2 }            
+             
+             
+             PathLine{ x: 300; y: 200 }
+             PathAttribute { name: "iconScale"; value: 2.0 }            
+             
+             
+             PathLine{ x: 500; y: 200 }
+             PathAttribute { name: "iconScale"; value: 2.0 }                             
+             
+             PathLine{ x: 700; y: 200 }
+             PathAttribute { name: "iconScale"; value: 1.2 }            
+             
+             
+             PathLine{ x: 800 + (pathView.count*140)/2; y:200 }                                  
+             PathAttribute { name: "iconScale"; value: 0.6 }
+             
+         }
+         
+        }
+    */    
     ListView{    
         id: photoList
         model: FullScreenModel{ id: fullScreenModel }
@@ -26,7 +60,7 @@ Rectangle{
         opacity: 0
                          
     }
-        
+       
     Rectangle{
         id: loaderIndicator
         color: "black"        
@@ -101,7 +135,7 @@ Rectangle{
         name: "CommentsView"
         PropertyChanges { 
             target: commentsView;
-            y: 0
+            y: 65
             opacity: 1
         }
 
@@ -115,6 +149,12 @@ Rectangle{
             opacity: 0
             visible: false
         }
+        
+        PropertyChanges {
+            target: mainPage
+            hideNavigationBar: false
+        }
+        
     }
 
     ]

@@ -17,14 +17,13 @@ QmlLoader::QmlLoader():
         QDeclarativeView()       
 {
     
-    
+#ifndef Q_WS_MAC
     QGLFormat format = QGLFormat::defaultFormat();
     format.setSampleBuffers(false);
-    QGLWidget *glWidget = new QGLWidget(format);
+    QGLWidget *glWidget = new QGLWidget();//(format);
     glWidget->setAutoFillBackground(false);
     setViewport(glWidget);
-    
-
+#endif
     
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();    
