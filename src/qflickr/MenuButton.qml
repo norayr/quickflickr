@@ -5,15 +5,15 @@ Item{
     property alias text: menuButtonText.text
     signal clicked
 
-    width: 200
-    height: 200
+    width: 134
+    height: 134
     state: "Default"
 
-    BorderImage{
+    Image{
         id: background
-        source: "qrc:/images/toolbutton.sci"
+        source: "qrc:///gfx/gfx/menu-button.png"
         smooth: true
-        opacity: 0.5
+        opacity: 0.2
         anchors.fill: parent
     }
 

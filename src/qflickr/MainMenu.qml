@@ -1,12 +1,18 @@
 import Qt 4.7
 
 
-Rectangle{
+Item{
     id: mainMenu
-    property alias authUrl: webauth.urlString
-    
+    property alias authUrl: webauth.urlString    
     anchors.fill: parent
-    Image { source: "qrc:/images/quickflickr-bg.png"; anchors.fill: parent }    
+    
+    Page{
+        id: mainPage
+        title: "QuickFlickr"
+        anchors.fill: parent        
+        onBackClicked:{ mainMenu.state = 'Menu'; }
+    }
+    
     
     function contactsMode(){
         mainMenu.state = 'Contacts'; 
@@ -25,50 +31,19 @@ Rectangle{
     MenuButton{ id: contactsButton; 
                 text: "Contacts";
                 onClicked: parent.contactsMode();
-                x:-750;y:140 }
+                x:-750;y:170 }
     MenuButton{ id: myPhotoStreamButton; 
-                text: "My Favorites"; 
+                text: "Favorites"; 
                 onClicked: parent.favoritesMode();
                 anchors.left: contactsButton.right
                 anchors.top: contactsButton.top
                 anchors.leftMargin:50}
     MenuButton{ id: recentCommentsButton; 
-                text: "Recent Activity"; 
+                text: "Activity"; 
                 onClicked: parent.recentActivityMode(); 
                 anchors.left: myPhotoStreamButton.right
                 anchors.top: myPhotoStreamButton.top
                 anchors.leftMargin:50}
-    Image {
-            id: quitButton
-            source: "qrc:/images/quit.png"
-            opacity: 1
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.rightMargin: 10
-            anchors.topMargin: 10
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked:{mainWindow.close();}//Qt.quit()}
-            }
-    }
-    
-    Image {
-            id: minimizeButton
-            source: "qrc:/images/minimize.png"
-            opacity: 1
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.leftMargin: 10
-            anchors.topMargin: 10
-            
-            MouseArea {
-                anchors.fill: parent
-                onClicked:{ mainWindow.minimize(); }
-            }
-    }
-    
-    
     
     
     WebBrowser{       
@@ -90,11 +65,13 @@ Rectangle{
     RecentActivityView{
         id: recentActivityView
         opacity: 0
+        anchors.topMargin: 65
     }
 
     FavoritesView{
         id: favoritesView
         opacity: 0
+        anchors.topMargin: 65
     }
 
     states: [
@@ -119,20 +96,9 @@ Rectangle{
             
             PropertyChanges {
                 target: contactsButton
-                x: 50
-                y: 140
-                
-            }
-            
-            PropertyChanges{
-                target: quitButton
-                opacity: 1
-            }
-             
-            PropertyChanges{
-                target: minimizeButton
-                opacity: 1
-            }
+                x: 149                                
+            }         
+                            
         },
 
         State{
@@ -145,14 +111,10 @@ Rectangle{
                 opacity: 1
             }
             
-            PropertyChanges{
-                target: quitButton
-                opacity: 0
-            }
-            
-            PropertyChanges{
-                target: minimizeButton
-                opacity: 0
+            PropertyChanges {
+                target: mainPage
+                title: "Contact Uploads"
+                showCloseButton: false                
             }
         },
 
@@ -163,17 +125,14 @@ Rectangle{
                 x: 0
                 y: 0
                 opacity: 1
+            }          
+            
+            PropertyChanges {
+                target: mainPage
+                title: "Favorites"
+                showCloseButton: false                
             }
             
-            PropertyChanges{
-                target: quitButton
-                opacity: 0
-            }
-            
-            PropertyChanges{
-                target: minimizeButton
-                opacity: 0
-            }
         },
 
         State{
@@ -184,10 +143,16 @@ Rectangle{
                 x: 0
                 y: 0
                 opacity: 1
-            }                                   
+            }  
+            PropertyChanges {
+                target: mainPage
+                title: "Recent Activity"
+                showCloseButton: false                
+            }
+            
         }
     ]
-
+    
     transitions: [
         Transition{
 
@@ -203,6 +168,7 @@ Rectangle{
                 duration: 700
                 easing.type: "OutCubic"
             }
+                        
             
             AnchorAnimation{
                 
@@ -211,6 +177,7 @@ Rectangle{
     }
 
     ]
+    
 
 }
 

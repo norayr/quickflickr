@@ -21,6 +21,7 @@ Item{
             id: image
             scale: 0.0
             anchors.fill: parent
+            smooth: true
             anchors.topMargin: background.border.width
             anchors.bottomMargin: background.border.width
             anchors.leftMargin: background.border.width
@@ -44,7 +45,8 @@ Item{
     
     states: [
         State {
-            name: "Show"; when: image.status == Image.Ready
+            name: "Show"; 
+            when: image.status == Image.Ready
             PropertyChanges { target: image; scale: 1 }
         }
     ]    

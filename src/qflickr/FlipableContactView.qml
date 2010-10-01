@@ -1,11 +1,10 @@
 import Qt 4.7
 
 
-Image{    
-    width:800
-    height:480            
-    //clip: true        
-    source: "qrc:/images/quickflickr-bg.png"; 
+Item{    
+    id: contactViewPage
+    anchors.fill: parent
+    clip: true        
     
 
     Flipable {                        
@@ -25,7 +24,11 @@ Image{
 
          front:ContactList{
              id: contactList
-             anchors.fill: parent             
+             anchors.topMargin: 65
+             anchors.top:  parent.top             
+             anchors.left: parent.left
+             anchors.right: parent.right
+             anchors.bottom: parent.bottom
             }
           
          
@@ -38,11 +41,12 @@ Image{
 
          states:  State {
              name: "back"
-             PropertyChanges { target: mainFlipable; angle: -180 }
+             PropertyChanges { target: mainFlipable; angle: -180; }   
+             PropertyChanges { target: mainPage; hideNavigationBar: true; }
          }
 
          transitions: Transition {
-             NumberAnimation { properties: "angle"; duration: 600 }
+             NumberAnimation { properties: "angle"; duration: 500 }
          }
 
      }

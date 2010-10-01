@@ -28,6 +28,8 @@
         <file>qflickr/UrlInput.qml</file>
         <file>qflickr/WebBrowser.qml</file>
         <file>qflickr/Loading.qml</file>
+        <file>qflickr/NavigationBar.qml</file>
+        <file>qflickr/Page.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>images/quickflickr-bg.png</file>
@@ -42,5 +44,13 @@
         <file>images/edit-delete.png</file>
         <file>images/loading.png</file>
         <file>images/minimize.png</file>
+    </qresource>
+    <qresource prefix="/gfx">
+        <file>gfx/back.png</file>
+        <file>gfx/background.png</file>
+        <file>gfx/close.png</file>
+        <file>gfx/menu-button.png</file>
+        <file>gfx/minimize.png</file>
+        <file>gfx/toolbar.png</file>
     </qresource>
 </RCC>

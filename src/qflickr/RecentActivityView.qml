@@ -2,9 +2,7 @@ import Qt 4.7
 
 Image {
     id: recentActivityView
-    width: 800
-    height: 480
-    source: "qrc:/images/quickflickr-bg.png"; 
+    anchors.fill: parent    
     state: 'Default'
         
     // Listen FlickrManager::recentActivityUpdated() signal and update

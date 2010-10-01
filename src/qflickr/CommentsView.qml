@@ -6,30 +6,22 @@ Item{
     width: 800
     height: 480        
     signal close
-    
-    
-    
-    
+                
     MouseArea{
         anchors.fill: parent
         onPressAndHold: { commentsView.close()}
     }
-    
-    
-    
+            
     BorderImage {
         source: "qrc:/images/toolbutton.sci"
         smooth: true
-        opacity: 0.3
-        
-    
+        opacity: 0.3            
         id: background
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.leftMargin: 10        
         anchors.rightMargin: 10
-        height: 100
-    
+        height: 100    
     }
     
     Flickable {
@@ -117,12 +109,7 @@ Item{
             scrollArea: commentsList; width: 8
             anchors { right: parent.right; top: parent.top; bottom: parent.bottom; bottomMargin:5; topMargin:5 }                        
             
-        }
-        
-        MouseArea{
-            anchors.fill: parent
-            onPressAndHold: fullScreenViewer.state = 'Default'
-        }
+        }                
     }                
             
 }

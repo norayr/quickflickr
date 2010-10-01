@@ -86,10 +86,5 @@ Item{
         width: 48
         height: 48
         source: "http://www.flickr.com/buddyicons/"+author+".jpg"        
-    }
-    
-    MouseArea{
-        anchors.fill: parent
-        onPressAndHold: fullScreenViewer.state = 'Default'
-    }
+    }        
 }
