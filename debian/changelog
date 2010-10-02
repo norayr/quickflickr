@@ -1,3 +1,9 @@
+quickflickr (1.1.1) unstable; urgency=low
+
+  * BugFix: Now it should be possible to add comments.
+  
+ -- Marko Mattila <marko.a.mattila@gmail.com>  Sat, 02 Aug 2010 23:11:22 +0300
+
 quickflickr (1.1.0) unstable; urgency=low
 
   * Added new graphics
