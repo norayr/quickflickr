@@ -152,6 +152,7 @@ Image{
     
     FullScreenCommentField{
         id: commentField
+        photoId: id
         anchors.left: parent.right
         anchors.leftMargin: 10        
         anchors.rightMargin: 10

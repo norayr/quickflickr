@@ -2,6 +2,7 @@ import Qt 4.7
 
 Item{    
     signal commentAdded
+    property string photoId            
     
     Text{
         id: titleText   
