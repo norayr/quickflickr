@@ -7,6 +7,7 @@ BorderImage {
 
     id: button
     property alias text: textElement.text
+    property alias source: icon.source
     width: 120;
     height: 45;
     source: "qrc:/images/toolbutton.sci"
@@ -21,6 +22,14 @@ BorderImage {
      font.pixelSize: 20
      style: Text.Raised
      color: "white"
+    }
+    
+    Image{
+        id: icon
+        smooth:  true
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: source != ""
     }
 
     MouseArea {
@@ -40,8 +49,16 @@ BorderImage {
           style: Text.Sunken
           color: "gray"
       }
+      PropertyChanges {
+          target: icon          
+          scale: 1.5
+      }      
     }
     ]
+    
+    transitions: Transition{
+        SmoothedAnimation{ duration: 500 }
+    }
 
 
  }

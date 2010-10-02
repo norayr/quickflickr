@@ -1,14 +1,13 @@
 import Qt 4.7
 
 
-Rectangle {
+Image{
     id: fullScreenDelegate
-    width: 796
-    height: 476
-    y: 0
-    border.color: "white"
-    border.width: 3
-    color: "black"
+    width: 800
+    height: 480    
+    source:  "qrc:///gfx/gfx/film_strip.png"
+    state:  "Default"
+    property bool commentsOk: false
     
     // This is needed here in order to get back if the image doesn't get loaded
     MouseArea{
@@ -16,34 +15,153 @@ Rectangle {
         onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}            
     }
    
-   
+    // TODO: Remove this when real film strip gfx exists
+    
+    
     // Actual thumbnail image. The size of
     // image is kept quite small untill it will be loaded
     Image{
         id: thumbImage
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter                
         source: url
-        smooth: true
-        height: 0
-        opacity: 0
-        fillMode: Image.PreserveAspectFit
-        x: (fullScreenDelegate.width) / 2
-        y: (fullScreenDelegate.height) / 2
-        sourceSize.width:800
-        sourceSize.height:480
-        onStatusChanged: {if(thumbImage.status == Image.Ready) fullScreenDelegate.state = 'ImageLoaded';}
+        smooth: true        
+        fillMode: Image.PreserveAspectFit        
+        
+        height:320
+        //onStatusChanged: {if(thumbImage.status == Image.Ready) fullScreenDelegate.state = 'ImageLoaded';}
         
         MouseArea{
             anchors.fill: parent        
-            onClicked: {                
-                if ( fullScreenDelegate.state == "ImageLoaded"){
-                    fullScreenDelegate.state = 'Details';
+            onClicked: {          
+                
+                if ( fullScreenDelegate.state == "Default"){
+                    fullScreenDelegate.state = 'Details';                    
                 }else{
-                    fullScreenDelegate.state = 'ImageLoaded';
+                    fullScreenDelegate.state = "Default";
+                    flipable.state = 'front';
                 }
             }
             
             onPressAndHold: {mainFlipable.state = 'front'; clearTimer.start()}            
         }
+    }
+    
+    Button {
+        id: addCommentButton                        
+        anchors.top:  parent.bottom
+        anchors.left: commentButton.right
+        anchors.leftMargin: 25
+        opacity:  0
+        width:  50
+        height: 50
+        source: "qrc:///gfx/gfx/add_comment.png"      
+        onClicked:{ 
+            parent.state = 'Comment';
+        }
+    }
+    
+    Button {
+        id: commentButton                        
+        anchors.top:  parent.bottom
+        anchors.left: faveButton.right
+        anchors.leftMargin: 25
+        opacity:  0
+        width:  50
+        height: 50
+        source: "qrc:///gfx/gfx/comment.png"      
+        onClicked:{ 
+            if ( !parent.commentsOk ){
+                commentsView.photoId = id;
+                flickrManager.getComments(id); 
+                parent.commentsOk = true;
+            }
+            
+            if ( flipable.state == "front" ){
+                flipable.state = 'back'; 
+            }else{
+                flipable.state = 'front';
+            }
+            
+            fullScreenDelegate.state = "Details";            
+        }
+    }
+    
+    
+    Button {
+        id: faveButton        
+        anchors.top: commentButton.top        
+        anchors.left: parent.left        
+        opacity:  0
+        width:  50
+        height: 50
+        source: "qrc:///gfx/gfx/favorite.png"        
+        onClicked:{  flickrManager.addFavorite(id) }        
+    }
+    
+    Flipable{
+        id: flipable
+        state: "front"
+        property int angle: 0
+        anchors.left: parent.right
+        anchors.leftMargin: 10        
+        anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin:  70
+           
+        
+        transform: Rotation {
+            id: rotation
+            origin.x: flipable.width/2 
+            origin.y: flipable.height/2
+            axis.x: 0 
+            axis.y: 1 
+            axis.z: 0     // rotate around y-axis
+            angle: flipable.angle
+        }
+        
+       
+        front:FullScreenInfoField{
+            id: infoField
+            anchors.fill: parent
+            title: model.title
+            description: model.description
+            tags: model.tags
+            dateTaken: model.datetaken
+            views: model.views                                
+        }
+        
+        back: CommentList{
+            id: commentList         
+            anchors.fill: parent            
+        }
+        
+        states:  State {
+            name: "back"                       
+            PropertyChanges { target: flipable; angle: -180; }             
+        }
+
+        transitions: Transition {
+            NumberAnimation { properties: "angle"; duration: 400 }
+        }
+        
+
+    }
+    
+    FullScreenCommentField{
+        id: commentField
+        anchors.left: parent.right
+        anchors.leftMargin: 10        
+        anchors.rightMargin: 10
+        anchors.top: parent.top
+        anchors.topMargin: 130
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 120
+        width: 200
+        
+        
     }
     
     Timer{
@@ -53,299 +171,158 @@ Rectangle {
     }
     
     
-    Text{
-        id:progressText
-        text: "Loading... " + Math.floor(thumbImage.progress*100) +"%"
-        font.family: "Helvetica"
-        font.pointSize: 40
-        color: "white"
-        anchors.fill: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        opacity: 1 - thumbImage.progress
-    }
-
-
-    // Title section
-    Text{
-        id: title_
-        elide: Text.ElideRight
-        width: fullScreenDelegate.width - 20
-        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        text: title
-        font.family: "Helvetica"
-        font.pointSize: 22
-        smooth: true
-        color: "white"
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: description_.left
-        anchors.leftMargin: 10
-        anchors.topMargin: 10
-        anchors.rightMargin: 5
-        opacity: 0
-
-    }
-
-    // Description field
-    BorderImage{
-        id: description_
-        source: "qrc:/images/toolbutton.sci"
-        smooth: true
-        opacity: 0        
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom:parent.bottom
-        anchors.rightMargin: 10
-        anchors.topMargin: 10
-        anchors.bottomMargin: 60
-        anchors.left: parent.horizontalCenter
-        
-
-        Flickable{
-            id: flickable
-            flickableDirection: Flickable.VerticalFlick            
-            anchors.fill: description_
-            anchors.topMargin: 2            
-            contentHeight: descriptionTitle.height + descriptionText.height + 30                        
-            clip: true
+    states: [
+        State{
+            name: "Details"
+                        
             
-            
-            Text{
-                id: descriptionTitle
-                text: "Description:"
-                font.family: "Helvetica"
-                font.pointSize: 22
-                color: "white"
-                smooth: true
-                
-                anchors.top: description.top                
-                anchors.left: parent.left
-                anchors.topMargin: 20
+            PropertyChanges{
+                target: thumbImage
+                width: 200   
+                height: 320
                 anchors.leftMargin: 10
-                x:10
-                
+                anchors.topMargin: 70
             }
-    
-            Text{
-                id: descriptionText
-                text: description
-                font.family: "Helvetica"
-                font.pointSize: 15            
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                clip: true
-                color: "white"
-                smooth: true
-                width: description_.width - 5
-                anchors.top: descriptionTitle.bottom
-                anchors.left: descriptionTitle.left
-                anchors.right: parent.right                
-                anchors.rightMargin: 5
-                anchors.topMargin: 30
-                textFormat: Text.RichText
-                
-                onLinkActivated:{webview.urlString = link; fullScreenViewer.state = 'WebView'; }
-            }  
             
-            ScrollBar {            
-                scrollArea: flickable; width: 8
-                anchors { right: parent.right; top: parent.top; bottom: parent.bottom; bottomMargin:5; topMargin:5 }                        
-                
+            AnchorChanges{
+                target:  thumbImage
+                anchors.left: fullScreenDelegate.left                
+                anchors.top:  parent.top                
+                anchors.verticalCenter: undefined
+                anchors.horizontalCenter: undefined
             }
-        }                
-                
-    }
-
-    Text {
-        id: views_
-        text: "Views: " + views
-        smooth: true
-        font.family: "Helvetica"; font.pointSize: 15; color: "white"
-        anchors.top: thumbImage.bottom
-        anchors.left: fullScreenDelegate.left
-        anchors.right: description_.left
-        anchors.topMargin: 5
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        opacity:0
-
-    }
-
-
-    // Tags field. NOTE if there are "too many" tags
-    // this widgets just clips stuff away.
-    Item {
-        id: tags_
-        anchors.top: views_.bottom
-        anchors.left: fullScreenDelegate.left
-        anchors.right: description_.left
-        anchors.bottom: description_.bottom
-        anchors.topMargin: 5
-        anchors.leftMargin: 5
-        anchors.rightMargin: 5
-        opacity:0
-
-        Text{
-            id: tagsTitle
-            text: "Tags:"
-            font.family: "Helvetica"; font.bold: true; font.pointSize: 15; color: "white"
-            anchors.top: parent.top
-            anchors.left: parent.left
-        }
-
-        Text{
-            id: tagsField
-            text: tags
-            clip: true
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            smooth: true
-            font.family: "Helvetica"; font.pointSize: 15; color: "white"
-            anchors.top: tagsTitle.bottom
-            anchors.left: tagsTitle.left
-            anchors.right: parent.right
-            //anchors.bottom: fullScreenDelegate.bottom
-            anchors.topMargin: 5
-        }
-    }
-
-
-    
-    
-    Button {
-        id: backButton
-        text: "Add Fave!"
-        anchors.top: description_.bottom
-        anchors.right: description_.right
-        anchors.topMargin: 10
-        opacity: 0
-        onClicked:{  flickrManager.addFavorite(id) }
-        z: 5
-    }
-    
-    Button {
-        id: commentButton
-        text: "Comments"
-        anchors.top: description_.bottom
-        anchors.right: backButton.left
-        anchors.topMargin: 10
-        anchors.rightMargin: 15
-        opacity: 0
-        onClicked:{ 
-            commentsView.photoId = id;
-            flickrManager.getComments(id); 
-            fullScreenViewer.state = 'CommentsView' 
-        }
-        z: 5
-    }
-
-    Button {
-        id: flickrButton
-        text: "Go Flickr"
-        anchors.top: description_.bottom
-        anchors.right: commentButton.left
-        anchors.topMargin: 10
-        opacity: 0
-        anchors.rightMargin: 15
-        onClicked: { webview.urlString = "http://www.flickr.com/photos/"+owner+"/"+id; fullScreenViewer.state = 'WebView';}
-        z: 5
-    }
-   
-    states:[
-    State{
-        name: "Details"
-        PropertyChanges{
-            target: thumbImage
-            height: 250
-            width: 250       
-            opacity: 1
-            anchors.leftMargin: 10
-            anchors.topMargin: 10
-        }
-        
-        AnchorChanges{
-            target: thumbImage
-            anchors.left: fullScreenDelegate.left
-            anchors.top: title_.bottom
-        }
-
-        PropertyChanges{
-            target: title_
-            opacity: 1
-        }
-
-        PropertyChanges{
-            target: description_
-            opacity: 0.8
-        }
-
-        PropertyChanges{
-            target: backButton
-            opacity: 1
-        }
-        
-        PropertyChanges {
-            target: commentButton
-            opacity: 1            
-        }
-        
-        PropertyChanges {
-            target: flickrButton
-            opacity: 1            
-        }
-        
-        PropertyChanges{
-            target: views_
-            opacity: 1
-        }
-        PropertyChanges{
-            target: tags_
-            opacity: 1
-        }
+            
+            AnchorChanges {                
+                target: flipable
+                anchors.left: thumbImage.right                
+                anchors.right: parent.right                
+                anchors.top: parent.top                
+                anchors.bottom: parent.bottom
+            }
+            
+            AnchorChanges {
+                target:  faveButton
+                anchors.left: thumbImage.left                                                         
+                anchors.bottom: parent.bottom               
+            }
+            
+            AnchorChanges {
+                target:  commentButton                
+                anchors.top: undefined                
+                anchors.bottom: parent.bottom               
+            }
+            AnchorChanges {
+                target:  addCommentButton                
+                anchors.top: undefined                
+                anchors.bottom: parent.bottom               
+            }
+            
+            PropertyChanges{
+                target: addCommentButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+            PropertyChanges{
+                target: commentButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+            
+            PropertyChanges{
+                target: faveButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+            
+            PropertyChanges {                
+                target: flipable
+                opacity: 1
+                scale: 1
+                anchors.leftMargin: 10
+                anchors.rightMargin: 10
+                anchors.topMargin: 70
+            }
         },
-
-    State{
-        name: 'ImageLoaded';
-        PropertyChanges{
-            target: thumbImage
-            opacity: 1
-            width: 780
-            height: 470
-            x: (fullScreenDelegate.width - width) / 2
-            y: (fullScreenDelegate.height - height) / 2
-        }        
+        State{
+            name: "Comment"
+            AnchorChanges{
+                target:  flipable
+                anchors.left: parent.right                
+                anchors.top: parent.top                
+                anchors.bottom: parent.bottom                                
+            }
+            
+            AnchorChanges {                
+                target: commentField
+                anchors.left: thumbImage.right                
+                anchors.right: parent.right                
+                anchors.top: parent.top                
+                anchors.bottom: parent.bottom
+            }
+            
+            PropertyChanges{
+                target: thumbImage
+                width: 200   
+                height: 320
+                anchors.leftMargin: 10
+                anchors.topMargin: 70
+            }
+            
+            AnchorChanges{
+                target:  thumbImage
+                anchors.left: fullScreenDelegate.left                
+                anchors.top:  parent.top                
+                anchors.verticalCenter: undefined
+                anchors.horizontalCenter: undefined
+            }
+            
+            
+            AnchorChanges {
+                target:  faveButton
+                anchors.left: thumbImage.left                                                         
+                anchors.bottom: parent.bottom               
+            }
+            
+            AnchorChanges {
+                target:  commentButton                
+                anchors.top: undefined                
+                anchors.bottom: parent.bottom               
+            }
+            AnchorChanges {
+                target:  addCommentButton                
+                anchors.top: undefined                
+                anchors.bottom: parent.bottom               
+            }
+            
+            PropertyChanges{
+                target: addCommentButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+            PropertyChanges{
+                target: commentButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+            
+            PropertyChanges{
+                target: faveButton
+                opacity: 1
+                anchors.bottomMargin: 75
+            }
+                        
+        }
         
-        AnchorChanges{
-            target: description_
-            anchors.left: fullScreenDelegate.right
-        }
-
-        AnchorChanges{
-            target: backButton
-            anchors.top: fullScreenDelegate.bottom
-        }
-
-        AnchorChanges{
-            target: commentButton
-            anchors.top: fullScreenDelegate.bottom
-        }
-        AnchorChanges{
-            target: flickrButton
-            anchors.top: fullScreenDelegate.bottom
-        }
-        }
-
     ]
 
-
-    transitions:[ Transition{
-        PropertyAnimation {
-            properties: "opacity,height,width,x,y"
-            easing.type: "OutCubic"
-            duration: 500
-        }
-
-        AnchorAnimation {
-
-        }
-        }]    
+    transitions: [
+        Transition {
+        
+            PropertyAnimation{  properties: "width,opacity";  duration: 500; easing.type: Easing.OutQuad }                    
+            AnchorAnimation{ duration: 500;  easing.type: Easing.OutQuad }
+        
+        }    
+    ]
+                
 }
+

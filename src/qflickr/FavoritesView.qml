@@ -32,25 +32,25 @@ Item{
         
          path: Path{      
              
-             startX: -(pathView.count*140)/2; startY: 200                                                                                     
+             startX: -(pathView.count*130)/2; startY: 200                                                                                     
              PathAttribute { name: "iconScale"; value: 0.6 }                             
              
              PathLine{ x: 100; y: 200 }
              PathAttribute { name: "iconScale"; value: 1.2 }            
              
              
-             PathLine{ x: 300; y: 200 }
+             PathLine{ x: 350; y: 200 }
              PathAttribute { name: "iconScale"; value: 2.0 }            
              
              
-             PathLine{ x: 500; y: 200 }
+             PathLine{ x: 450; y: 200 }
              PathAttribute { name: "iconScale"; value: 2.0 }                             
              
              PathLine{ x: 700; y: 200 }
              PathAttribute { name: "iconScale"; value: 1.2 }            
              
              
-             PathLine{ x: 800 + (pathView.count*140)/2; y:200 }                                  
+             PathLine{ x: 800 + (pathView.count*130)/2; y:200 }                                  
              PathAttribute { name: "iconScale"; value: 0.6 }
              
          }

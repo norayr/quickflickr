@@ -10,64 +10,31 @@ Item{
             fullScreenViewer.state = "Default"
         }
     }
-    /*
-    PathView {     
-        id:photoList       
-        anchors.fill: parent
-        //model: FavoritesModel{ id: favoritesModel }
-        //delegate: FavoriteDelegate{}
-        model: FullScreenModel{ id: fullScreenModel }
-        delegate: FullScreenDelegate { id: fullScreenDelegate}
-        
-         path: Path{      
-             
-             startX: -(pathView.count*140)/2; startY: 200                                                                                     
-             PathAttribute { name: "iconScale"; value: 0.6 }                             
-             
-             PathLine{ x: 100; y: 200 }
-             PathAttribute { name: "iconScale"; value: 1.2 }            
-             
-             
-             PathLine{ x: 300; y: 200 }
-             PathAttribute { name: "iconScale"; value: 2.0 }            
-             
-             
-             PathLine{ x: 500; y: 200 }
-             PathAttribute { name: "iconScale"; value: 2.0 }                             
-             
-             PathLine{ x: 700; y: 200 }
-             PathAttribute { name: "iconScale"; value: 1.2 }            
-             
-             
-             PathLine{ x: 800 + (pathView.count*140)/2; y:200 }                                  
-             PathAttribute { name: "iconScale"; value: 0.6 }
-             
-         }
-         
-        }
-    */    
-    ListView{    
-        id: photoList
-        model: FullScreenModel{ id: fullScreenModel }
-        delegate: FullScreenDelegate { id: fullScreenDelegate}
-        width: 800
-        height: 480
-        orientation: "Horizontal"
-        snapMode: ListView.SnapOneItem
-        spacing: 20
-        focus: true
-        cacheBuffer: 1600
-        opacity: 0
-                         
-    }
-       
+    
+    
     Rectangle{
+        color:  "white"
+        anchors.fill: parent
+    
+        ListView{    
+            id: photoList
+            model: FullScreenModel{ id: fullScreenModel }
+            delegate: FullScreenDelegate { id: fullScreenDelegate}
+            anchors.fill: parent
+            orientation: "Horizontal"
+            snapMode: ListView.SnapOneItem        
+            focus: true
+            cacheBuffer: 1600
+            opacity: 0
+                             
+        }
+    } 
+    
+    Image{
+        source:  "qrc:///gfx/gfx/film_strip.png"
         id: loaderIndicator
-        color: "black"        
         anchors.fill: parent
         visible: true
-        border.color: "white"
-        border.width: 3
         
         Row{
             id: indicatorRow            
@@ -152,7 +119,7 @@ Item{
         
         PropertyChanges {
             target: mainPage
-            hideNavigationBar: false
+            hideNavigationBar: true
         }
         
     }
@@ -166,5 +133,6 @@ Item{
                 PropertyAnimation { properties: "x,y"; duration: 600 }
             }
          }
+         
 }
 

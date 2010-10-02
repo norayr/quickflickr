@@ -60,7 +60,10 @@ OTHER_FILES += \
     qflickr/BrowserButton.qml \
     qflickr/Loading.qml \
     qflickr/Page.qml \
-    qflickr/NavigationBar.qml
+    qflickr/NavigationBar.qml \
+    qflickr/FullScreenInfoField.qml \
+    qflickr/CommentList.qml \
+    qflickr/FullScreenCommentField.qml
 
 
 

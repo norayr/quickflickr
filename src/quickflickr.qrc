@@ -30,6 +30,9 @@
         <file>qflickr/Loading.qml</file>
         <file>qflickr/NavigationBar.qml</file>
         <file>qflickr/Page.qml</file>
+        <file>qflickr/FullScreenInfoField.qml</file>
+        <file>qflickr/CommentList.qml</file>
+        <file>qflickr/FullScreenCommentField.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>images/quickflickr-bg.png</file>
@@ -52,5 +55,9 @@
         <file>gfx/menu-button.png</file>
         <file>gfx/minimize.png</file>
         <file>gfx/toolbar.png</file>
+        <file>gfx/film_strip.png</file>
+        <file>gfx/add_comment.png</file>
+        <file>gfx/comment.png</file>
+        <file>gfx/favorite.png</file>
     </qresource>
 </RCC>
