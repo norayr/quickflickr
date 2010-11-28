@@ -17,7 +17,6 @@
         <file>qflickr/WebBrowser.qml</file>
         <file>qflickr/Loading.qml</file>
         <file>qflickr/NavigationBar.qml</file>
-        <file>qflickr/Page.qml</file>
         <file>qflickr/Settings.qml</file>
         <file>qflickr/Timelineview.qml</file>
         <file>qflickr/TimelineDelegate.qml</file>
