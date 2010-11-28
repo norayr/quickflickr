@@ -3,18 +3,12 @@
 ######################################################################
 include(quickflickr.pri)
 
-#TEMPLATE = app
-#TARGET = quickflickr 
 DEPENDPATH += .
 INCLUDEPATH += .
 DESTDIR = ../
 
 
 unix {
-    #VARIABLES
-    #isEmpty(PREFIX) {
-    #    PREFIX = /opt/quickflickr
-    #}
     BINDIR = $$PREFIX/quickflickr
     DATADIR = /usr/share
 
@@ -22,7 +16,6 @@ unix {
 
     #MAKE INSTALL    
     INSTALLS += target desktop icon64  iconScalable
-	#iconxpm icon26 icon40 icon64
 
     target.path =$$BINDIR
     
@@ -30,14 +23,6 @@ unix {
     desktop.path = $$DATADIR/applications/hildon
     desktop.files += quickflickr.desktop
 
-    #iconxpm.path = $$DATADIR/pixmap
-    #iconxpm.files += data/maemo/qt-maemo-example.xpm 
-
-    #icon26.path = $$DATADIR/icons/hicolor/26x26/apps
-    #icon26.files += data/26x26/qt-maemo-example.png 
-
-    #icon40.path = $$DATADIR/icons/hicolor/40x40/apps
-    #icon40.files += images/quickflickr.png
 
     icon64.path = $$DATADIR/icons/hicolor/64x64/apps
     icon64.files += images/quickflickr.png
@@ -45,3 +30,5 @@ unix {
     iconScalable.path = $$DATADIR/icons/hicolor/scalable/hildon/
     iconScalable.files += images/quickflickr.png    
 }
+
+

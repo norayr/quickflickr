@@ -24,6 +24,8 @@ public:
         AddFavorite,
         GetFavorites,
         RemoveFavorite,
+        GetUserInfo,
+        GetPhotoInfo,
         RequestCount
 
     };
@@ -38,7 +40,9 @@ public:
 
     Q_INVOKABLE void getLatestContactUploads();
 
-    Q_INVOKABLE void getPhotosOfContact(const QString & userId);
+    Q_INVOKABLE void getPhotostream(const QString & userId, int page=1);
+
+    Q_INVOKABLE void getUserInfo(const QString & userId);
 
     Q_INVOKABLE void getRecentActivity();
     
@@ -56,6 +60,10 @@ public:
     
     Q_INVOKABLE void removeFavorite( const QString & photoId );
     
+    Q_INVOKABLE void getPhotoInfo(const QString & photoId );
+
+    Q_INVOKABLE QString nsid() const;
+
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
     void proceed();        
@@ -66,7 +74,9 @@ Q_SIGNALS:
     void commentAdded();
     void favoritesUpdated( const QString & xml);
     void favoriteRemoved();
-    
+    void userInfoUpdated( const QString & xml);
+    void photoInfoUpdated( const QString & xml);
+
 private Q_SLOTS:        
     void requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData );
     void requestFinished ( int reqId, QString xmlData, QtfError err, void* userData );

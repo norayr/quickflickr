@@ -86,36 +86,45 @@ void FlickrManager::authenticate()
     d->m_requestId.insert(d->m_qtFlickr->get(method,request), GetFrob);
 }
 
-
 void FlickrManager::getLatestContactUploads()
 {
     Q_D(FlickrManager);    
     QtfMethod method("flickr.photos.getContactsPublicPhotos");
     method.args.insert("user_id", d->settingsValue("nsid"));
-    method.args.insert("count", "30" );
+    method.args.insert("count", "25" );
     method.args.insert("include_self", "1");
     method.args.insert("single_photo", "true");
-    method.args.insert("extras", "date_taken" );    
+    //method.args.insert("extras", "date_taken" );
     QtfRequest request;
     d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContactsPublicPhotos);    
 
 }
 
-void FlickrManager::getPhotosOfContact(const QString & userId)
+void FlickrManager::getPhotostream(const QString & userId, int page)
 {
     // Clear the old stuff    
     Q_D(FlickrManager);    
-    
+        
     qDebug() << "getPhotosOfContact() Method";
     QtfMethod method("flickr.people.getPublicPhotos");
     method.args.insert("api_key", "ee829960cd89d099");
-    method.args.insert("user_id", userId);
-    method.args.insert("extras", "description,date_taken,username,original_format,last_update,geo,tags,o_dims,views,url_m" );
-    method.args.insert("per_page","30");    
+    method.args.insert("user_id", userId);    
+    method.args.insert("extras", "owner_name,url_m,url_s" );
+    method.args.insert("per_page","20");
+    method.args.insert("page", QString::number(page));
     QtfRequest request;
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetPhotosOfContact);
 }
 
+void FlickrManager::getUserInfo( const QString & userId )
+{
+    Q_D(FlickrManager);
+    QtfMethod method("flickr.people.getInfo");
+    method.args.insert("api_key", "ee829960cd89d099");
+    method.args.insert("user_id", userId);
+    QtfRequest request;
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetUserInfo);
+}
 
 void FlickrManager::getRecentActivity()
 {
@@ -195,6 +204,23 @@ void FlickrManager::removeFavorite( const QString & photoId )
     QtfRequest request;    
     Q_D(FlickrManager);
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), RemoveFavorite); 
+}
+
+
+void FlickrManager::getPhotoInfo(const QString & photoId )
+{
+    QtfMethod method("flickr.photos.getInfo");
+    method.args.insert("api_key", "ee829960cd89d099");
+    method.args.insert("photo_id", photoId);
+    QtfRequest request;
+    Q_D(FlickrManager);
+    d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetPhotoInfo);
+}
+
+QString FlickrManager::nsid() const
+{
+    Q_D(const FlickrManager);
+    return d->settingsValue("nsid");
 }
 
 void FlickrManager::requestFinished ( int reqId, QtfResponse data, QtfError err, void* userData )
@@ -286,6 +312,15 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         emit favoriteRemoved();
         break;
         
+    case GetUserInfo:
+        //qDebug()<< xmlData;
+        emit userInfoUpdated(xmlData);
+        break;
+    case GetPhotoInfo:
+        //qDebug()<< xmlData;
+        emit photoInfoUpdated(xmlData);
+        break;
+
     default:
         {
             if ( !err.code){

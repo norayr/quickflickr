@@ -9,13 +9,12 @@ int main(int argc, char *argv[])
     
     // Simple loader for loading QML files
     QmlLoader loader;
-    loader.resize(800,480);
+    loader.resize(480,800);
 #ifdef Q_WS_MAC
         loader.show();
 #else
         app.setGraphicsSystem("raster");
         loader.showFullScreen();
 #endif
-    
     return app.exec();
 }

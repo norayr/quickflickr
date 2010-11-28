@@ -6,6 +6,7 @@ Item{
     property alias fillMode: image.fillMode
     property alias smooth: image.smooth
     property alias sourceSize: image.sourceSize    
+    property bool showBorder: true
     signal clicked
     signal pressAndHold
     
@@ -14,12 +15,12 @@ Item{
         id: background
         anchors.fill: parent
         color: "black"
-        border.width: 2
-        border.color: "white"
+        border.width: showBorder?2:0
+        border.color: showBorder?"white":color
         
         Image{
             id: image
-            scale: 0.0
+            scale: 0
             anchors.fill: parent
             smooth: true
             anchors.topMargin: background.border.width
@@ -28,21 +29,22 @@ Item{
             anchors.rightMargin: background.border.width
             
         }   
-        
+        /*
         Loading{            
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             visible: image.status != Image.Ready            
         }
+        */
     }
-    
-    
+
+
     MouseArea{
         anchors.fill: parent
         onClicked: parent.clicked();     
         onPressAndHold: parent.pressAndHold();
     }
-    
+
     states: [
         State {
             name: "Show"; 
@@ -50,7 +52,7 @@ Item{
             PropertyChanges { target: image; scale: 1 }
         }
     ]    
-    
+
     transitions: [
         Transition {
             PropertyAnimation {
@@ -60,4 +62,5 @@ Item{
             }            
         }
     ]
+
 }

@@ -1,114 +1,87 @@
 import Qt 4.7
 
-Item{   
-    id: navBar
-    property bool showCloseButton: true
-    property alias text: title.text    
-    signal backClicked            
-    
-                
-    Text{
-        id: title
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter        
-        font.pixelSize: 22
-        font.bold: true
-        color: "white"
-        smooth: true
-        Behavior on text {
-            PropertyAnimation { target: title; from: 0; to: 1; property: "scale"; duration: 300 }
-        }
-    }
-    
-    Image{
-        id: background
-        source: "qrc:///gfx/gfx/toolbar.png"    
+Item{
+    id: navBar    
+    property alias model: menu.model
+    property int currentIndex: 0
+    signal itemSelected(string id)
+
+    height: settings.navigationBarHeight
+
+    Rectangle{
         anchors.fill: parent
-        smooth: true
-        opacity: 0.3
+        opacity: 0.8
+        gradient: Gradient {
+             GradientStop { position: 0.0; color: "black" }
+             GradientStop { position: 0.1; color: "darkGray" }
+             GradientStop { position: 1.0; color: "black" }
+           }
     }
-    
-    // TODO: Create a reusable component for each button below
-    Image{
-        source: "qrc:///gfx/gfx/minimize.png"    
-        anchors.left:  parent.left
-        anchors.verticalCenter:  parent.verticalCenter   
-        smooth: true
-        opacity:  0.6
-        scale: 0.7
-        
-        MouseArea{
-            anchors.fill: parent
-            onPressed: { parent.scale = 0.8; parent.opacity = 0.8; }
-            onReleased: { parent.scale = 0.7; parent.opacity = 0.6; }
-            onClicked: {  mainWindow.minimize(); }
+
+
+    Component{
+        id: ldelegate
+
+
+        Text{
+            width: menu.width
+            height: menu.height
+            text: name
+            color: "white"
+            font.pixelSize: 24
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            smooth: true
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: navBar.itemSelected(strId)
+            }
         }
     }
-    
-    
-    Flipable {                        
-         id: buttonFlipable
-         property int angle: 0
-         width: closeButton.width
-         anchors.right: parent.right             
-         anchors.verticalCenter: parent.verticalCenter
-         
-         transform: Rotation {
-             id: rotation
-             origin.x: buttonFlipable.width/2 
-             origin.y: buttonFlipable.height/2
-             axis.x: 0 
-             axis.y: 1 
-             axis.z: 0     // rotate around y-axis
-             angle: buttonFlipable.angle
-         }
 
-         front: Image{
-             id: closeButton
-             source: "qrc:///gfx/gfx/close.png"                 
-             anchors.verticalCenter:  parent.verticalCenter 
-             smooth: true
-             opacity:  0.6
-             scale: 0.7
-             
-             MouseArea{
-                 anchors.fill: parent
-                 onPressed: { parent.scale = 0.8; parent.opacity = 0.8; }
-                 onReleased: { parent.scale = 0.7; parent.opacity = 0.6; }
-                 onClicked: { mainWindow.close(); }
-             }
-         }
-          
-         
-         back: Image{
-             id: backButton
-             source: "qrc:///gfx/gfx/back.png"                 
-             anchors.verticalCenter:  parent.verticalCenter             
-             smooth: true
-             opacity:  0.6
-             scale: 0.7
-             
-             MouseArea{
-                 anchors.fill: parent
-                 onPressed: { parent.scale = 0.8; parent.opacity = 0.8; }
-                 onReleased: { parent.scale = 0.7; parent.opacity = 0.6; }
-                 onClicked: { navBar.backClicked()}
-             }
-         }
 
-         states:  State {
-             name: "back"
-             when: showCloseButton == false
-             PropertyChanges { target: buttonFlipable; angle: -180; }             
-         }
 
-         transitions: Transition {
-             NumberAnimation { properties: "angle"; duration: 400 }
-         }
+    // List view for containing the actual menu items
+    ListView{
+        id: menu
+        //model: lmodel
+        delegate: ldelegate
+        anchors.fill: parent
+        anchors.bottomMargin: 20
+        orientation: ListView.Horizontal
+        snapMode: ListView.SnapOneItem
+        highlightRangeMode: ListView.StrictlyEnforceRange
+        currentIndex: navBar.currentIndex
+        onCurrentIndexChanged: navBar.currentIndex = currentIndex
+    }
 
-     }
-    
-   
+
+
+
+    Row{
+        anchors.top: menu.bottom
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: menu.horizontalCenter
+
+
+        Repeater{
+            model: lmodel.count
+            Image{
+                smooth:  true
+                source: {if ( menu.currentIndex == index)"qrc:///gfx/gfx/indicator-selected.png"; else "qrc:///gfx/gfx/indicator-not-selected.png";}
+                width:  15
+                height: 15
+                fillMode: Image.PreserveAspectFit
+            }
+        }
+    }
+
+
+    // TODO: Possibility to close and minimize the app
+    // mainWindow.minimize()
+    // mainWindow.close()
+
     
     
     

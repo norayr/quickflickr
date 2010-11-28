@@ -43,9 +43,15 @@ import Qt 4.7
 
 Item {
     id: container
-
+    width:  settings.scrollbarWidth
     property variant scrollArea
     property variant orientation: Qt.Vertical
+    anchors.right: scrollArea.right
+    anchors.top: scrollArea.top
+    anchors.bottom: scrollArea.bottom
+    anchors.topMargin: 5
+    anchors.bottomMargin: 5
+    anchors.rightMargin: 5
 
     opacity: 0
 
