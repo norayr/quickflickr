@@ -7,7 +7,12 @@
 
 TARGET = quickflickr
 CONFIG   -= app_bundle release
-QT += declarative network xml opengl webkit #dbus
+QT += declarative network xml opengl webkit
+
+linux-g++{
+    QT += dbus
+}
+
 
 
 TEMPLATE = app
@@ -41,8 +46,8 @@ OTHER_FILES += \
     qflickr/ScrollBar.qml \
     qflickr/UrlInput.qml \
     qflickr/RecentActivityModel.qml \
-    qflickr/ContactListModel.qml \
     qflickr/CommentModel.qml \
+    qflickr/CommentsView.qml \
     qflickr/FavoritesModel.qml \
     qflickr/FlickrImage.qml \
     qflickr/BrowserButton.qml \
@@ -56,7 +61,17 @@ OTHER_FILES += \
     qflickr/PhotostreamModel.qml \
     qflickr/PhotoDetailsView.qml \
     qflickr/UserInfoModel.qml \
-    qflickr/UserInfoDelegate.qml
+    qflickr/UserInfoDelegate.qml \
+    qflickr/FlickrText.qml \
+    qflickr/LineSeparator.qml \
+    qflickr/IconButton.qml \
+    qflickr/RadioIconButton.qml \
+    qflickr/PhotoDetailsModel.qml \
+    qflickr/PhotoDetailsDelegate.qml \
+    qflickr/AddCommentView.qml \
+    qflickr/ContactUploadsModel.qml \
+    qflickr/ContactListModel.qml \
+    qflickr/ContactListView.qml
 
 
 

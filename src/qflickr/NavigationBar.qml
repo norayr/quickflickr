@@ -10,12 +10,11 @@ Item{
 
     Rectangle{
         anchors.fill: parent
-        opacity: 0.8
-        gradient: Gradient {
-             GradientStop { position: 0.0; color: "black" }
-             GradientStop { position: 0.1; color: "darkGray" }
-             GradientStop { position: 1.0; color: "black" }
-           }
+        anchors.rightMargin: 1
+
+        color: "steelblue"
+        border.color: "white"
+        border.width: 1
     }
 
 
@@ -33,8 +32,12 @@ Item{
             verticalAlignment: Text.AlignVCenter
             smooth: true
 
+            Behavior on scale { NumberAnimation { duration: 200 } }
+
             MouseArea{
                 anchors.fill: parent
+                onPressed: {parent.scale = 0.9; }
+                onReleased: { parent.scale = 1 }
                 onClicked: navBar.itemSelected(strId)
             }
         }
@@ -44,8 +47,7 @@ Item{
 
     // List view for containing the actual menu items
     ListView{
-        id: menu
-        //model: lmodel
+        id: menu        
         delegate: ldelegate
         anchors.fill: parent
         anchors.bottomMargin: 20
@@ -69,20 +71,12 @@ Item{
             model: lmodel.count
             Image{
                 smooth:  true
-                source: {if ( menu.currentIndex == index)"qrc:///gfx/gfx/indicator-selected.png"; else "qrc:///gfx/gfx/indicator-not-selected.png";}
+                source: menu.currentIndex == index?"qrc:/gfx/indicator-selected.png":"qrc:/gfx/indicator-not-selected.png"
                 width:  15
                 height: 15
                 fillMode: Image.PreserveAspectFit
             }
         }
-    }
-
-
-    // TODO: Possibility to close and minimize the app
-    // mainWindow.minimize()
-    // mainWindow.close()
-
-    
-    
+    }    
     
 }

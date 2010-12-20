@@ -6,8 +6,9 @@ Rectangle {
     height: settings.pageHeight
     color:  settings.defaultBackgroundColor
 
-    signal thumbnailClicked( string imageId, url url_m )
+    signal thumbnailClicked( string photoId, url photoUrl )
     property int currentPage: 1
+    property string userid
     property bool loading: true
 
     // Model
@@ -38,14 +39,16 @@ Rectangle {
 
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                showBorder: false
+                showBorder: true
                 source:     url_s
+                borderWidth: 3
                 width:      settings.gridCellWidth
                 height:     settings.gridCellHeight
                 fillMode: Image.PreserveAspectCrop
                 clip:  true
-                //transform: Rotation{origin.x: width/2; origin.y: height/2; axis { x: 0; y: 0; z: 1 } angle: Math.random() * 10 * (index % 2?-1:1) }
-                smooth: true                
+                showLoader: false
+                transform: Rotation{origin.x: width/2; origin.y: height/2; axis { x: 0; y: 0; z: 1 } angle: Math.random() * 10 * (index % 2?-1:1) }
+                smooth: true
                 onClicked: photostreamView.thumbnailClicked(id, mediumSizeUrl);
             }            
         }
@@ -55,8 +58,8 @@ Rectangle {
     function nextPhotostreamPage()
     {
         loading = true;
-        ++currentPage;
-        flickrManager.getPhotostream( flickrManager.nsid(), currentPage );
+        ++currentPage;        
+        flickrManager.getPhotostream( userid, currentPage );
     }
 
     // Function to get previous photostream page
@@ -66,7 +69,7 @@ Rectangle {
             return;
         loading = true;
         --currentPage;
-        flickrManager.getPhotostream( flickrManager.nsid(), currentPage );
+        flickrManager.getPhotostream( userid, currentPage );
     }
 
     function loadMoreImages(){
@@ -74,22 +77,12 @@ Rectangle {
             prevPhotostreamPage();
             console.log("prev page");
         }else
-        if (photostreamGrid.atYEnd){
+        if (photostreamGrid.atYEnd){            
             nextPhotostreamPage();
-            console.log("next page");
+            console.log("next page"+currentPage);
         }
     }
 
-    Item{
-        anchors.fill: photostreamGrid
-        visible: loading
-
-        Loading{
-            id: topLoadingIndicator
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-    }
 
 
 
@@ -109,15 +102,15 @@ Rectangle {
         id:             photostreamGrid
         anchors.top:    spacer.bottom
         anchors.topMargin:  10
-        anchors.left:   parent.left
-        anchors.right:  parent.right
+        anchors.left:   parent.left        
+        anchors.right:  parent.right        
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
+        //anchors.bottomMargin: 10
         cellHeight:     settings.pageWidth / 4
         cellWidth:      settings.pageWidth / 4
         model:          photostreamModel
         delegate:       delegate
-        clip:           true
+        //clip:           true
         opacity: loading ?0.2:1
         onMovementEnded: loadMoreImages();
 
@@ -132,4 +125,16 @@ Rectangle {
             anchors.rightMargin: 5
         }
     }    
+
+    Item{
+        anchors.fill: photostreamGrid
+        visible: loading
+
+        Loading{
+            id: topLoadingIndicator
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
 }

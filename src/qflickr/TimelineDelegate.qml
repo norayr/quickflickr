@@ -26,8 +26,6 @@ Rectangle{
         anchors.rightMargin: 10
         anchors.bottom: parent.bottom
         anchors.bottomMargin: author.paintedHeight
-
-
         source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_z.jpg"
         smooth: true
         fillMode: Image.PreserveAspectCrop
@@ -35,7 +33,7 @@ Rectangle{
 
         MouseArea{
             anchors.fill: parent            
-            onClicked: timelineView.thumbnailClicked(id, image.source);
+            onClicked: timelineView.thumbnailClicked(id, image.source, owner);
         }
 
     }
@@ -43,7 +41,7 @@ Rectangle{
     // Black rectangle for polaroid effect
     Rectangle{
         anchors.fill: image
-        //color: "black"
+
         gradient: Gradient {
              GradientStop { position: 0.0; color: "black" }
              GradientStop { position: 0.5; color: "darkGray" }

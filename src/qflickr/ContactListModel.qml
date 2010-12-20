@@ -1,14 +1,13 @@
 import Qt 4.7
 
 XmlListModel {
-    
-    query: "/rsp/photos/photo"    
-    XmlRole { name: "owner"; query: "@owner/string()" }        
-    XmlRole { name: "title"; query: "@title/string()" }
+    query: "/rsp/contacts/contact"
+    XmlRole { name: "nsid"; query: "@nsid/string()" }
     XmlRole { name: "username"; query: "@username/string()" }
-    XmlRole { name: "datetaken"; query: "@datetaken/string()" }     
-    XmlRole { name: "farm"; query: "@farm/string()" }
-    XmlRole { name: "server"; query: "@server/string()" }
-    XmlRole { name: "id"; query: "@id/string()" }
-    XmlRole { name: "secret"; query: "@secret/string()" }
+    XmlRole { name: "iconserver"; query: "@iconserver/string()" }
+    XmlRole { name: "iconfarm"; query: "@iconfarm/string()" }
+    XmlRole { name: "realname"; query: "@realname/string()" }
+    XmlRole { name: "friend"; query: "@friend/string()" }
+    XmlRole { name: "family"; query: "@family/string()" }
+    XmlRole { name: "ignored"; query: "@ignored/string()" }
 }

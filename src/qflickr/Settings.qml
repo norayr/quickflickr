@@ -1,8 +1,9 @@
 import Qt 4.7
 
 Item{
-    width: 480
-    height: 800
+    width: 360
+    height: 640
+
     property color defaultBackgroundColor: "black"
 
     property int navigationBarHeight: 80
@@ -18,11 +19,14 @@ Item{
     property int smallFontSize: 16
     property int mediumFontSize: 20
     property int largeFontSize: 24
+    property color fontColor: "white"
 
     // Margins
     property int smallMargin: 2
     property int mediumMargin: 5
     property int largeMargin: 10
+    property int hugeMargin: 20
 
-
+    property color separatorColor: "white"
+    property color textHeaderColor: "steelblue"
 }

@@ -18,9 +18,11 @@ Item{
         id: startupView
         x: 0
         y: 0
-        onThumbnailClicked: {
-            photoDetails.source = url_m;
-            mainMenu.state = "details"
+        onThumbnailClicked: {            
+            flickrManager.getPhotostream(owner,1);
+            flickrManager.getUserInfo( owner )
+            photostream.userid = owner;            
+            mainMenu.state = "photostream";
         }
     }
 
@@ -33,7 +35,9 @@ Item{
         anchors.bottom:  startupView.bottom
 
         onThumbnailClicked: {
-            photoDetails.source = url_m;
+            //photoDetails.loading = true;
+            flickrManager.getPhotoInfo(photoId);
+            //flickrManager.getComments(photoId);
             mainMenu.state = "details"
         }
 
@@ -45,12 +49,11 @@ Item{
         //anchors.topMargin: settings.navigationBarHeight
         anchors.left: bottomBar.left
         anchors.right: bottomBar.right
-
         height: settings.pageHeight
         opacity:  0
     }
 
-    Rectangle{
+    ContactListView{
         id: contactsView
         width: settings.pageWidth
         height: settings.pageHeight
@@ -58,7 +61,12 @@ Item{
         anchors.left: photostream.right
         anchors.top: photostream.top
         anchors.bottom:  photostream.bottom
-        color: "yellow"
+        onClicked: {
+            photostream.userid = nsid;
+            flickrManager.getPhotostream( nsid, 1 );
+            flickrManager.getUserInfo( nsid )
+            mainMenu.state = "photostream";
+        }
     }
 
 
@@ -102,15 +110,18 @@ Item{
             }else
             if ( id == "photostream"){
                 if ( mainMenu.state != "details"){
-                    flickrManager.getPhotostream( flickrManager.nsid() );
+                    photostream.userid = flickrManager.nsid();
+                    flickrManager.getPhotostream( flickrManager.nsid(), 1 );
                     flickrManager.getUserInfo( flickrManager.nsid());
                 }
-                viewOffset = -480;
+
+                viewOffset = -settings.pageWidth;
                 mainMenu.state = id;
             }
             else                        
             if ( id == "contacts"){
-                viewOffset = -480 * 2;
+                flickrManager.getContacts();
+                viewOffset = -settings.pageWidth * 2;
                 mainMenu.state = id;
             }
             else
@@ -129,15 +140,16 @@ Item{
     states:[
         State{
             name: "startup"
-
             PropertyChanges {
                 target: startupView
                 x: 0
                 y: 0
             }            
-
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 0
+            }
         },
-
         State {
             name: "photostream"
 
@@ -146,10 +158,11 @@ Item{
                 x: -settings.pageWidth
                 y: 0
             }
-
-
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 1
+            }
         },
-
         State {
             name: "details"
             AnchorChanges{
@@ -167,15 +180,21 @@ Item{
                 y: -settings.pageHeight - settings.navigationBarHeight
                 x: viewOffset
             }
-
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: currentIndex
+            }
         },
-
         State {
             name: "contacts"
             PropertyChanges {
                 target: startupView
                 x: -2*settings.pageWidth
                 y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 2
             }
         },
         State{
@@ -225,165 +244,5 @@ Item{
         urlString: parent.authUrl
         onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
     }
-
-    /*
-    function contactsMode(){
-        mainMenu.state = 'Contacts'; 
-    }
-    
-    function favoritesMode(){
-        mainMenu.state = 'Favorites';
-        flickrManager.getFavorites();
-    }
-    
-    function recentActivityMode(){        
-        mainMenu.state = 'RecentActivity'
-        flickrManager.getRecentActivity();
-    }
-    
-    MenuButton{ id: contactsButton; 
-                text: "Contacts";
-                onClicked: parent.contactsMode();
-                x:-750;y:170 }
-    MenuButton{ id: myPhotoStreamButton; 
-                text: "Favorites"; 
-                onClicked: parent.favoritesMode();
-                anchors.left: contactsButton.right
-                anchors.top: contactsButton.top
-                anchors.leftMargin:50}
-    MenuButton{ id: recentCommentsButton; 
-                text: "Activity"; 
-                onClicked: parent.recentActivityMode(); 
-                anchors.left: myPhotoStreamButton.right
-                anchors.top: myPhotoStreamButton.top
-                anchors.leftMargin:50}
-    
-    
-
-
-    // Contacts View
-    FlipableContactView {
-        id: contactsView                
-        opacity: 0
-    }
-
-    
-    RecentActivityView{
-        id: recentActivityView
-        opacity: 0
-        anchors.topMargin: 65
-    }
-
-    FavoritesView{
-        id: favoritesView
-        opacity: 0
-        anchors.topMargin: 65
-    }
-
-    states: [
-        State{
-            name: "Authenticate"
-            PropertyChanges{
-                target: webauth
-                y: 0
-            }                    
-            
-        },
-
-        State{
-            name: "Menu"
-            
-            PropertyChanges{
-                target: contactsView
-                x: 800
-                y: 0
-                opacity: 0
-            }
-            
-            PropertyChanges {
-                target: contactsButton
-                x: 149                                
-            }         
-                            
-        },
-
-        State{
-            name: "Contacts"
-            
-            PropertyChanges{
-                target: contactsView
-                x: 0
-                y: 0
-                opacity: 1
-            }
-            
-            PropertyChanges {
-                target: mainPage
-                title: "Contact Uploads"
-                showCloseButton: false                
-            }
-        },
-
-        State{
-            name: "Favorites"
-            PropertyChanges{
-                target: favoritesView
-                x: 0
-                y: 0
-                opacity: 1
-            }          
-            
-            PropertyChanges {
-                target: mainPage
-                title: "Favorites"
-                showCloseButton: false                
-            }
-            
-        },
-
-        State{
-            name: "RecentActivity"            
-            
-            PropertyChanges{
-                target: recentActivityView
-                x: 0
-                y: 0
-                opacity: 1
-            }  
-            PropertyChanges {
-                target: mainPage
-                title: "Recent Activity"
-                showCloseButton: false                
-            }
-            
-        }
-    ]
-    
-    transitions: [
-        Transition{
-
-        ParallelAnimation{
-            PropertyAnimation{                
-                properties: "opacity"
-                duration: 700
-                easing.type: "OutCubic"
-            }
-
-            PropertyAnimation{                
-                properties: "x,y,opacity"
-                duration: 700
-                easing.type: "OutCubic"
-            }
-                        
-            
-            AnchorAnimation{
-                
-            }
-        }
-    }
-
-    ]
-    */
-
 }
 

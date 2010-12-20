@@ -2,13 +2,13 @@ import Qt 4.7
 
 Rectangle{
     id: timelineView
-    signal thumbnailClicked( string imageId, url url_m )
+    signal thumbnailClicked( string photoId, url photoUrl, string owner )
 
     color:  settings.defaultBackgroundColor
     width:  settings.pageWidth
     height: settings.pageHeight
 
-    ContactListModel{
+    ContactUploadsModel{
         id: timelineModel
     }
 
@@ -24,7 +24,7 @@ Rectangle{
        delegate: TimelineDelegate{}
        model: timelineModel
        clip: true
-       flickDeceleration: 400
+       flickDeceleration: 1000
        highlight: Rectangle{ color: "white"; border.color: "black" }
        focus:  true
 

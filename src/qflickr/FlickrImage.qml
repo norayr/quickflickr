@@ -7,6 +7,8 @@ Item{
     property alias smooth: image.smooth
     property alias sourceSize: image.sourceSize    
     property bool showBorder: true
+    property bool showLoader: true
+    property int  borderWidth: 2
     signal clicked
     signal pressAndHold
     
@@ -15,9 +17,9 @@ Item{
         id: background
         anchors.fill: parent
         color: "black"
-        border.width: showBorder?2:0
+        border.width: showBorder? borderWidth:0
         border.color: showBorder?"white":color
-        
+        smooth: true
         Image{
             id: image
             scale: 0
@@ -29,13 +31,12 @@ Item{
             anchors.rightMargin: background.border.width
             
         }   
-        /*
+
         Loading{            
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-            visible: image.status != Image.Ready            
-        }
-        */
+            visible: showLoader && (image.status != Image.Ready)
+        }        
     }
 
 

@@ -86,12 +86,22 @@ void FlickrManager::authenticate()
     d->m_requestId.insert(d->m_qtFlickr->get(method,request), GetFrob);
 }
 
+void FlickrManager::getContacts()
+{
+    Q_D(FlickrManager);
+    QtfMethod method("flickr.contacts.getList");
+    method.args.insert("user_id", d->settingsValue("nsid"));
+    QtfRequest request;
+    d->m_requestId.insert(d->m_qtFlickr->post( method, request,0,false ), GetContacts);
+}
+
+
 void FlickrManager::getLatestContactUploads()
 {
     Q_D(FlickrManager);    
     QtfMethod method("flickr.photos.getContactsPublicPhotos");
     method.args.insert("user_id", d->settingsValue("nsid"));
-    method.args.insert("count", "25" );
+    method.args.insert("count", "20" );
     method.args.insert("include_self", "1");
     method.args.insert("single_photo", "true");
     //method.args.insert("extras", "date_taken" );
@@ -105,7 +115,7 @@ void FlickrManager::getPhotostream(const QString & userId, int page)
     // Clear the old stuff    
     Q_D(FlickrManager);    
         
-    qDebug() << "getPhotosOfContact() Method";
+    qDebug() << "getPhotosOfContact() Method" << userId << page;
     QtfMethod method("flickr.people.getPublicPhotos");
     method.args.insert("api_key", "ee829960cd89d099");
     method.args.insert("user_id", userId);    
@@ -165,7 +175,7 @@ void FlickrManager::getComments(const QString & photoId)
 }
     
 void FlickrManager::addComment(const QString & photoId, const QString & commentText )
-{
+{    
     QtfMethod method("flickr.photos.comments.addComment");    
     method.args.insert("api_key", "ee829960cd89d099");    
     method.args.insert("photo_id", photoId);
@@ -276,6 +286,11 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
     case GetContactsPublicPhotos:        
         //qDebug() << xmlData;
         emit contactsUploadsUpdated(xmlData);                                
+        break;
+
+    case GetContacts:
+        //qDebug() << xmlData;
+        emit contactsUpdated(xmlData);
         break;
 
     case GetPhotosOfContact:

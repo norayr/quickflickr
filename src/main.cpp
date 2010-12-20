@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     
     // Simple loader for loading QML files
     QmlLoader loader;
-    loader.resize(480,800);
+    loader.resize(360,640);
 #ifdef Q_WS_MAC
         loader.show();
 #else

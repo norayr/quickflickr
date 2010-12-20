@@ -92,7 +92,7 @@ Item {
     Rectangle { anchors.fill: parent; color: "Black"; opacity: 0.5 }
 
     BorderImage {
-        source: "qrc:/images/scrollbar.png"
+        source: "qrc:/gfx/scrollbar.png"
         border { left: 1; right: 1; top: 1; bottom: 1 }
         x: container.orientation == Qt.Vertical ? 2 : position()
         width: container.orientation == Qt.Vertical ? container.width - 4 : size()

@@ -17,14 +17,10 @@ QmlLoader::QmlLoader():
         QDeclarativeView()       
 {
     
-#ifndef Q_WS_MAC
-    QGLFormat format = QGLFormat::defaultFormat();
-    format.setSampleBuffers(false);
-    QGLWidget *glWidget = new QGLWidget();//(format);
-    glWidget->setAutoFillBackground(false);
-    setViewport(glWidget);
+#ifdef Q_WS_MAEMO_5
+    setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
 #endif
-    
+
     // Setup the C++ side for providing data for QML
     m_flickrManager = new FlickrManager();    
         
@@ -47,7 +43,7 @@ QmlLoader::~QmlLoader()
 
 void QmlLoader::minimize()
 {
-#ifndef Q_WS_MAC
+#ifdef Q_WS_MAEMO_5
      QDBusConnection c = QDBusConnection::sessionBus();
      QDBusMessage m = QDBusMessage::createSignal("/", "com.nokia.hildon_desktop", "exit_app_view");
      c.send(m);

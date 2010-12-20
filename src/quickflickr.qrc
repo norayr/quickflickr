@@ -3,7 +3,6 @@
         <file>qflickr/BrowserButton.qml</file>
         <file>qflickr/Button.qml</file>
         <file>qflickr/CommentModel.qml</file>
-        <file>qflickr/ContactListModel.qml</file>
         <file>qflickr/FavoritesModel.qml</file>
         <file>qflickr/FlickableWebView.qml</file>
         <file>qflickr/FlickrImage.qml</file>
@@ -25,22 +24,20 @@
         <file>qflickr/PhotoDetailsView.qml</file>
         <file>qflickr/UserInfoModel.qml</file>
         <file>qflickr/UserInfoDelegate.qml</file>
+        <file>qflickr/FlickrText.qml</file>
+        <file>qflickr/LineSeparator.qml</file>
+        <file>qflickr/IconButton.qml</file>
+        <file>qflickr/RadioIconButton.qml</file>
+        <file>qflickr/CommentsView.qml</file>
+        <file>qflickr/PhotoView.qml</file>
+        <file>qflickr/PhotoDetailsDelegate.qml</file>
+        <file>qflickr/PhotoDetailsModel.qml</file>
+        <file>qflickr/AddCommentView.qml</file>
+        <file>qflickr/ContactUploadsModel.qml</file>
+        <file>qflickr/ContactListModel.qml</file>
+        <file>qflickr/ContactListView.qml</file>
     </qresource>
     <qresource prefix="/">
-        <file>images/quickflickr-bg.png</file>
-        <file>images/quit.png</file>
-        <file>images/scrollbar.png</file>
-        <file>images/titlebar.png</file>
-        <file>images/toolbutton.png</file>
-        <file>images/toolbutton.sci</file>
-        <file>images/go-jump-locationbar.png</file>
-        <file>images/go-next-view.png</file>
-        <file>images/go-previous-view.png</file>
-        <file>images/edit-delete.png</file>
-        <file>images/loading.png</file>
-        <file>images/minimize.png</file>
-    </qresource>
-    <qresource prefix="/gfx">
         <file>gfx/back.png</file>
         <file>gfx/background.png</file>
         <file>gfx/close.png</file>
@@ -49,9 +46,21 @@
         <file>gfx/toolbar.png</file>
         <file>gfx/film_strip.png</file>
         <file>gfx/add_comment.png</file>
-        <file>gfx/comment.png</file>
         <file>gfx/favorite.png</file>
         <file>gfx/indicator-not-selected.png</file>
         <file>gfx/indicator-selected.png</file>
+        <file>gfx/button-checked.png</file>
+        <file>gfx/button-checked.sci</file>
+        <file>gfx/button.png</file>
+        <file>gfx/button.sci</file>
+        <file>gfx/quit.png</file>
+        <file>gfx/loading.png</file>
+        <file>gfx/scrollbar.png</file>
+        <file>gfx/comments.png</file>
+        <file>gfx/comments-active.png</file>
+        <file>gfx/comments-add.png</file>
+        <file>gfx/favorite-off.png</file>
+        <file>gfx/favorite-on.png</file>
+        <file>gfx/description.png</file>
     </qresource>
 </RCC>

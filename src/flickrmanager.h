@@ -16,6 +16,7 @@ public:
     {
         GetFrob,
         GetToken,
+        GetContacts,
         GetContactsPublicPhotos,
         GetPhotosOfContact,
         GetRecentActivity,
@@ -38,9 +39,11 @@ public:
     
     Q_INVOKABLE void authenticate();
 
+    Q_INVOKABLE void getContacts();
+
     Q_INVOKABLE void getLatestContactUploads();
 
-    Q_INVOKABLE void getPhotostream(const QString & userId, int page=1);
+    Q_INVOKABLE void getPhotostream(const QString & userId, int page);
 
     Q_INVOKABLE void getUserInfo(const QString & userId);
 
@@ -68,6 +71,7 @@ Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
     void proceed();        
     void contactsUploadsUpdated(const QString & xml);
+    void contactsUpdated(const QString & xml);
     void photostreamUpdated( const QString & xml);
     void recentActivityUpdated( const QString & xml);
     void commentsUpdated( const QString & xml);

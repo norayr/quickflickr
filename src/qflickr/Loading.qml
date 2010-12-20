@@ -42,7 +42,7 @@
 import Qt 4.7
 
 Image {
-    id: loading; source: "qrc:/images/loading.png"
+    id: loading; source: "qrc:/gfx/loading.png"
     NumberAnimation on rotation {
         from: 0; to: 360; running: loading.visible == true; loops: Animation.Infinite; duration: 900
     }

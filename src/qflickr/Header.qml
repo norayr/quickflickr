@@ -54,7 +54,7 @@ BorderImage {
     
     smooth: true
     //opacity: 0.2
-    source: "qrc:/images/toolbutton.sci"; 
+    source: "qrc:/gfx/toolbutton.sci";
         
 
     x: webView.contentX < 0 ? -webView.contentX : webView.contentX > webView.contentWidth-webView.width
@@ -98,7 +98,7 @@ BorderImage {
             BrowserButton {
                 id: closeButton
                 anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "qrc:/images/quit.png"
+                action: webView.stop; image: "qrc:/gfx/quit.png"
                 onClicked: {header.closeClicked();}
             }
             

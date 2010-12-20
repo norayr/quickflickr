@@ -1,115 +1,89 @@
 import Qt 4.7
 
 Item{
-    id: commentsView
-    property string photoId            
-    width: 800
-    height: 480        
-    signal close
-                
-    MouseArea{
-        anchors.fill: parent
-        onPressAndHold: { commentsView.close()}
-    }
-            
-    BorderImage {
-        source: "qrc:/images/toolbutton.sci"
-        smooth: true
-        opacity: 0.3            
-        id: background
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 10        
-        anchors.rightMargin: 10
-        height: 100    
+    id: commentsView    
+    width: settings.pageWidth
+
+
+    Connections{
+        target: flickrManager
+        onCommentsUpdated: { commentsModel.xml = xml}
+        // Make sure that adding a comment also updates this view
+        onCommentAdded: { flickrManager.getComments(id) }
     }
     
-    Flickable {
-        id: textField
-   
-        anchors.left: background.left
-        anchors.right: addCommentButton.left
-        anchors.rightMargin: 10
-        anchors.leftMargin: 10
-        height: 100;
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        contentWidth: textEdit.paintedWidth
-        contentHeight: textEdit.paintedHeight
-        clip: true
-   
-        function ensureVisible(r)
-        {
-            if (contentX >= r.x)
-                contentX = r.x;
-            else if (contentX+width <= r.x+r.width)
-                contentX = r.x+r.width-width;
-            if (contentY >= r.y)
-                contentY = r.y;
-            else if (contentY+height <= r.y+r.height)
-                contentY = r.y+r.height-height;
-        }
-   
-       
-            
-        TextEdit {
-            id:textEdit
-            width: textField.width
-            height: textField.height            
-            wrapMode: TextEdit.Wrap
-            onCursorRectangleChanged: textField.ensureVisible(cursorRectangle)
-            color: "white"
-            font.pixelSize: 20
-            font.family: "Helvetica"
-        }
-        
-        ScrollBar {            
-            scrollArea: textField; width: 8
-            anchors { right: parent.right; top: parent.top; bottom: parent.bottom; bottomMargin:5; topMargin:5 }                        
-            
-        }
-   
-    }
+    Component{
+        id: commentDelegate
+        Item{
+            width: settings.pageWidth
+            height:  childrenRect.height// commentText.paintedHeight
+            opacity:  0
+            Behavior on opacity { PropertyAnimation { duration: 400 } }
 
-    Button{ 
-        id: addCommentButton
-        text: "Add"        
-        anchors.verticalCenter: textField.verticalCenter
-        anchors.right:  background.right
-        anchors.rightMargin: 10
-        onClicked:{
-            if ( textEdit.text != "" ){
-                flickrManager.addComment(photoId, textEdit.text);
-                textEdit.text = "";
-                console.log("CommentAdded");
+            Rectangle{
+                id: commentBg
+                color: "#00000000"
+                border.color: "lightGray"
+                border.width: 1                
+                anchors.fill: parent
+
+            }
+            Image{
+                id: buddyIcon
+                source: "http://www.flickr.com/buddyicons/"+author+".jpg"
+                anchors.left: commentBg.left
+                anchors.leftMargin: settings.smallMargin
+                anchors.top:  commentBg.top
+                anchors.topMargin: settings.smallMargin
+                width: 48
+                height: 48
+                onStatusChanged: status == Image.Ready?parent.opacity = 1:parent.opacity = 0;
+            }
+            Text{
+                id: authorName
+                color: "white"
+                text: authorname
+                anchors.left: buddyIcon.right
+                anchors.leftMargin: settings.smallMargin
+                anchors.top:  buddyIcon.top
+                anchors.right:  commentBg.right
+            }
+            Text{
+                id: commentText
+                color: "white"
+                text: comment
+                wrapMode: Text.Wrap
+                anchors.left: commentBg.left
+                anchors.leftMargin:  settings.smallMargin
+                anchors.top: buddyIcon.bottom
+                anchors.topMargin: settings.smallMargin
+                anchors.right: commentBg.right
+                anchors.rightMargin: settings.smallMargin
             }
         }
     }
 
-    Connections{
-        target: flickrManager
-        onCommentsUpdated: { commentsModel.xml = xml; }
-        onCommentAdded: { flickrManager.getComments(photoId) }
+    CommentModel{
+        id:commentsModel
     }
-    
+
     ListView{
         id: commentsList
-        delegate: CommentDelegate{ id: commentsDelegate }
-        model: CommentModel{ id: commentsModel }
-        anchors.top: background.bottom
-        anchors.left: background.left
-        anchors.right: background.right
-        anchors.bottom: parent.bottom
-        anchors.topMargin: 10
-        anchors.bottomMargin: 10
+        delegate: commentDelegate
+        model: commentsModel        
+        anchors.fill: parent
         clip: true
-        spacing: 10
-        
-        ScrollBar {            
-            scrollArea: commentsList; width: 8
-            anchors { right: parent.right; top: parent.top; bottom: parent.bottom; bottomMargin:5; topMargin:5 }                        
-            
-        }                
+        spacing: 1
+        cacheBuffer: parent.height
+        ScrollBar{
+            scrollArea: parent
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.topMargin: 5
+            anchors.bottomMargin: 5
+            anchors.rightMargin: 5
+        }
     }                
             
 }

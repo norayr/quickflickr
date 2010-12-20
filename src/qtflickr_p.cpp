@@ -23,6 +23,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QCryptographicHash>
+#include <QNetworkDiskCache>
 #include "qtflickr.h"
 
 QtFlickrPrivate::QtFlickrPrivate( QtFlickr *parent )
@@ -32,11 +33,13 @@ QtFlickrPrivate::QtFlickrPrivate( QtFlickr *parent )
     manager = new QNetworkAccessManager ( this );
     connect ( manager, SIGNAL ( finished ( QNetworkReply* ) ),
               this, SLOT ( replyFinished ( QNetworkReply* ) ) );
+
+
 }
 
 QtFlickrPrivate::~QtFlickrPrivate()
 {
-
+    delete manager;
 }
 
 
@@ -176,7 +179,7 @@ void QtFlickrPrivate::replyFinished ( QNetworkReply *reply )
     }
     
     requestDataMap.remove ( reply );    
-    reply->deleteLater();       
+    reply->deleteLater();
 }
 
 void QtFlickrPrivate::uploadProgress ( qint64 bytesSent, qint64 bytesTotal )
