@@ -29,7 +29,6 @@
         <file>qflickr/IconButton.qml</file>
         <file>qflickr/RadioIconButton.qml</file>
         <file>qflickr/CommentsView.qml</file>
-        <file>qflickr/PhotoView.qml</file>
         <file>qflickr/PhotoDetailsDelegate.qml</file>
         <file>qflickr/PhotoDetailsModel.qml</file>
         <file>qflickr/AddCommentView.qml</file>
@@ -50,9 +49,7 @@
         <file>gfx/indicator-not-selected.png</file>
         <file>gfx/indicator-selected.png</file>
         <file>gfx/button-checked.png</file>
-        <file>gfx/button-checked.sci</file>
         <file>gfx/button.png</file>
-        <file>gfx/button.sci</file>
         <file>gfx/quit.png</file>
         <file>gfx/loading.png</file>
         <file>gfx/scrollbar.png</file>
