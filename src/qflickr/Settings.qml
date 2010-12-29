@@ -25,7 +25,7 @@ Item{
     property int smallMargin: 2
     property int mediumMargin: 5
     property int largeMargin: 10
-    property int hugeMargin: 20
+    property int hugeMargin: 15
 
     property color separatorColor: "white"
     property color textHeaderColor: "steelblue"

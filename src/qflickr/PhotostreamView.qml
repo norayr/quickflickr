@@ -32,8 +32,8 @@ Rectangle {
         id: delegate
         Item{
 
-            width: photostreamGrid.cellWidth
-            height: photostreamGrid.cellHeight
+            width: grid.cellWidth
+            height: grid.cellHeight
             property url mediumSizeUrl: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+".jpg"
             FlickrImage{
 
@@ -73,11 +73,11 @@ Rectangle {
     }
 
     function loadMoreImages(){
-        if (photostreamGrid.atYBeginning){
+        if (grid.atYBeginning){
             prevPhotostreamPage();
             console.log("prev page");
         }else
-        if (photostreamGrid.atYEnd){            
+        if (grid.atYEnd){
             nextPhotostreamPage();
             console.log("next page"+currentPage);
         }
@@ -98,34 +98,39 @@ Rectangle {
         delegate:  UserInfoDelegate{}
     }
 
-    GridView{
-        id:             photostreamGrid
+    // Parent for grid which is required to make clipping correctly
+    // from the left and right side.
+    Item{
+        id: photostreamGrid
         anchors.top:    spacer.bottom
-        anchors.topMargin:  10
-        anchors.left:   parent.left        
-        anchors.right:  parent.right        
+        anchors.left:   parent.left
+        anchors.right:  parent.right
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: 10
-        cellHeight:     settings.pageWidth / 4
-        cellWidth:      settings.pageWidth / 4
-        model:          photostreamModel
-        delegate:       delegate
-        //clip:           true
-        opacity: loading ?0.2:1
-        onMovementEnded: loadMoreImages();
+        clip: true
+
+        GridView{
+            id:             grid
+            anchors.topMargin: settings.hugeMargin
+            anchors.fill: parent
+            cellHeight:     settings.pageWidth / 4
+            cellWidth:      settings.pageWidth / 4
+            model:          photostreamModel
+            delegate:       delegate
+            opacity: loading ?0.2:1
+            onMovementEnded: loadMoreImages();
 
 
-        ScrollBar{
-            scrollArea: parent
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.topMargin: 5
-            anchors.bottomMargin: 5
-            anchors.rightMargin: 5
+            ScrollBar{
+                scrollArea: parent
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.topMargin: 5
+                anchors.bottomMargin: 5
+                anchors.rightMargin: 5
+            }
         }
-    }    
-
+    }
     Item{
         anchors.fill: photostreamGrid
         visible: loading

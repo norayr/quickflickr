@@ -52,8 +52,7 @@ BorderImage {
 
     signal closeClicked
     
-    smooth: true
-    //opacity: 0.2
+    smooth: true   
     source: "qrc:/gfx/toolbutton.sci";
         
 
@@ -68,41 +67,30 @@ BorderImage {
         }
     }
 
-    Column {
-        width: parent.width
 
-        Item {
-            width: parent.width; height: 20                        
-            Text {
-                id: title
-                anchors.centerIn: parent
-                text: webView.title; font.pixelSize: 14; font.bold: true
-                color: "white"; styleColor: "black"; style: Text.Sunken
-            }                
-        }
 
-        Item {
-            width: parent.width; height: 40
-            
-            Rectangle {
-                anchors.centerIn: parent
-                anchors.left: parent.left
-                anchors.right: closeButton.left
-                
-                x: 18; height: 8; color: "#63b1ed"
-                width: (parent.width - 20) * webView.progress
-                opacity: webView.progress == 1.0 ? 0.0 : 1.0
-            }
-                        
-
-            BrowserButton {
-                id: closeButton
-                anchors { right: parent.right; rightMargin: 4 }
-                action: webView.stop; image: "qrc:/gfx/quit.png"
-                onClicked: {header.closeClicked();}
-            }
-            
-            
-        }
+    Loading{
+        visible: webView.progress < 1.0
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
     }
+
+    Text {
+        id: title
+        anchors.centerIn: parent
+        text: "Authenticate"//webView.title;
+        font.pixelSize: 14; font.bold: true
+        color: "white"; styleColor: "black"; style: Text.Sunken
+    }
+
+
+    BrowserButton {
+        id: closeButton
+        anchors.right: parent.right
+        anchors.rightMargin: settings.smallMargin
+        image: "qrc:/gfx/quit.png"
+        onClicked: {header.closeClicked();}
+    }
+
+
 }

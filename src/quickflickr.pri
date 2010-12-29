@@ -9,10 +9,14 @@ TARGET = quickflickr
 CONFIG   -= app_bundle release
 QT += declarative network xml opengl webkit
 
-linux-g++{
+maemo5{
     QT += dbus
 }
 
+symbian{
+    TARGET.CAPABILITY += NetworkServices
+    TARGET.EPOCHEAPSIZE = 0x20000 0x4000000
+}
 
 
 TEMPLATE = app

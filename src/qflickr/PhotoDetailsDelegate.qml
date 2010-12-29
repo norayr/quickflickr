@@ -86,13 +86,12 @@ Item{
         anchors.left: photo.left
         anchors.right: photo.right
 
+        // Placeholder for a graphics
         Rectangle{
             id: titleBarBg
             anchors.fill: parent
             anchors.rightMargin: 1
             color: "#00000000"
-            border.color: "darkGray"
-            border.width: 1            
         }
 
         Text{
@@ -159,6 +158,7 @@ Item{
         anchors.bottom: bottomBar.top        
         anchors.left: photo.right
 
+        // Placeholder for a graphics
         Rectangle{
             id: descriptionAreaBg
             anchors.fill: parent
@@ -184,6 +184,7 @@ Item{
                 color: "white"
                 opacity: 1
                 clip: true
+                textFormat: Text.RichText
             }
 
             ScrollBar{
@@ -206,21 +207,21 @@ Item{
         anchors.top: photoDelegate.bottom
         anchors.left: photoDelegate.left
         anchors.right: photoDelegate.right
-        anchors.topMargin: settings.smallMargin
-        height: 90
+        //anchors.topMargin: settings.smallMargin
+        height: favoriteButton.height + 2*settings.mediumMargin
 
+        // Placeholder for a graphics
         Rectangle{
             id: bottomBarBg
-            anchors.fill: parent
-            anchors.rightMargin: 1
-            color: "#00000000"
-            border.color: "darkGray"
-            border.width: 1            
+            anchors.fill: parent            
+            color: "#00000000"            
         }
-        Flow{
-            anchors.fill: bottomBarBg
-            anchors.margins: settings.mediumMargin
-            spacing:  (settings.pageWidth-settings.mediumFontSize*2-favoriteButton.width*4) /5
+
+        Row{
+            anchors.centerIn: bottomBarBg
+            anchors.leftMargin: settings.mediumMargin
+            anchors.rightMargin: settings.mediumMargin
+            spacing:  (settings.pageWidth-settings.mediumMargin*2-favoriteButton.width*4) /3
 
             RadioIconButton{
                 id: favoriteButton

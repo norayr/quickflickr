@@ -52,7 +52,8 @@ Rectangle {
     property alias showNavigationButtons: header.showNavigationButtons
     property alias showRefreshButton: header.showRefreshButton
 
-    width: 480; height: 800
+    width: settings.pageWidth
+    height: settings.height
     color: "#343434"
 
     FlickableWebView {

@@ -8,17 +8,32 @@
 #include <QtDebug>
 #include <QGLContext>
 
-#ifndef Q_WS_MAC
+#ifdef Q_WS_MAEMO_5
 #include <QDBusConnection>
 #include <QDBusMessage>
+#endif
+
+#if defined(Q_OS_SYMBIAN)
+#include <eikenv.h>
+#include <eikappui.h>
+#include <aknenv.h>
+#include <aknappui.h>
 #endif
 
 QmlLoader::QmlLoader():
         QDeclarativeView()       
 {
-    
+
+// Set the platform specific orientations to portrait always
 #ifdef Q_WS_MAEMO_5
     setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
+#endif
+
+#ifdef Q_WS_SYMBIAN
+    CAknAppUi* appUi = dynamic_cast<CAknAppUi*> (CEikonEnv::Static()->AppUi());
+    if (appUi){
+        appUi->SetOrientationL(CAknAppUi::EAppUiOrientationPortrait);
+    }
 #endif
 
     // Setup the C++ side for providing data for QML

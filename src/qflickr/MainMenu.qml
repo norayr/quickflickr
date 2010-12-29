@@ -69,7 +69,14 @@ Item{
         }
     }
 
-
+    WebBrowser{
+        id: webauth
+        x:0
+        y:parent.height
+        urlString: parent.authUrl
+        onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
+        opacity: 0
+    }
 
     // Model for a menu
     ListModel{
@@ -202,6 +209,12 @@ Item{
             PropertyChanges{
                 target: webauth
                 y: 0
+                opacity: 1
+            }
+            PropertyChanges {
+                target: bottomBar
+                opacity: 0
+
             }
 
         }
@@ -236,13 +249,5 @@ Item{
         }
 
     ]
-
-    WebBrowser{
-        id: webauth
-        x:0
-        y:parent.height
-        urlString: parent.authUrl
-        onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
-    }
 }
 
