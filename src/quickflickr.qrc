@@ -35,6 +35,10 @@
         <file>qflickr/ContactUploadsModel.qml</file>
         <file>qflickr/ContactListModel.qml</file>
         <file>qflickr/ContactListView.qml</file>
+        <file>qflickr/FavoritesView.qml</file>
+        <file>qflickr/ThumbnailDelegate.qml</file>
+        <file>qflickr/ThumbnailView.qml</file>
+        <file>gfx/button.sci</file>
     </qresource>
     <qresource prefix="/">
         <file>gfx/back.png</file>
@@ -51,7 +55,6 @@
         <file>gfx/button-checked.png</file>
         <file>gfx/button.png</file>
         <file>gfx/quit.png</file>
-        <file>gfx/loading.png</file>
         <file>gfx/scrollbar.png</file>
         <file>gfx/comments.png</file>
         <file>gfx/comments-active.png</file>
@@ -59,5 +62,10 @@
         <file>gfx/favorite-off.png</file>
         <file>gfx/favorite-on.png</file>
         <file>gfx/description.png</file>
+        <file>gfx/loading-1.png</file>
+        <file>gfx/loading-2.png</file>
+        <file>gfx/loading-3.png</file>
+        <file>gfx/loading-4.png</file>
+        <file>gfx/navigationbar-bg.png</file>
     </qresource>
 </RCC>

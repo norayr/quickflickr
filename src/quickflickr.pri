@@ -75,7 +75,10 @@ OTHER_FILES += \
     qflickr/AddCommentView.qml \
     qflickr/ContactUploadsModel.qml \
     qflickr/ContactListModel.qml \
-    qflickr/ContactListView.qml
+    qflickr/ContactListView.qml \
+    qflickr/FavoritesView.qml \
+    qflickr/ThumbnailDelegate.qml \
+    qflickr/ThumbnailView.qml
 
 
 
