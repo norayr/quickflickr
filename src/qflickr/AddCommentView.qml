@@ -43,6 +43,7 @@ Item{
         font.pixelSize: settings.mediumFontSize
         color: settings.fontColor
         anchors.top: addCommentBg.top
+        anchors.topMargin: settings.mediumMargin
         anchors.left: addCommentBg.left
         anchors.right: addCommentBg.right
     }

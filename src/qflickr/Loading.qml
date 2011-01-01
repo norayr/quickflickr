@@ -40,10 +40,42 @@
 ****************************************************************************/
 
 import Qt 4.7
+Item{
+    id: loading
 
-Image {
-    id: loading; source: "qrc:/gfx/loading.png"
-    NumberAnimation on rotation {
-        from: 0; to: 360; running: loading.visible == true; loops: Animation.Infinite; duration: 900
+    Image {
+        anchors.centerIn: parent
+        source: "qrc:/gfx/loading-1.png"
+        NumberAnimation on rotation {
+            from: 0; to: 360; running: loading.visible == true; loops: Animation.Infinite; duration: 900
+        }
+
+        smooth: true
+    }
+    Image{
+        anchors.centerIn: parent
+        source: "qrc:/gfx/loading-2.png"
+        NumberAnimation on rotation {
+            from: 360; to: 0; running: loading.visible == true; loops: Animation.Infinite; duration: 900
+        }
+        smooth: true
+    }
+
+    Image {
+        anchors.centerIn: parent
+        source: "qrc:/gfx/loading-3.png"
+        NumberAnimation on rotation {
+            from: 0; to: 360; running: loading.visible == true; loops: Animation.Infinite; duration: 1800
+        }
+
+        smooth: true
+    }
+    Image{
+        anchors.centerIn: parent
+        source: "qrc:/gfx/loading-4.png"
+        NumberAnimation on rotation {
+            from: 360; to: 0; running: loading.visible == true; loops: Animation.Infinite; duration: 1800
+        }
+        smooth: true
     }
 }

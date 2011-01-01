@@ -3,14 +3,15 @@ import Qt 4.7
 
 Item{
     id: mainMenu
+    property alias authUrl: webauth.urlString
+    property int viewOffset: 0
 
+    // Background
     Rectangle{
         anchors.fill: parent
         color: "black"
     }
 
-    property alias authUrl: webauth.urlString
-    property int viewOffset: 0
 
     // The first, startup view. Just position it in relative to x, y.
     // The rest of the views are anchored relative to each others.
@@ -34,19 +35,15 @@ Item{
         anchors.top: startupView.top
         anchors.bottom:  startupView.bottom
 
-        onThumbnailClicked: {
-            //photoDetails.loading = true;
-            flickrManager.getPhotoInfo(photoId);
-            //flickrManager.getComments(photoId);
+        onThumbnailClicked: {            
+            flickrManager.getPhotoInfo(photoId);            
             mainMenu.state = "details"
         }
-
     }
 
     PhotoDetailsView{
         id: photoDetails
-        anchors.top: bottomBar.bottom
-        //anchors.topMargin: settings.navigationBarHeight
+        anchors.top: bottomBar.bottom        
         anchors.left: bottomBar.left
         anchors.right: bottomBar.right
         height: settings.pageHeight
@@ -66,6 +63,21 @@ Item{
             flickrManager.getPhotostream( nsid, 1 );
             flickrManager.getUserInfo( nsid )
             mainMenu.state = "photostream";
+        }
+    }
+
+    FavoritesView{
+        id: favoritesView
+        width: settings.pageWidth
+        height: settings.pageHeight
+
+        anchors.left: contactsView.right
+        anchors.top: contactsView.top
+        anchors.bottom:  contactsView.bottom
+
+        onThumbnailClicked: {
+            flickrManager.getPhotoInfo(photoId);
+            mainMenu.state = "details"
         }
     }
 
@@ -92,6 +104,10 @@ Item{
          ListElement {
              name: "Contacts"
              strId: "contacts"
+         }
+         ListElement {
+             name: "Favorites"
+             strId: "favorites"
          }
          ListElement {
              name: "Minimize"
@@ -126,9 +142,14 @@ Item{
                 mainMenu.state = id;
             }
             else                        
-            if ( id == "contacts"){
+            if ( id == "contacts" ){
                 flickrManager.getContacts();
                 viewOffset = -settings.pageWidth * 2;
+                mainMenu.state = id;
+            }
+            if ( id == "favorites" ){
+                flickrManager.getFavorites(24, 1);
+                viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
             else
@@ -204,6 +225,18 @@ Item{
                 currentIndex: 2
             }
         },
+        State {
+            name: "favorites"
+            PropertyChanges {
+                target: startupView
+                x: -3*settings.pageWidth
+                y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 3
+            }
+        },
         State{
             name: "Authenticate"
             PropertyChanges{
@@ -243,11 +276,10 @@ Item{
                     properties: "opacity"
                     duration: 700
                     easing.type: "OutCubic"
-                }
+                }                
                 }
             }
         }
-
     ]
 }
 

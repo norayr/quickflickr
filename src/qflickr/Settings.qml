@@ -16,6 +16,7 @@ Item{
     property int scrollbarWidth: 8
 
     //Fonts
+    property int tinyFontSize: 14
     property int smallFontSize: 16
     property int mediumFontSize: 20
     property int largeFontSize: 24

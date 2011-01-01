@@ -2,13 +2,7 @@ import Qt 4.7
 
 Rectangle{
     anchors.fill: parent
-    opacity: 0.8
-    gradient: Gradient {
-         GradientStop { position: 0.0; color: "black" }
-         GradientStop { position: 0.1; color: "darkGray" }
-         GradientStop { position: 1.0; color: "black" }
-    }
-
+    color: "black"
 
     Image{
         id: buddyIcon
@@ -32,38 +26,56 @@ Rectangle{
         anchors.leftMargin: settings.largeMargin * 2
         anchors.right: parent.right
     }
-    Text{
-        id: statistics
-        color: "white"
-        font.pixelSize: settings.smallFontSize
-        smooth: true
-        text: "Views: " + views + " "+"Photos: " + count// +" "+"Pro:" + ispro == 0?"No":"Yes"
-        anchors.top:  userName.bottom
-        anchors.topMargin: settings.mediumMargin
-        anchors.left: userName.left
-        anchors.right: userName.right
-        anchors.bottom: buddyIcon.bottom
+    /*
+    FlickrText{
+        id: viewsText
+        header: "Views"
+        text:  views
+        anchors.top:  userName.bottom        
+        anchors.left: userName.left        
+        fontPixelSize: settings.tinyFontSize
+        Component.onCompleted: console.log("Views:"+views)
     }
-    Text{
-        id: dateTaken
-        color: "white"
-        font.pixelSize: settings.smallFontSize
-        smooth: true
-        text: "First upload: " + firstdatetaken
+    */
+    FlickrText{
+        id: photos
+        header:  "Photos"
+        text: count
+        anchors.top: userName.bottom
+        anchors.left: userName.left
+        anchors.leftMargin: settings.mediumMargin
+        fontPixelSize: settings.tinyFontSize
+    }
+
+    FlickrText{
+        id: pro
+        //visible: (ispro != 0)
+        header: "Pro"
+        text: (ispro != 0?"yes":"no")
+        anchors.top: userName.bottom
+        anchors.left: photos.right
+        anchors.leftMargin: settings.mediumMargin
+        fontPixelSize:  settings.tinyFontSize
+    }
+
+    FlickrText{
+        id: dateTaken        
+        header: "First upload"
+        text: firstdatetaken // TODO: format this to shorter
         anchors.top:  buddyIcon.bottom
         anchors.topMargin: settings.mediumMargin
         anchors.left: buddyIcon.left
         anchors.right: userName.right
+        fontPixelSize: settings.tinyFontSize
     }
-    Text{
-        id: location
-        color: "white"
-        font.pixelSize: settings.smallFontSize
-        smooth: true
-        text: "Location: " + geolocation
+    FlickrText{
+        id: location        
+        header:  "Location"
+        text: (geolocation != ""? geolocation:"unknown")
         anchors.top:  dateTaken.bottom
         anchors.topMargin: settings.mediumMargin
         anchors.left: dateTaken.left
         anchors.right: dateTaken.right
+        fontPixelSize: settings.tinyFontSize
     }
 }

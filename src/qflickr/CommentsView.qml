@@ -85,5 +85,9 @@ Item{
             anchors.rightMargin: 5
         }
     }                
-            
+
+    Loading{
+        anchors.centerIn: commentsList
+        visible: commentsModel.xml == ""
+    }
 }

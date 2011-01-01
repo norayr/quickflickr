@@ -82,6 +82,13 @@ Rectangle{
        }     
    }
 
-
+   Item{
+       anchors.fill: parent
+       visible:  timelineModel.xml == ""
+        Loading{
+            id: loader
+            anchors.centerIn: parent
+        }
+   }
 
 }

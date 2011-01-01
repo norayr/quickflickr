@@ -9,7 +9,7 @@ Item{
 
     Connections{
         target: flickrManager
-        onContactsUpdated: {contactListModel.xml = xml; console.log(xml)}
+        onContactsUpdated: {contactListModel.xml = xml}
     }
 
     ContactListModel{
@@ -43,7 +43,7 @@ Item{
                 anchors.margins: settings.mediumMargin
                 source: "http://farm"+iconfarm+".static.flickr.com/"+iconserver+"/buddyicons/"+nsid+".jpg";
                 onStatusChanged: (status == Image.Ready || status == Image.Error)?parent.opacity = 1:parent.opacity = 0;
-                width: 48
+                width: 48 // Size is defined by Flickr
                 height: 48
             }
             Text{
@@ -54,6 +54,8 @@ Item{
                 color: "white"
                 font.pixelSize: settings.mediumFontSize
                 text: username
+                elide: Text.ElideRight
+                width: parent.width - buddyIcon.width
             }
             Text{
                 id: realName
@@ -62,6 +64,8 @@ Item{
                 anchors.margins: settings.mediumMargin
                 color: "white"
                 text: realname
+                elide: Text.ElideRight
+                width: parent.width - buddyIcon.width
             }
         }
     }
@@ -82,5 +86,14 @@ Item{
             anchors.bottomMargin: 5
             anchors.rightMargin: 5
         }
+    }
+
+    Item{
+        anchors.fill: contactList
+        visible:  contactListModel.xml == ""
+         Loading{
+             id: loader
+             anchors.centerIn: parent
+         }
     }
 }

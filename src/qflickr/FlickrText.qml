@@ -9,7 +9,7 @@ Item{
     property alias wrapMode: body.wrapMode
     property color headerColor: settings.textHeaderColor
     property string header
-
+    property int fontPixelSize: settings.smallFontSize
 
     height:  body.paintedHeight
     width:  header.paintedWidth+10+body.paintedWidth
@@ -21,7 +21,7 @@ Item{
             id: header
             color:  headerColor
             font.bold: true
-            font.pixelSize: settings.smallFontSize
+            font.pixelSize: fontPixelSize
             text:  flickrText.header + ":"
             visible: flickrText.header != ""
         }
@@ -30,7 +30,7 @@ Item{
             id: body
             color: settings.fontColor
             smooth:  true
-            font.pixelSize: settings.smallFontSize
+            font.pixelSize: fontPixelSize
             width: flickrText.width - header.paintedWidth
         }
     }

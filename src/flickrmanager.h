@@ -59,7 +59,7 @@ public:
 
     Q_INVOKABLE void addFavorite( const QString & photoId );
     
-    Q_INVOKABLE void getFavorites();
+    Q_INVOKABLE void getFavorites( int perPage, int page );
     
     Q_INVOKABLE void removeFavorite( const QString & photoId );
     

@@ -1,15 +1,14 @@
 import Qt 4.7
 
-Rectangle{    
-    id: photoViewer    
-    property bool loading: false       
+Rectangle{        
     color:  settings.defaultBackgroundColor
+
 
 
     // Update the view if FlickrManager emits signals
     Connections{
         target: flickrManager
-        onPhotoInfoUpdated: {photoDetailsModel.xml = xml; photoViewer.loading = false; console.log(xml)}
+        onPhotoInfoUpdated: {photoDetailsModel.xml = xml; }
     }
 
     PhotoDetailsModel{ id: photoDetailsModel }
@@ -19,7 +18,6 @@ Rectangle{
         id: photoDetailsList
         model: photoDetailsModel
         delegate: PhotoDetailsDelegate{}
-        width: settings.pageWidth        
-    }   
-
+        width: settings.pageWidth                
+    }
 }

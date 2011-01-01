@@ -12,6 +12,6 @@ XmlListModel {
     XmlRole { name: "username";     query: "username/string()" }
     XmlRole { name: "geolocation";  query: "location/string()" } // Property name can't be location. It prints the object location in memory
     XmlRole { name: "firstdatetaken"; query: "photos/firstdatetaken/string()" }
-    XmlRole { name: "views";        query: "photos/views/string()" }
+    //XmlRole { name: "views";        query: "photos/views/string()" }
     XmlRole { name: "count";        query: "photos/count/string()" }
 }

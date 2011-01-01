@@ -11,7 +11,6 @@ Rectangle {
     property string userid
     property bool loading: true
 
-    // Model
     PhotostreamModel{
         id: photostreamModel
     }
@@ -25,33 +24,6 @@ Rectangle {
         target: flickrManager
         onPhotostreamUpdated: { photostreamModel.xml = xml; loading = false;}
         onUserInfoUpdated: { userInfoModel.xml = xml}
-    }
-
-    // Simple delegate for images
-    Component{
-        id: delegate
-        Item{
-
-            width: grid.cellWidth
-            height: grid.cellHeight
-            property url mediumSizeUrl: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+".jpg"
-            FlickrImage{
-
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                showBorder: true
-                source:     url_s
-                borderWidth: 3
-                width:      settings.gridCellWidth
-                height:     settings.gridCellHeight
-                fillMode: Image.PreserveAspectCrop
-                clip:  true
-                showLoader: false
-                transform: Rotation{origin.x: width/2; origin.y: height/2; axis { x: 0; y: 0; z: 1 } angle: Math.random() * 10 * (index % 2?-1:1) }
-                smooth: true
-                onClicked: photostreamView.thumbnailClicked(id, mediumSizeUrl);
-            }            
-        }
     }
 
     // Function to get next photostream page
@@ -72,21 +44,8 @@ Rectangle {
         flickrManager.getPhotostream( userid, currentPage );
     }
 
-    function loadMoreImages(){
-        if (grid.atYBeginning){
-            prevPhotostreamPage();
-            console.log("prev page");
-        }else
-        if (grid.atYEnd){
-            nextPhotostreamPage();
-            console.log("next page"+currentPage);
-        }
-    }
 
-
-
-
-    // Because we get all the user data also as XML so let's create a view
+    // Because we get all the user data also in XML, let's create a view
     // for a single user information
     ListView{
         id:spacer
@@ -98,48 +57,16 @@ Rectangle {
         delegate:  UserInfoDelegate{}
     }
 
-    // Parent for grid which is required to make clipping correctly
-    // from the left and right side.
-    Item{
-        id: photostreamGrid
+    // Grid for thumbnails
+    ThumbnailView{
         anchors.top:    spacer.bottom
         anchors.left:   parent.left
         anchors.right:  parent.right
         anchors.bottom: parent.bottom
-        clip: true
-
-        GridView{
-            id:             grid
-            anchors.topMargin: settings.hugeMargin
-            anchors.fill: parent
-            cellHeight:     settings.pageWidth / 4
-            cellWidth:      settings.pageWidth / 4
-            model:          photostreamModel
-            delegate:       delegate
-            opacity: loading ?0.2:1
-            onMovementEnded: loadMoreImages();
-
-
-            ScrollBar{
-                scrollArea: parent
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 5
-                anchors.bottomMargin: 5
-                anchors.rightMargin: 5
-            }
-        }
+        model: photostreamModel
+        loading: parent.loading
+        onClicked: parent.thumbnailClicked(photoId, photoUrl );
+        onLoadNextThumbnails: nextPhotostreamPage();
+        onLoadPreviousThumbnails: prevPhotostreamPage();
     }
-    Item{
-        anchors.fill: photostreamGrid
-        visible: loading
-
-        Loading{
-            id: topLoadingIndicator
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-    }
-
 }

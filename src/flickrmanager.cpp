@@ -60,7 +60,6 @@ void FlickrManager::activate()
     d->m_qtFlickr = new QtFlickr ( "Your Api Key",
                                    "Api Secret", this );
 
-
     connect(d->m_qtFlickr,SIGNAL(requestFinished ( int, QtfResponse, QtfError, void* )),
             this,SLOT(requestFinished ( int, QtfResponse, QtfError, void* )));
     connect(d->m_qtFlickr,SIGNAL(requestFinished(int,QString,QtfError,void*)),
@@ -197,11 +196,13 @@ void FlickrManager::addFavorite( const QString & photoId )
 }
 
 
-void FlickrManager::getFavorites()
+void FlickrManager::getFavorites(int perPage, int page)
 {
     QtfMethod method("flickr.favorites.getList");    
     method.args.insert("api_key", "ee829960cd89d099");        
-    method.args.insert("extras","url_m,owner_name");
+    method.args.insert("extras","url_s,owner_name");
+    method.args.insert("per_page", QString::number(perPage));
+    method.args.insert("page", QString::number(page));
     QtfRequest request;    
     Q_D(FlickrManager);
     d->m_requestId.insert(d->m_qtFlickr->post( method,request,0,false ), GetFavorites); 
@@ -320,7 +321,7 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         break;
         
     case GetFavorites:
-        qDebug() << xmlData;
+        //qDebug() << xmlData;
         emit favoritesUpdated(xmlData);
         break;
     
@@ -329,7 +330,7 @@ void FlickrManager::requestFinished ( int reqId, QString xmlData, QtfError err, 
         break;
         
     case GetUserInfo:
-        //qDebug()<< xmlData;
+        qDebug()<< xmlData;
         emit userInfoUpdated(xmlData);
         break;
     case GetPhotoInfo:

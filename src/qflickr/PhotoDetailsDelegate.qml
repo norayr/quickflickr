@@ -10,14 +10,11 @@ Item{
     {
         console.log( "AddOrRemoveFavorite: is fave:" + isfavorite == 0?"true":"false" +"," +id);
 
-        if ( isfavorite ){
+        if ( isfavorite == 0 ){
             flickrManager.addFavorite(id);
         }else{
             flickrManager.removeFavorite(id)
-        }
-
-        // Update current data from Flickr
-        flickrManager.getPhotoInfo( id )
+        }        
     }
 
     function addComment()
@@ -66,7 +63,12 @@ Item{
         MouseArea{
             anchors.fill: parent
             onClicked: showInfo();
-        }
+        }        
+    }
+
+    Loading{
+        anchors.centerIn: photo
+        visible: photo.opacity < 1
     }
 
     Rectangle{
@@ -81,10 +83,16 @@ Item{
     // Title bar on top
     Item{
         id: titleBar
-        height: 90
-        anchors.bottom: photo.top
+        height: childrenRect.height
+        anchors.bottom: photoDelegate.top
+        anchors.bottomMargin: settings.hugeMargin
         anchors.left: photo.left
         anchors.right: photo.right
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: console.log("TODO: Implement showing user's photostream")
+        }
 
         // Placeholder for a graphics
         Rectangle{
@@ -141,11 +149,17 @@ Item{
         }
         FlickrText{
             id: dateText
-            header: "date"
+            header: "Date"
             text: datetaken
-            anchors.top: viewsText.top
-            anchors.left: commentsText.right
-            anchors.leftMargin: settings.mediumMargin
+            anchors.top: viewsText.bottom
+            anchors.left: viewsText.left
+            //anchors.leftMargin: settings.mediumMargin
+        }
+        LineSeparator{
+            anchors.top:  dateText.bottom
+            //anchors.horizontalCenter: parent.horizontalCenter
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
     }
     // End of the title bar
@@ -161,21 +175,19 @@ Item{
         // Placeholder for a graphics
         Rectangle{
             id: descriptionAreaBg
-            anchors.fill: parent
-            anchors.topMargin: 1
-            anchors.bottomMargin: 1
+            anchors.fill: parent            
             color: "black"
             opacity: 0.8
             visible: false
         }
         Flickable{
             id: flickableDescriptionText
-            anchors.fill: descriptionAreaBg
-            anchors.margins: settings.mediumMargin
+            anchors.fill: descriptionAreaBg            
             contentHeight: descriptionText.paintedHeight
             clip:  true
             Text{
                 id: descriptionText
+                y: settings.mediumMargin
                 text: description
                 width: settings.pageWidth
                 wrapMode: Text.Wrap
@@ -185,17 +197,7 @@ Item{
                 opacity: 1
                 clip: true
                 textFormat: Text.RichText
-            }
-
-            ScrollBar{
-                scrollArea: parent
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.topMargin: 5
-                anchors.bottomMargin: 5
-                anchors.rightMargin: 5
-            }
+            }           
         }
     }
     // End of the description area
@@ -210,7 +212,7 @@ Item{
         //anchors.topMargin: settings.smallMargin
         height: favoriteButton.height + 2*settings.mediumMargin
 
-        // Placeholder for a graphics
+        // Placeholder for graphics
         Rectangle{
             id: bottomBarBg
             anchors.fill: parent            
@@ -276,6 +278,7 @@ Item{
     }
     // end of add comment field
 
+
     Timer {
         id: updateInfo
          interval: 500;
@@ -317,11 +320,11 @@ Item{
             }
             AnchorChanges{
                 target: descriptionArea
-                anchors.top: titleBar.bottom
+                anchors.top: titleBar.bottom                
                 anchors.bottom: bottomBar.top
                 anchors.left: photo.left
                 anchors.right: photo.right
-            }
+            }            
         },
         State{
             name:  "showComments"

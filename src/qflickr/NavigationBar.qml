@@ -8,13 +8,10 @@ Item{
 
     height: settings.navigationBarHeight
 
-    Rectangle{
+    Image{
+        source: "qrc:/gfx/navigationbar-bg.png"
         anchors.fill: parent
-        anchors.rightMargin: 1
-
-        color: "steelblue"
-        border.color: "white"
-        border.width: 1
+        fillMode: Image.TileHorizontally
     }
 
 
