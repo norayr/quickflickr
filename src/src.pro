@@ -8,7 +8,7 @@ INCLUDEPATH += .
 DESTDIR = ../
 
 
-unix {
+maemo5 {
     BINDIR = $$PREFIX/quickflickr
     DATADIR = /usr/share
 
