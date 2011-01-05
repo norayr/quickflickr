@@ -20,8 +20,10 @@
 import Qt 4.7
 Item{
     id: loading
-
+    width: image.width
+    height:  image.height
     Image {
+        id: image
         anchors.centerIn: parent
         source: "qrc:/gfx/loading-1.png"
         NumberAnimation on rotation {

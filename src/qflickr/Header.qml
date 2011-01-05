@@ -71,14 +71,15 @@ BorderImage {
 
     Loading{
         visible: webView.progress < 1.0
-        anchors.left: parent.left
+        anchors.left: parent.left        
         anchors.verticalCenter: parent.verticalCenter
+        scale:0.5
     }
 
     Text {
         id: title
         anchors.centerIn: parent
-        text: "Authenticate"//webView.title;
+        text: "Authenticate"
         font.pixelSize: 14; font.bold: true
         color: "white"; styleColor: "black"; style: Text.Sunken
     }

@@ -7,10 +7,14 @@
 
 TARGET = quickflickr
 CONFIG   -= app_bundle release
-QT += declarative network xml opengl webkit
+QT += declarative network xml webkit
+
+mac{
+    QT += opengl
+}
 
 maemo5{
-    QT += dbus
+    QT += dbus opengl
 }
 
 symbian{
@@ -78,7 +82,9 @@ OTHER_FILES += \
     qflickr/ContactListView.qml \
     qflickr/FavoritesView.qml \
     qflickr/ThumbnailDelegate.qml \
-    qflickr/ThumbnailView.qml
+    qflickr/ThumbnailView.qml \
+    qflickr/RecentActivityView.qml \
+    qflickr/SettingsView.qml
 
 
 

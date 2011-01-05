@@ -66,7 +66,7 @@ Item{
         id: menu        
         delegate: ldelegate
         anchors.fill: parent
-        anchors.bottomMargin: 20
+        anchors.bottomMargin: 30
         orientation: ListView.Horizontal
         snapMode: ListView.SnapOneItem
         highlightRangeMode: ListView.StrictlyEnforceRange
@@ -85,12 +85,13 @@ Item{
 
         Repeater{
             model: lmodel.count
-            Image{
+            Image{                
                 smooth:  true
                 source: menu.currentIndex == index?"qrc:/gfx/indicator-selected.png":"qrc:/gfx/indicator-not-selected.png"
-                width:  15
-                height: 15
-                fillMode: Image.PreserveAspectFit
+                width:  25
+                height: 25
+                fillMode: Image.PreserveAspectFit                
+
             }
         }
     }    

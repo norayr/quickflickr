@@ -1,82 +1,39 @@
-import Qt 4.7 
+import Qt 4.7
 
-Image {
-    id: recentActivityView
-    anchors.fill: parent    
-    state: 'Default'
-        
-    // Listen FlickrManager::recentActivityUpdated() signal and update
-    // the xml to the model 
+Item{
+    width: settings.pageWidth
+    height: settings.pageHeight
+
+
     Connections{
         target: flickrManager
-        onRecentActivityUpdated: {
-            recentActivityModel.xml = xml;
-            loaderIndicator.visible = false;
+        onRecentActivityUpdated: { activityModel.xml = xml}
+    }
+
+    Rectangle {
+        color:"black"
+        anchors.fill: parent
+    }
+
+    RecentActivityModel{ id: activityModel }
+
+    Component{
+        id: del
+        Item{
+            width: settings.pageWidth
+            height: 30
+            Text{
+                anchors.fill: parent
+                color: "white"
+                text: title +",type: "+eventtype//+", comments: "+comments_
+            }
         }
     }
-    
-    
-    ListView{
-        id: recentActivityList
-        model: RecentActivityModel{id: recentActivityModel }
-        delegate: RecentActivityDelegate{}        
-        x:0
-        y:10
-        width: parent.width
-        height: parent.height
-        spacing: 10
-        cacheBuffer: 480
-        
-        ScrollBar {            
-            scrollArea: parent; width: 8
-            anchors { right: parent.right; top: parent.top; bottom: parent.bottom }                        
-        }
-        
+
+    ListView {
+        anchors.fill: parent
+        model:  activityModel
+        delegate: del
     }
 
-
-    Loading{        
-        id: loaderIndicator        
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-        
-    CommentsView{
-        id: activityComments
-        x: 800
-        y: 115
-        width: parent.width
-        height: parent.height - activityComments.y - 10
-    }
-
-    states: [
-        
-        State {
-            name: "Comments"
-            PropertyChanges {
-                target: activityComments
-                x:0                
-            }
-            PropertyChanges {
-                target: recentActivityList
-                x:-800
-                
-            }
-        }        
-    ]
-    
-    transitions: [
-        Transition {
-            PropertyAnimation{
-                properties: "x"
-                easing.type: "OutCubic"
-                duration: 500
-            }
-            AnchorAnimation {
-    
-            }   
-        }
-    ]
-            
 }

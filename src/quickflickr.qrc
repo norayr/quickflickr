@@ -38,7 +38,8 @@
         <file>qflickr/FavoritesView.qml</file>
         <file>qflickr/ThumbnailDelegate.qml</file>
         <file>qflickr/ThumbnailView.qml</file>
-        <file>gfx/button.sci</file>
+        <file>qflickr/RecentActivityView.qml</file>
+        <file>qflickr/SettingsView.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>gfx/back.png</file>
@@ -67,5 +68,8 @@
         <file>gfx/loading-3.png</file>
         <file>gfx/loading-4.png</file>
         <file>gfx/navigationbar-bg.png</file>
+        <file>gfx/button.sci</file>
+        <file>gfx/polaroid-bg.png</file>
+        <file>gfx/d-pointer-logo.png</file>
     </qresource>
 </RCC>

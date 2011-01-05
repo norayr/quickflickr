@@ -35,5 +35,7 @@ XmlListModel {
     XmlRole { name: "faves"; query: "@faves/string()" }
     XmlRole { name: "views"; query: "@views/string()" }
     XmlRole { name: "notes"; query: "@notes/string()" }        
+    //XmlRole { name: "comments_"; query: "activity/event/string()" }
+    XmlRole { name: "eventtype"; query: "activity/event/@type/string()" }
      
 }

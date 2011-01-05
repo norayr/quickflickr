@@ -46,13 +46,19 @@ Item{
         }
     }
 
+    RecentActivityView{
+        id: activityView
+        anchors.left: startupView.right
+        anchors.top: startupView.top
+        anchors.bottom:  startupView.bottom
+    }
 
     PhotostreamView{
         id: photostream
 
-        anchors.left: startupView.right
-        anchors.top: startupView.top
-        anchors.bottom:  startupView.bottom
+        anchors.left: activityView.right
+        anchors.top: activityView.top
+        anchors.bottom:  activityView.bottom
 
         onThumbnailClicked: {            
             flickrManager.getPhotoInfo(photoId);            
@@ -100,6 +106,15 @@ Item{
         }
     }
 
+    SettingsView{
+        id: settingsView
+        anchors.left: favoritesView.right
+        anchors.top: favoritesView.top
+        anchors.bottom:  favoritesView.bottom
+        width:  settings.pageWidth
+        height: settings.pageHeight        
+    }
+
     WebBrowser{
         id: webauth
         x:0
@@ -117,6 +132,10 @@ Item{
              strId: "startup"
          }
          ListElement {
+            name: "Recent Activity"
+            strId: "activity"
+         }
+         ListElement {
              name: "Photostream"
              strId: "photostream"
          }
@@ -127,6 +146,10 @@ Item{
          ListElement {
              name: "Favorites"
              strId: "favorites"
+         }
+         ListElement {
+             name: "Settings"
+             strId: "settings"
          }
          ListElement {
              name: "Minimize"
@@ -161,14 +184,26 @@ Item{
                 mainMenu.state = id;
             }
             else                        
+            if (id == "activity"){
+                flickrManager.getRecentActivity();
+                viewOffset = -settings.pageWidth * 2;
+                mainMenu.state = id;
+                console.log("Activating activity")
+            }
+            else
             if ( id == "contacts" ){
                 flickrManager.getContacts();
-                viewOffset = -settings.pageWidth * 2;
+                viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
             if ( id == "favorites" ){
                 flickrManager.getFavorites(24, 1);
-                viewOffset = -settings.pageWidth * 3;
+                viewOffset = -settings.pageWidth * 4;
+                mainMenu.state = id;
+            }
+            else
+            if ( id == "settings" ){
+                viewOffset = -settings.pageWidth * 5;
                 mainMenu.state = id;
             }
             else
@@ -197,9 +232,8 @@ Item{
                 currentIndex: 0
             }
         },
-        State {
-            name: "photostream"
-
+        State{
+            name: "activity"
             PropertyChanges {
                 target: startupView
                 x: -settings.pageWidth
@@ -208,6 +242,55 @@ Item{
             PropertyChanges{
                 target: bottomBar
                 currentIndex: 1
+            }
+        },
+        State {
+            name: "photostream"
+
+            PropertyChanges {
+                target: startupView
+                x: -2*settings.pageWidth
+                y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 2
+            }
+        },        
+        State {
+            name: "contacts"
+            PropertyChanges {
+                target: startupView
+                x: -3*settings.pageWidth
+                y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 3
+            }
+        },
+        State {
+            name: "favorites"
+            PropertyChanges {
+                target: startupView
+                x: -4*settings.pageWidth
+                y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 4
+            }
+        },
+        State {
+            name: "settings"
+            PropertyChanges {
+                target: startupView
+                x: -5*settings.pageWidth
+                y: 0
+            }
+            PropertyChanges{
+                target: bottomBar
+                currentIndex: 5
             }
         },
         State {
@@ -232,30 +315,6 @@ Item{
                 currentIndex: currentIndex
             }
         },
-        State {
-            name: "contacts"
-            PropertyChanges {
-                target: startupView
-                x: -2*settings.pageWidth
-                y: 0
-            }
-            PropertyChanges{
-                target: bottomBar
-                currentIndex: 2
-            }
-        },
-        State {
-            name: "favorites"
-            PropertyChanges {
-                target: startupView
-                x: -3*settings.pageWidth
-                y: 0
-            }
-            PropertyChanges{
-                target: bottomBar
-                currentIndex: 3
-            }
-        },
         State{
             name: "Authenticate"
             PropertyChanges{
@@ -268,7 +327,6 @@ Item{
                 opacity: 0
 
             }
-
         }
     ]
     

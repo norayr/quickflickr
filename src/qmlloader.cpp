@@ -26,7 +26,7 @@
 #include <QHBoxLayout>
 #include <QtDebug>
 
-#ifndef Q_WS_SYMBIAN
+#ifndef Q_OS_SYMBIAN
 #include <QGLContext>
 #endif
 

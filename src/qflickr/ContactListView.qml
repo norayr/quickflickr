@@ -53,6 +53,7 @@ Item{
                 border.color: "lightGray"
                 border.width: 1
                 anchors.fill: parent
+                anchors.rightMargin: 1
 
             }
             Image{

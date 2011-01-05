@@ -55,6 +55,8 @@ public:
     virtual ~ FlickrManager();
 
     Q_INVOKABLE void activate();
+
+    Q_INVOKABLE void removeAuthentication();
     
     Q_INVOKABLE void authenticate();
 
@@ -85,6 +87,8 @@ public:
     Q_INVOKABLE void getPhotoInfo(const QString & photoId );
 
     Q_INVOKABLE QString nsid() const;
+
+    Q_INVOKABLE QString userName() const;
 
 Q_SIGNALS:
     void authenticationRequired(const QUrl & authUrl);
