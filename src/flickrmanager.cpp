@@ -85,10 +85,8 @@ FlickrManager:: ~ FlickrManager()
 void FlickrManager::activate()
 {
     Q_D(FlickrManager);
-    //d->m_qtFlickr = new QtFlickr ( "Your Api Key",
-    //                               "Api Secret", this );
-    d->m_qtFlickr = new QtFlickr ( "5ed969460703ab6ae4f0ecbf4178be5d",
-                                   "ee829960cd89d099", this );
+    d->m_qtFlickr = new QtFlickr ( "Your Api Key",
+                                   "Api Secret", this );
 
 
     connect(d->m_qtFlickr,SIGNAL(requestFinished ( int, QtfResponse, QtfError, void* )),
