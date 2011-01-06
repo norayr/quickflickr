@@ -37,24 +37,13 @@ Rectangle {
         }
 
         FlickrText{
-            id: logInfo
-            /*
-            anchors.top: parent.top
-            anchors.topMargin: settings.mediumMargin
-            anchors.left: parent.left
-            anchors.leftMargin: settings.mediumMargin
-            */
+            id: logInfo            
             smooth: true
             header: "You are logged in as"
             text:  flickrManager.userName()
         }
 
-        Button{
-            /*
-            anchors.top: logInfo.bottom
-            anchors.topMargin: settings.mediumMargin
-            anchors.horizontalCenter: parent.horizontalCenter
-            */
+        Button{            
             text: "Log Again"
             onClicked:  flickrManager.removeAuthentication()
         }
@@ -88,7 +77,7 @@ Rectangle {
             textFormat: Text.RichText
             wrapMode:  Text.Wrap
             width: parent.width
-            onLinkActivated: {console.log("Link clicked: " + link); Qt.openUrlExternally(link);}
+            onLinkActivated:Qt.openUrlExternally(link);
             smooth: true
         }
 

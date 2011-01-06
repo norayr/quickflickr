@@ -207,7 +207,7 @@ Item{
             Text{
                 id: descriptionText
                 y: settings.mediumMargin
-                text: description
+                text: {if (description != "" )return description; else return "No Description"; }
                 width: settings.pageWidth
                 wrapMode: Text.Wrap
                 smooth:  true
@@ -216,6 +216,7 @@ Item{
                 opacity: 1
                 clip: true
                 textFormat: Text.RichText
+                onLinkActivated:Qt.openUrlExternally(link)
             }           
         }
     }

@@ -51,6 +51,10 @@ Item{
         anchors.left: startupView.right
         anchors.top: startupView.top
         anchors.bottom:  startupView.bottom
+        onThumbnailClicked: {
+            flickrManager.getPhotoInfo(photoId);
+            mainMenu.state = "details"
+        }
     }
 
     PhotostreamView{
@@ -148,7 +152,7 @@ Item{
              strId: "favorites"
          }
          ListElement {
-             name: "Settings"
+             name: "Settings & About"
              strId: "settings"
          }
          ListElement {
@@ -172,6 +176,11 @@ Item{
             if ( id == "startup"){
                 viewOffset = 0;
                 mainMenu.state = id;
+            }else                                                
+            if (id == "activity"){                
+                viewOffset = -settings.pageWidth;
+                mainMenu.state = id;
+                console.log("Activating activity")
             }else
             if ( id == "photostream"){
                 if ( mainMenu.state != "details"){
@@ -180,19 +189,11 @@ Item{
                     flickrManager.getUserInfo( flickrManager.nsid());
                 }
 
-                viewOffset = -settings.pageWidth;
-                mainMenu.state = id;
-            }
-            else                        
-            if (id == "activity"){
-                flickrManager.getRecentActivity();
                 viewOffset = -settings.pageWidth * 2;
                 mainMenu.state = id;
-                console.log("Activating activity")
             }
             else
-            if ( id == "contacts" ){
-                flickrManager.getContacts();
+            if ( id == "contacts" ){                
                 viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
