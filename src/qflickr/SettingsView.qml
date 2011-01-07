@@ -44,7 +44,7 @@ Rectangle {
         }
 
         Button{            
-            text: "Log Again"
+            text: "Log out"
             onClicked:  flickrManager.removeAuthentication()
         }
 

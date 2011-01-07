@@ -43,11 +43,11 @@ Rectangle{
         target: flickrManager
         onProceed: {mainMenu.state = 'Menu';
                     flickrManager.getLatestContactUploads();
-                    //flickrManager.getRecentActivity();
-                    //flickrManager.getContacts();
+                    flickrManager.getRecentActivity();
+                    flickrManager.getContacts();
                     }
 
         onAuthenticationRequired: {mainMenu.authUrl = authUrl;
-                                   mainMenu.state = 'Authenticate';}
+                                   mainMenu.state = 'authenticate';}
     }            
 }

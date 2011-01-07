@@ -40,6 +40,7 @@
         <file>qflickr/ThumbnailView.qml</file>
         <file>qflickr/RecentActivityView.qml</file>
         <file>qflickr/SettingsView.qml</file>
+        <file>qflickr/AuthenticationView.qml</file>
     </qresource>
     <qresource prefix="/">
         <file>gfx/back.png</file>

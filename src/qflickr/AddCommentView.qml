@@ -93,9 +93,11 @@ Item{
         anchors.leftMargin: settings.mediumMargin
         anchors.rightMargin: settings.mediumMargin
         anchors.bottomMargin: settings.mediumMargin
-        font.pointSize: settings.smallFontSize
+        font.pixelSize: settings.smallFontSize
         color: "black"
         //focus: true
+        width: textEditBg.width
+        wrapMode: TextEdit.Wrap
         clip: true
     }
 

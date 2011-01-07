@@ -30,7 +30,7 @@ Item{
     property int  borderWidth: 2
     signal clicked
     signal pressAndHold
-    
+    smooth: true
     
     Rectangle {
         id: background
@@ -39,9 +39,9 @@ Item{
         border.width: showBorder? borderWidth:0
         border.color: showBorder?"white":color
         smooth: true
+        scale:  0
         Image{
-            id: image
-            scale: 0
+            id: image            
             anchors.fill: parent
             smooth: true
             anchors.topMargin: background.border.width
@@ -68,8 +68,8 @@ Item{
     states: [
         State {
             name: "Show"; 
-            when: image.status == Image.Ready
-            PropertyChanges { target: image; scale: 1 }
+            when: image.status == Image.Ready            
+            PropertyChanges { target: background; scale: 1 }
         }
     ]    
 

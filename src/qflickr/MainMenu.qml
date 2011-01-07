@@ -22,7 +22,7 @@ import Qt 4.7
 
 Item{
     id: mainMenu
-    //property alias authUrl: webauth.urlString
+    property alias authUrl: authenticationView.authenticationUrl
     property int viewOffset: 0
 
     // Background
@@ -56,7 +56,7 @@ Item{
         id: activityView
         anchors.left: startupView.right
         anchors.top: startupView.top
-        anchors.bottom:  startupView.bottom
+        anchors.bottom:  startupView.bottom        
         onThumbnailClicked: {
             flickrManager.getPhotoInfo(photoId);
             mainMenu.state = "details"
@@ -68,8 +68,7 @@ Item{
 
         anchors.left: activityView.right
         anchors.top: activityView.top
-        anchors.bottom:  activityView.bottom
-
+        anchors.bottom:  activityView.bottom        
         onThumbnailClicked: {            
             flickrManager.getPhotoInfo(photoId);            
             mainMenu.state = "details"
@@ -84,6 +83,7 @@ Item{
         anchors.left: photostream.right
         anchors.top: photostream.top
         anchors.bottom:  photostream.bottom
+
         onClicked: {
             photostream.userid = nsid;
             flickrManager.getPhotostream( nsid, 1 );
@@ -113,8 +113,17 @@ Item{
         anchors.top: favoritesView.top
         anchors.bottom:  favoritesView.bottom
         width:  settings.pageWidth
-        height: settings.pageHeight        
+        height: settings.pageHeight
+
     }
+    AuthenticationView{
+        id: authenticationView
+        x:0
+        y:settings.height
+        opacity: 0
+        z: 5
+    }
+
     /*
     WebBrowser{
         id: webauth
@@ -175,7 +184,7 @@ Item{
                 mainMenu.state = id;
             }else                                                
             if (id == "activity"){
-                flickrManager.getRecentActivity()
+                //flickrManager.getRecentActivity()
                 viewOffset = -settings.pageWidth;
                 mainMenu.state = id;
                 console.log("Activating activity")
@@ -192,7 +201,7 @@ Item{
             }
             else
             if ( id == "contacts" ){
-                flickrManager.getContacts();
+                //flickrManager.getContacts();
                 viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
@@ -314,11 +323,11 @@ Item{
                 target: bottomBar
                 currentIndex: currentIndex
             }
-        }/*,
+        },
         State{
-            name: "Authenticate"
+            name: "authenticate"
             PropertyChanges{
-                target: webauth
+                target: authenticationView
                 y: 0
                 opacity: 1
             }
@@ -328,7 +337,7 @@ Item{
 
             }
         }
-        */
+
     ]
     
     transitions: [

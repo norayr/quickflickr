@@ -107,6 +107,7 @@ Item{
         anchors.bottomMargin: settings.hugeMargin
         anchors.left: photo.left
         anchors.right: photo.right
+        opacity: 0
 
         MouseArea{
             anchors.fill: parent
@@ -327,8 +328,13 @@ Item{
             AnchorChanges {
                 target: titleBar
                 anchors.bottom: undefined
-                anchors.top: photo.top
+                anchors.top: photo.top                
             }
+            PropertyChanges {
+                target: titleBar
+                opacity: 1
+            }
+
             AnchorChanges {
                 target: bottomBar
                 anchors.top: undefined
@@ -408,7 +414,7 @@ Item{
     transitions: [
         Transition{
             AnchorAnimation{ duration: 500; easing.type: Easing.InOutExpo }
-            PropertyAnimation{ duration: 500; properties: "opacity" }
+            PropertyAnimation{ duration: 500; properties: "visible,opacity" }
         }
 
     ]

@@ -44,11 +44,17 @@ Rectangle {
         onPhotostreamUpdated: { photostreamModel.xml = xml; loading = false;}
         onUserInfoUpdated: { userInfoModel.xml = xml}
     }
+    function clear()
+    {
+        photostreamModel.xml = ""
+        loading = true;
+    }
+
 
     // Function to get next photostream page
     function nextPhotostreamPage()
     {
-        loading = true;
+        clear();
         ++currentPage;        
         flickrManager.getPhotostream( userid, currentPage );
     }
@@ -58,7 +64,7 @@ Rectangle {
     {
         if ( currentPage == 1)
             return;
-        loading = true;
+        clear();
         --currentPage;
         flickrManager.getPhotostream( userid, currentPage );
     }

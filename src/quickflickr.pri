@@ -87,7 +87,8 @@ OTHER_FILES += \
     qflickr/ThumbnailDelegate.qml \
     qflickr/ThumbnailView.qml \
     qflickr/RecentActivityView.qml \
-    qflickr/SettingsView.qml
+    qflickr/SettingsView.qml \
+    qflickr/AuthenticationView.qml
 
 
 
