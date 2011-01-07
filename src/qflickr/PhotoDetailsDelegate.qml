@@ -369,6 +369,10 @@ Item{
                 target: detailsBg
                 opacity: 0.8
             }
+            PropertyChanges {
+                target: titleBar
+                opacity: 1
+            }
             AnchorChanges {
                 target: descriptionArea
                 anchors.left: photo.right
@@ -396,6 +400,10 @@ Item{
             PropertyChanges{
                 target: detailsBg
                 opacity: 0.8
+            }
+            PropertyChanges {
+                target: titleBar
+                opacity: 1
             }
             AnchorChanges {
                 target: descriptionArea
