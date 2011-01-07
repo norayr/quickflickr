@@ -26,10 +26,6 @@ Item{
             width: settings.pageWidth
             height: childrenRect.height
 
-            MouseArea{
-                anchors.fill: parent
-                onClicked: recentActivityView.thumbnailClicked( id, mediumSizeUrl)
-            }
 
 
             Text{
@@ -45,7 +41,7 @@ Item{
             }
             FlickrImage{
                 id: image
-                source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_z.jpg"
+                source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_m.jpg"
                 anchors.top: titleText.bottom
                 anchors.left: parent.left
                 anchors.margins: settings.largeMargin
@@ -83,6 +79,11 @@ Item{
                 header: "Views"
                 text: views
             }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: recentActivityView.thumbnailClicked( id, mediumSizeUrl)
+            }
+
         }
     }
 

@@ -29,6 +29,7 @@ Item{
     function nextFavoritesPage()
     {
         loading = true;
+        favoritesModel.xml = "";
         ++currentPage;
 
         if ( favoritesModel.count < perPage )
@@ -43,6 +44,7 @@ Item{
     {
         if ( currentPage == 1)
             return;
+        favoritesModel.xml = "";
         loading = true;
         --currentPage;
         favoritesModel.xml = "";

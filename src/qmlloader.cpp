@@ -35,7 +35,7 @@
 #include <QDBusMessage>
 #endif
 
-#if defined(Q_OS_SYMBIAN)
+#ifdef Q_OS_SYMBIAN
 #include <eikenv.h>
 #include <eikappui.h>
 #include <aknenv.h>
@@ -51,7 +51,7 @@ QmlLoader::QmlLoader():
     setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
 #endif
 
-#ifdef Q_WS_SYMBIAN
+#ifdef Q_OS_SYMBIAN
     CAknAppUi* appUi = dynamic_cast<CAknAppUi*> (CEikonEnv::Static()->AppUi());
     if (appUi){
         appUi->SetOrientationL(CAknAppUi::EAppUiOrientationPortrait);

@@ -19,7 +19,7 @@
  */
 import Qt 4.7
 
-Image{
+Rectangle{
     id: polaroid
     transform: Rotation {
         origin.x: width / 2;
@@ -31,9 +31,9 @@ Image{
     z: PathView.z
     width: 230
     height: 270//250
-    //color: "white"
+    color: "white"
     smooth:  true
-    source: "qrc:/gfx/polaroid-bg.png"
+    //source: "qrc:/gfx/polaroid-bg.png"
 
     Image{
         id: image
@@ -45,7 +45,7 @@ Image{
         anchors.rightMargin: 10
         anchors.bottom: parent.bottom
         anchors.bottomMargin: author.paintedHeight * 2
-        source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_z.jpg"
+        source: "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_m.jpg"
         smooth: true
         fillMode: Image.PreserveAspectCrop
         clip:  true

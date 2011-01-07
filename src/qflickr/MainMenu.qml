@@ -22,7 +22,7 @@ import Qt 4.7
 
 Item{
     id: mainMenu
-    property alias authUrl: webauth.urlString
+    //property alias authUrl: webauth.urlString
     property int viewOffset: 0
 
     // Background
@@ -31,9 +31,15 @@ Item{
         color: "black"
     }
 
+    PhotoDetailsView{
+        id: photoDetails
+        anchors.top: bottomBar.bottom
+        anchors.left: bottomBar.left
+        anchors.right: bottomBar.right
+        height: settings.pageHeight
+        opacity:  0
+    }
 
-    // The first, startup view. Just position it in relative to x, y.
-    // The rest of the views are anchored relative to each others.
     Timelineview{
         id: startupView
         x: 0
@@ -68,15 +74,6 @@ Item{
             flickrManager.getPhotoInfo(photoId);            
             mainMenu.state = "details"
         }
-    }
-
-    PhotoDetailsView{
-        id: photoDetails
-        anchors.top: bottomBar.bottom        
-        anchors.left: bottomBar.left
-        anchors.right: bottomBar.right
-        height: settings.pageHeight
-        opacity:  0
     }
 
     ContactListView{
@@ -118,7 +115,7 @@ Item{
         width:  settings.pageWidth
         height: settings.pageHeight        
     }
-
+    /*
     WebBrowser{
         id: webauth
         x:0
@@ -127,7 +124,7 @@ Item{
         onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
         opacity: 0
     }
-
+    */
     // Model for a menu
     ListModel{
         id: lmodel
@@ -177,7 +174,8 @@ Item{
                 viewOffset = 0;
                 mainMenu.state = id;
             }else                                                
-            if (id == "activity"){                
+            if (id == "activity"){
+                flickrManager.getRecentActivity()
                 viewOffset = -settings.pageWidth;
                 mainMenu.state = id;
                 console.log("Activating activity")
@@ -193,7 +191,8 @@ Item{
                 mainMenu.state = id;
             }
             else
-            if ( id == "contacts" ){                
+            if ( id == "contacts" ){
+                flickrManager.getContacts();
                 viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
@@ -315,7 +314,7 @@ Item{
                 target: bottomBar
                 currentIndex: currentIndex
             }
-        },
+        }/*,
         State{
             name: "Authenticate"
             PropertyChanges{
@@ -329,6 +328,7 @@ Item{
 
             }
         }
+        */
     ]
     
     transitions: [

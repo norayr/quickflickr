@@ -36,5 +36,8 @@ int main(int argc, char *argv[])
         app.setGraphicsSystem("raster");
         loader.showFullScreen();
 #endif
+#ifdef Q_OS_SYMBIAN
+        loader.showFullScreen();
+#endif
     return app.exec();
 }

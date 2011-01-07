@@ -8,7 +8,7 @@
 TARGET = quickflickr
 CONFIG   -= app_bundle release
 QT += declarative network xml webkit
-
+QMAKE_CXXFLAGS = -O2
 mac{
     QT += opengl
 }
@@ -18,8 +18,11 @@ maemo5{
 }
 
 symbian{
+    LIBS += -lavkon -leikcore -lcone
     TARGET.CAPABILITY += NetworkServices
-    TARGET.EPOCHEAPSIZE = 0x20000 0x4000000
+    TARGET.EPOCHEAPSIZE = 0x20000 0x8000000
+    #TARGET.EPOCSTACKSIZE = 0x80000
+    #TARGET.EPOCALLOWDLLDATA = 1
 }
 
 
