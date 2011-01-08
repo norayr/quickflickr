@@ -3,13 +3,14 @@ import Qt 4.7
 Item{
     id: recentActivityView
     signal thumbnailClicked( string photoId, url photoUrl )
+    property bool isModelUpdated: false
     width: settings.pageWidth
     height: settings.pageHeight
 
 
     Connections{
         target: flickrManager
-        onRecentActivityUpdated: { activityModel.xml = xml}
+        onRecentActivityUpdated: { activityModel.xml = xml; isModelUpdated = true;}
     }
 
     Rectangle {
@@ -45,6 +46,8 @@ Item{
                 anchors.top: titleText.bottom
                 anchors.left: parent.left
                 anchors.margins: settings.largeMargin
+                smooth: true
+                showLoader: false
                 width: 100
                 height: 100
                 fillMode: Image.PreserveAspectCrop

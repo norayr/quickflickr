@@ -42,10 +42,9 @@ Item{
             Rectangle{
                 id: commentBg
                 color: "#00000000"
-                border.color: "lightGray"
-                border.width: 1                
+                //border.color: "lightGray"
+                //border.width: 1
                 anchors.fill: parent
-
             }
             Image{
                 id: buddyIcon
@@ -72,12 +71,19 @@ Item{
                 color: "white"
                 text: comment
                 wrapMode: Text.Wrap
+                textFormat: Text.RichText
+                onLinkActivated: Qt.openUrlExternally(link)
                 anchors.left: commentBg.left
                 anchors.leftMargin:  settings.smallMargin
                 anchors.top: buddyIcon.bottom
                 anchors.topMargin: settings.smallMargin
                 anchors.right: commentBg.right
                 anchors.rightMargin: settings.smallMargin
+            }
+            LineSeparator{
+                width:  parent.width
+                thickness: 1
+                anchors.top: commentText.bottom
             }
         }
     }

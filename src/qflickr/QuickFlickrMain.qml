@@ -42,9 +42,7 @@ Rectangle{
     Connections{
         target: flickrManager
         onProceed: {mainMenu.state = 'Menu';
-                    flickrManager.getLatestContactUploads();
-                    flickrManager.getRecentActivity();
-                    flickrManager.getContacts();
+                    flickrManager.getLatestContactUploads();                    
                     }
 
         onAuthenticationRequired: {mainMenu.authUrl = authUrl;

@@ -184,7 +184,9 @@ Item{
                 mainMenu.state = id;
             }else                                                
             if (id == "activity"){
-                //flickrManager.getRecentActivity()
+                if ( !activityView.isModelUpdated ){
+                    flickrManager.getRecentActivity();
+                }
                 viewOffset = -settings.pageWidth;
                 mainMenu.state = id;
                 console.log("Activating activity")
@@ -201,7 +203,10 @@ Item{
             }
             else
             if ( id == "contacts" ){
-                //flickrManager.getContacts();
+                if ( !contactsView.isModelUpdated ){
+                    flickrManager.getContacts();
+                }
+
                 viewOffset = -settings.pageWidth * 3;
                 mainMenu.state = id;
             }
