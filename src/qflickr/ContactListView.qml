@@ -23,12 +23,13 @@ Item{
     id: contactListView
     // Signal for indicating that user has been clicked
     signal clicked(string nsid)
+    property bool isModelUpdated: false
 
     width: settings.pageWidth
 
     Connections{
         target: flickrManager
-        onContactsUpdated: {contactListModel.xml = xml}
+        onContactsUpdated: {contactListModel.xml = xml; isModelUpdated = true;}
     }
 
     ContactListModel{
@@ -50,11 +51,10 @@ Item{
             Rectangle{
                 id: contactListBg
                 color: "#00000000"
-                border.color: "lightGray"
-                border.width: 1
+                //border.color: "lightGray"
+                //border.width: 1
                 anchors.fill: parent
-                anchors.rightMargin: 1
-
+                //anchors.rightMargin: 1
             }
             Image{
                 id: buddyIcon
@@ -86,6 +86,12 @@ Item{
                 text: realname
                 elide: Text.ElideRight
                 width: parent.width - buddyIcon.width
+            }
+            LineSeparator{
+                width:  parent.width
+                thickness: 1
+                anchors.top: buddyIcon.bottom
+                anchors.topMargin: settings.mediumMargin
             }
         }
     }
