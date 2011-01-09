@@ -92,9 +92,7 @@ Item{
 
     Rectangle{
         id: detailsBg
-        anchors.fill: parent
-        anchors.topMargin: 1
-        anchors.bottomMargin: 1
+        anchors.fill: parent                
         color: "black"
         opacity: 0
     }
@@ -294,7 +292,7 @@ Item{
         anchors.top: titleBar.bottom
         anchors.bottom: bottomBar.top
         anchors.left: photo.right
-        onCommentAdded: {showComments(); updateInfo.start()}
+        onCommentAdded: {photoDelegate.state = ""; updateInfo.start()}
 
     }
     // end of add comment field

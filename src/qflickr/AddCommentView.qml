@@ -93,7 +93,7 @@ Item{
         anchors.leftMargin: settings.mediumMargin
         anchors.rightMargin: settings.mediumMargin
         anchors.bottomMargin: settings.mediumMargin
-        font.pixelSize: settings.smallFontSize
+        font.pixelSize: settings.mediumFontSize
         color: "black"
         //focus: true
         width: textEditBg.width

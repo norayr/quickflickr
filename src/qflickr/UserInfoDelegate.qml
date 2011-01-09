@@ -22,6 +22,7 @@ import Qt 4.7
 Rectangle{
     anchors.fill: parent
     color: "black"
+    width:  settings.pageWidth
 
     Image{
         id: buddyIcon
@@ -29,9 +30,9 @@ Rectangle{
         width: 48
         height: 48
         anchors.top:  parent.top
-        anchors.topMargin: settings.largeMargin
-        anchors.left: parent.left
-        anchors.leftMargin: settings.largeMargin
+        anchors.topMargin: settings.mediumMargin
+        anchors.right: parent.right
+        anchors.rightMargin: settings.mediumMargin
     }
     Text{
         id: userName
@@ -40,40 +41,32 @@ Rectangle{
         font.pixelSize: settings.largeFontSize
         verticalAlignment: Text.AlignTop
         smooth: true
-        anchors.top: buddyIcon.top
-        anchors.left: buddyIcon.right
-        anchors.leftMargin: settings.largeMargin * 2
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.leftMargin: settings.mediumMargin
         anchors.right: parent.right
+        width: parent.width - buddyIcon.width - settings.mediumMargin*2
+        elide: Text.ElideRight
+        Component.onCompleted: console.log("xxx"+width)
     }
-    /*
-    FlickrText{
-        id: viewsText
-        header: "Views"
-        text:  views
-        anchors.top:  userName.bottom        
-        anchors.left: userName.left        
-        fontPixelSize: settings.tinyFontSize
-        Component.onCompleted: console.log("Views:"+views)
-    }
-    */
+
     FlickrText{
         id: photos
         header:  "Photos"
         text: count
         anchors.top: userName.bottom
-        anchors.left: userName.left
+        anchors.left: parent.left
         anchors.leftMargin: settings.mediumMargin
         fontPixelSize: settings.tinyFontSize
     }
 
     FlickrText{
-        id: pro
-        //visible: (ispro != 0)
+        id: pro        
         header: "Pro"
         text: (ispro != 0?"yes":"no")
-        anchors.top: userName.bottom
-        anchors.left: photos.right
-        anchors.leftMargin: settings.mediumMargin
+        anchors.top: photos.bottom
+        anchors.topMargin: settings.mediumMargin
+        anchors.left: photos.left
         fontPixelSize:  settings.tinyFontSize
     }
 
@@ -81,10 +74,10 @@ Rectangle{
         id: dateTaken        
         header: "First upload"
         text: firstdatetaken // TODO: format this to shorter
-        anchors.top:  buddyIcon.bottom
+        anchors.top:  pro.bottom
         anchors.topMargin: settings.mediumMargin
-        anchors.left: buddyIcon.left
-        anchors.right: userName.right
+        anchors.left: pro.left
+        //anchors.right: userName.right
         fontPixelSize: settings.tinyFontSize
     }
     FlickrText{
@@ -94,7 +87,7 @@ Rectangle{
         anchors.top:  dateTaken.bottom
         anchors.topMargin: settings.mediumMargin
         anchors.left: dateTaken.left
-        anchors.right: dateTaken.right
+        //anchors.right: dateTaken.right
         fontPixelSize: settings.tinyFontSize
     }
 }
