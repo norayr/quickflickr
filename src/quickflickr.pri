@@ -23,6 +23,7 @@ symbian{
     TARGET.EPOCHEAPSIZE = 0x20000 0x8000000
     #TARGET.EPOCSTACKSIZE = 0x80000
     #TARGET.EPOCALLOWDLLDATA = 1
+    default_deployment.pkg_prerules += pkg_depends_webkit
 }
 
 
@@ -37,13 +38,15 @@ SOURCES += main.cpp \
     qmlloader.cpp \
     flickrmanager.cpp \
     qtflickr.cpp \
-    qtflickr_p.cpp     
+    qtflickr_p.cpp \     
+    deviceprofile.cpp
 
 HEADERS += \
     qmlloader.h \
     flickrmanager.h \
     qtflickr.h \
-    qtflickr_p.h 
+    qtflickr_p.h \ 
+    deviceprofile.h
 
 
 OTHER_FILES += \    

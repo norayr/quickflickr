@@ -19,6 +19,7 @@
  */
 #include <QApplication>
 #include "qmlloader.h"
+#include <QtDebug>
 
 int main(int argc, char *argv[])
 {
@@ -28,16 +29,21 @@ int main(int argc, char *argv[])
     
     // Simple loader for loading QML files
     QmlLoader loader;
-    loader.resize(360,640);
-#ifdef Q_WS_MAC
-        loader.show();
-#endif
+
+    // Platform specific stuff. Not so nice, but should work
 #ifdef Q_WS_MAEMO_5
         app.setGraphicsSystem("raster");
         loader.showFullScreen();
+        return app.exec();
 #endif
 #ifdef Q_OS_SYMBIAN
         loader.showFullScreen();
+        return app.exec();
 #endif
-    return app.exec();
+#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+        loader.resize(360,640);
+        loader.show();
+        return app.exec();
+#endif
+
 }

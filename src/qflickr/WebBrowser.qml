@@ -72,13 +72,4 @@ Rectangle {
         onCloseClicked: webBrowser.close();
     }
 
-    ScrollBar {
-        scrollArea: webView; width: 8
-        anchors { right: parent.right; top: header.bottom; bottom: parent.bottom }
-    }
-
-    ScrollBar {
-        scrollArea: webView; height: 8; orientation: Qt.Horizontal
-        anchors { right: parent.right; rightMargin: 8; left: parent.left; bottom: parent.bottom }
-    }
 }

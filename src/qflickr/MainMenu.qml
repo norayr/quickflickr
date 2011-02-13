@@ -124,16 +124,8 @@ Item{
         z: 5
     }
 
-    /*
-    WebBrowser{
-        id: webauth
-        x:0
-        y:parent.height
-        urlString: parent.authUrl
-        onClose: {flickrManager.getToken();mainMenu.state = 'Menu';}
-        opacity: 0
-    }
-    */
+
+
     // Model for a menu
     ListModel{
         id: lmodel
@@ -342,7 +334,6 @@ Item{
 
             }
         }
-
     ]
     
     transitions: [

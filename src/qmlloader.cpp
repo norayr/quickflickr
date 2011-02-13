@@ -19,6 +19,7 @@
  */
 #include "qmlloader.h"
 #include "flickrmanager.h"
+#include "deviceprofile.h"
 
 #include <QDeclarativeError>
 #include <QDeclarativeContext>
@@ -65,7 +66,8 @@ QmlLoader::QmlLoader():
     // Expose the C++ interface to QML
     engine()->rootContext()->setContextProperty("flickrManager", m_flickrManager );
     engine()->rootContext()->setContextProperty("mainWindow", this );
-    
+    engine()->rootContext()->setContextProperty("deviceProfile", DeviceProfile::instance() );
+
     // Load the main QML component which constructs the whole UI from other
     // QML components    
     setSource(QUrl("qrc:///qml/qflickr/QuickFlickrMain.qml"));    

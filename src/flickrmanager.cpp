@@ -29,15 +29,17 @@
 #include <QMapIterator>
 #include <QVariant>
 
+#define KEY "cfa0d40dee57a1808c8c3c9b30f56ded"
+#define SECRET "72c539e938abdfc0"
 
 class FlickrManagerPrivate{
 public:
     FlickrManagerPrivate():
             m_qtFlickr(0),
             m_requestId(),
-            m_settings("QuickFlickr","Authorization"),
+            m_settings("d-pointer","quickflickr"),
             m_frob()
-    {
+    {            
     }
 
     QSettings & settings()
@@ -85,9 +87,7 @@ FlickrManager:: ~ FlickrManager()
 void FlickrManager::activate()
 {
     Q_D(FlickrManager);
-    d->m_qtFlickr = new QtFlickr ( "Your Api Key",
-                                   "Api Secret", this );
-
+    d->m_qtFlickr = new QtFlickr ( KEY, SECRET, this );
 
     connect(d->m_qtFlickr,SIGNAL(requestFinished ( int, QtfResponse, QtfError, void* )),
             this,SLOT(requestFinished ( int, QtfResponse, QtfError, void* )));
@@ -99,6 +99,7 @@ void FlickrManager::activate()
     if(!token.isEmpty()){
         d->m_qtFlickr->setToken(token);                
         emit proceed();
+        qDebug() << "Token found:" << token;
     }else{
         authenticate();        
     }

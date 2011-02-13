@@ -10,7 +10,9 @@ Rectangle {
     function checkOnClicked()
     {
         if (!webBrowserOpened){
-            Qt.openUrlExternally(authenticationUrl);
+            //Qt.openUrlExternally(authenticationUrl);
+            //webAuth.urlString = authenticationUrl;
+            webauth.opacity = 1;
             webBrowserOpened = true;
         }else {
             flickrManager.getToken();
@@ -65,6 +67,16 @@ Rectangle {
         source: "qrc:/gfx/d-pointer-logo.png"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
+    }
+
+
+    WebBrowser{
+        id: webauth
+        x:0
+        y: 0//settings.height
+        urlString: authenticationUrl//parent.authUrl
+        onClose: opacity = 0//{flickrManager.getToken();mainMenu.state = 'Menu';}
+        opacity: 0
     }
 
 }

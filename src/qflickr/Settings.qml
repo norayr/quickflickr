@@ -20,8 +20,10 @@
 import Qt 4.7
 
 Item{
-    width: 360
-    height: 640
+    //width: 360
+    //height: 640
+    width:  deviceProfile.displayWidth()
+    height: deviceProfile.displayHeight()
 
     property color defaultBackgroundColor: "black"
 
