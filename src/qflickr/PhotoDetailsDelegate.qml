@@ -18,6 +18,7 @@
  *  along with QuickFLickr.  If not, see <http://www.gnu.org/licenses/>.
  */
 import Qt 4.7
+import Qt.labs.gestures 1.0
 
 Item{
     id: photoDelegate
@@ -82,7 +83,15 @@ Item{
         MouseArea{
             anchors.fill: parent
             onClicked: showInfo();
-        }        
+        }
+
+        /*
+        GestureArea{
+            onTap: showInfo();
+            onPinch: {photo.scale = gesture.scaleFactor; photo.rotation = gesture.rotationAngle; }
+            //console.log("pinch center = (",gesture.centerPoint.x,",",gesture.centerPoint.y,") rotation =",gesture.rotationAngle," scale =",gesture.scaleFactor)
+        }
+        */
     }
 
     Loading{

@@ -51,6 +51,7 @@ Item{
             smooth:  true
             font.pixelSize: fontPixelSize
             width: flickrText.width - header.paintedWidth
+            font.bold: true
         }
     }
 }

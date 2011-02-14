@@ -40,7 +40,10 @@ Rectangle {
             id: logInfo            
             smooth: true
             header: "You are logged in as"
-            text:  flickrManager.userName()
+            Connections{
+                target: flickrManager
+                onProceed: logInfo.text = flickrManager.userName();
+            }
         }
 
         Button{            

@@ -23,12 +23,15 @@ int DeviceProfile::displayHeight() const
 DeviceProfile::DeviceProfile(QObject *parent) :
     QObject(parent)
 {
+#if defined(Q_WS_MAEMO_5)
+        m_displaySize.setWidth( qApp->desktop()->screenGeometry().size().height());
+        m_displaySize.setHeight( qApp->desktop()->screenGeometry().size().width());
+        return;
+#endif
 #if defined(Q_WS_MAC) || defined(Q_WS_X11)
         m_displaySize.setWidth(360);
         m_displaySize.setHeight(640);
 #else
-    //m_displaySize = qApp->desktop()->screenGeometry().size();
-    m_displaySize.setWidth(360);
-    m_displaySize.setHeight(640);
+    m_displaySize = qApp->desktop()->screenGeometry().size();
 #endif
 }

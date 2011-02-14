@@ -98,8 +98,7 @@ void FlickrManager::activate()
     QString token = d->settingsValue("token");
     if(!token.isEmpty()){
         d->m_qtFlickr->setToken(token);                
-        emit proceed();
-        qDebug() << "Token found:" << token;
+        emit proceed();        
     }else{
         authenticate();        
     }

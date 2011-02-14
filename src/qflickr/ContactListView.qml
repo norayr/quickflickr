@@ -70,7 +70,7 @@ Item{
                 id: userName
                 anchors.left: buddyIcon.right
                 anchors.top:  buddyIcon.top
-                anchors.margins: settings.mediumMargin
+                anchors.leftMargin: settings.mediumMargin
                 color: "white"
                 font.pixelSize: settings.mediumFontSize
                 text: username

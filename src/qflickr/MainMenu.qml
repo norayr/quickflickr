@@ -44,7 +44,8 @@ Item{
         id: startupView
         x: 0
         y: 0
-        onThumbnailClicked: {            
+        onThumbnailClicked: {
+            photostream.clear();
             flickrManager.getPhotostream(owner,1);
             flickrManager.getUserInfo( owner )
             photostream.userid = owner;            
@@ -86,6 +87,7 @@ Item{
 
         onClicked: {
             photostream.userid = nsid;
+            photostream.clear();
             flickrManager.getPhotostream( nsid, 1 );
             flickrManager.getUserInfo( nsid )
             mainMenu.state = "photostream";
@@ -153,10 +155,12 @@ Item{
              name: "Settings & About"
              strId: "settings"
          }
+         /*
          ListElement {
              name: "Minimize"
              strId: "minimize"
          }
+         */
          ListElement {
              name: "Exit"
              strId: "exit"
