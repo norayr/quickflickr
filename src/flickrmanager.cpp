@@ -29,8 +29,8 @@
 #include <QMapIterator>
 #include <QVariant>
 
-#define KEY "cfa0d40dee57a1808c8c3c9b30f56ded"
-#define SECRET "72c539e938abdfc0"
+#define KEY ""
+#define SECRET ""
 
 class FlickrManagerPrivate{
 public:
