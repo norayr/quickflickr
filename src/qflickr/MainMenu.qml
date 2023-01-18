@@ -155,12 +155,12 @@ Item{
              name: "Settings & About"
              strId: "settings"
          }
-         /*
+         
          ListElement {
              name: "Minimize"
              strId: "minimize"
          }
-         */
+         
          ListElement {
              name: "Exit"
              strId: "exit"

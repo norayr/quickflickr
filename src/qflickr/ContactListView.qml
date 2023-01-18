@@ -81,7 +81,8 @@ Item{
                 id: realName
                 anchors.left: buddyIcon.right
                 anchors.top:  userName.bottom
-                anchors.margins: settings.mediumMargin
+                anchors.leftMargin: settings.mediumMargin
+		anchors.topMargin: settings.smallMargin
                 color: "white"
                 text: realname
                 elide: Text.ElideRight
@@ -90,7 +91,7 @@ Item{
             LineSeparator{
                 width:  parent.width
                 thickness: 1
-                anchors.top: buddyIcon.bottom
+                anchors.top: realName.bottom
                 anchors.topMargin: settings.mediumMargin
             }
         }

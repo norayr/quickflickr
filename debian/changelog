@@ -1,15 +1,42 @@
+quickflickr (1.9.22-1+leste1) unstable; urgency=low
+
+  * Import of Fremantle sources.
+  
+ -- Norayr Chilingarian  <norayr@arnet.am>  Wed, 18 Jan 2023 17:19:22 +0400
+
+
+quickflickr (1.9.21) unstable; urgency=low
+
+  * Just a version update for a new package.
+  
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Mon, 14 Aug 2010 22:41:22 +0200
+
+quickflickr (1.9.2) unstable; urgency=low
+
+  * Fixed a layout bug in a contact view.
+  * Added backt the minized menu for N900
+
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Mon, 14 Feb 2010 21:45:00 +0200
+
+quickflickr (1.9.1) unstable; urgency=low
+
+  * New packackage for N900
+  * New UI
+
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Mon, 14 Feb 2011 11:45:00 +0200
+ 
 quickflickr (1.1.1) unstable; urgency=low
 
   * BugFix: Now it should be possible to add comments.
   
- -- Marko Mattila <marko.a.mattila@gmail.com>  Sat, 02 Aug 2010 23:11:22 +0300
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Sat, 02 Aug 2010 23:11:22 +0200
 
 quickflickr (1.1.0) unstable; urgency=low
 
   * Added new graphics
   * User Interface improved / changed
   
- -- Marko Mattila <marko.a.mattila@gmail.com>  Sat, 02 Aug 2010 13:38:22 +0300
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Sat, 02 Aug 2010 13:38:22 +0200
 
 quickflickr (1.0.2) unstable; urgency=low
 
@@ -19,7 +46,7 @@ quickflickr (1.0.2) unstable; urgency=low
   * Removed next and back buttons from WebView
   * Fine tuned the user experience little bit... To better I hope 
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Sun, 12 Sep 2010 22:33:22 +0300
+ -- Marko Mattila <marko.mattila@d-pointer@gmail.com>  Sun, 12 Sep 2010 22:33:22 +0200
 
 
 quickflickr (1.0.1) unstable; urgency=low
@@ -27,11 +54,11 @@ quickflickr (1.0.1) unstable; urgency=low
   * Added missing images to qrc files
   * Fixed a bug in close button positioning.
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Tue, 12 Sep 2010 22:33:22 +0300
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Tue, 12 Sep 2010 22:33:22 +0200
 
 quickflickr (1.0.0) unstable; urgency=low
 
   * Initial release 
 
- -- Marko Mattila <marko.a.mattila@gmail.com>  Fri, 3 Sep 2010 00:33:22 +0300
+ -- Marko Mattila <marko.mattila@d-pointer.com>  Fri, 3 Sep 2010 00:33:22 +0200
 

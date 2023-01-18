@@ -2,14 +2,14 @@ Source: quickflickr
 Section: user/graphics
 Priority: optional
 Maintainer: Marko Mattila <marko.a.mattila@gmail.com>
-Build-Depends: debhelper (>= 5), libqt4-experimental-declarative-dev, libqt4-experimental-dev, libqt4-experimental-maemo5, libqt4-experimental-gui
+Build-Depends: debhelper (>= 5), qtdeclarative5-dev, qtbase5-dev, qt5-qmake, libqt5maemo5-dev, qt5base-dev-tools, qtdeclarative5-dev-tools, libqt5gui5, libqt5qml5-dev, qtquickcontrols2-5-dev
 Standards-Version: 3.7.2
 
 Package: quickflickr
 Architecture: armel
-Depends: libqt4-experimental-declarative
-Description: Flickr client for N900
- Simple Qt Quick based Flickr client for N900.
+Depends: qtdeclarative5-dev, libqt5qml5, qml-module-qtquick2
+Description: Flickr client for Maemo
+ Simple Qt Quick based Flickr client for Maemo.
 XB-Maemo-Icon-26:
  iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABLmlDQ1BJQ0Mg
  UHJvZmlsZQAAeAFjYGAycHRxcmUSYGDIzSspCnJ3UoiIjFJgP8/AxsDMAAaJ
