@@ -7,7 +7,6 @@ DEPENDPATH += .
 INCLUDEPATH += .
 DESTDIR = ../
 
-
 maemo5 {
     BINDIR = $$PREFIX/quickflickr
     DATADIR = /usr/share

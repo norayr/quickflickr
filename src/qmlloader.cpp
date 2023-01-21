@@ -21,9 +21,12 @@
 #include "flickrmanager.h"
 #include "deviceprofile.h"
 
-#include <QDeclarativeError>
-#include <QDeclarativeContext>
-#include <QDeclarativeEngine>
+//#include <QtQuick/QDeclarativeError>
+//#include <QtQuick/QDeclarativeContext>
+//#include <QtQuick/QDeclarativeEngine>
+//#include <QtQuick/QQuickEngine>
+#include <QQmlContext>
+#include <QQmlEngine>
 #include <QHBoxLayout>
 #include <QtDebug>
 
@@ -44,7 +47,7 @@
 #endif
 
 QmlLoader::QmlLoader():
-        QDeclarativeView()       
+        QQuickView()       
 {
 
 // Set the platform specific orientations to portrait always

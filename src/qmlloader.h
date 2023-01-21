@@ -21,11 +21,10 @@
 #define QMLLOADER_H
 
 
-#include <QDeclarativeView>
-
+#include <QtQuick/QQuickView>
 
 class FlickrManager;
-class QmlLoader: public QDeclarativeView
+class QmlLoader: public QQuickView
 {
     Q_OBJECT
 public:
