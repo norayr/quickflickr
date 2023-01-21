@@ -8,7 +8,7 @@
 TARGET = quickflickr
 CONFIG   -= app_bundle release
 #QT += declarative network xml webkit
-QT += network xml webkit widgets qml quick opengl
+QT += network xml webkit widgets qml quick
 QMAKE_CXXFLAGS = -O2
 mac{
     QT += opengl

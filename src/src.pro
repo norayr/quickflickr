@@ -8,7 +8,7 @@ INCLUDEPATH += .
 DESTDIR = ../
 
 maemo5 {
-    BINDIR = $$PREFIX/quickflickr
+    BINDIR = $$PREFIX/bin
     DATADIR = /usr/share
 
     DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"

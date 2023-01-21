@@ -52,7 +52,8 @@ QmlLoader::QmlLoader():
 
 // Set the platform specific orientations to portrait always
 #ifdef Q_WS_MAEMO_5
-    setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
+    //setAttribute(Qt::WA_Maemo5PortraitOrientation, true);
+    setProperty("X-Maemo-Orientation", 1);
 #endif
 
 #ifdef Q_OS_SYMBIAN

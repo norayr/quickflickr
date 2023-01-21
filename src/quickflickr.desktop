@@ -2,7 +2,7 @@
 Version=1.0
 Encoding=UTF-8
 Name=QuickFlickr
-Exec=/opt/quickflickr/quickflickr
+Exec=/usr/bin/quickflickr
 Type=Application
 Icon = quickflickr
 x-Window-Icon = quickflickr

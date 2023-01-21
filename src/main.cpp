@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     // Platform specific stuff. Not so nice, but should work
 #ifdef Q_WS_MAEMO_5
-        app.setGraphicsSystem("raster");
+        //app.setGraphicsSystem("raster");
         loader.showFullScreen();
         return app.exec();
 #endif
