@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 2
 // Simple delegate which displays some common information about a
 // single image from flickr. This delegate scales all the thumbnails
 // to fixed width.

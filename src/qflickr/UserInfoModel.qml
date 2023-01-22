@@ -17,7 +17,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with QuickFLickr.  If not, see <http://www.gnu.org/licenses/>.
  */
-import QtQuick 2.15
+import QtQuick 2
+import QtQuick.XmlListModel 2
 
 // Model for containing information about users
 XmlListModel {

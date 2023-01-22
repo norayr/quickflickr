@@ -6,6 +6,7 @@ include(quickflickr.pri)
 DEPENDPATH += .
 INCLUDEPATH += .
 DESTDIR = ../
+QT += opengl
 
 maemo5 {
     BINDIR = $$PREFIX/bin

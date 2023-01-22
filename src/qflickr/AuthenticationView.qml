@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 2
 
 Rectangle {
     property string authenticationUrl

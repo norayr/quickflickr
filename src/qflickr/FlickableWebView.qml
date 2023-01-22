@@ -39,18 +39,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.15
-import QtWebKit 1.0
+import QtQuick 2
+import QtWebKit 3
 
 Flickable {
     property alias title: webView.title
     property alias icon: webView.icon
-    property alias progress: webView.progress
+    property alias progress: webView.loadProgress
     property alias url: webView.url
-    property alias back: webView.back
-    property alias stop: webView.stop
-    property alias reload: webView.reload
-    property alias forward: webView.forward
+    property var stop: webView.stop
+    property var reload: webView.reload
+    property var back: webView.goBack
+    property var forward: webView.goForward
 
     id: flickable
     width: parent.width
@@ -64,8 +64,8 @@ Flickable {
 
     onWidthChanged : {
         // Expand (but not above 1:1) if otherwise would be smaller that available width.
-        if (width > webView.width*webView.contentsScale && webView.contentsScale < 1.0)
-            webView.contentsScale = width / webView.width * webView.contentsScale;
+        //if (width > webView.width*webView.contentsScale && webView.contentsScale < 1.0)
+        //    webView.contentsScale = width / webView.width * webView.contentsScale;
     }
 
 
@@ -92,7 +92,7 @@ Flickable {
         smooth: false // We don't want smooth scaling, since we only scale during (fast) transitions
         focus: true
 
-        onAlert: console.log(message)
+        //onAlert: console.log(message)
 
         function doZoom(zoom,centerX,centerY)
         {
@@ -112,9 +112,9 @@ Flickable {
         Keys.onLeftPressed: webView.contentsScale -= 0.1
         Keys.onRightPressed: webView.contentsScale += 0.1
 
-        preferredWidth: flickable.width
-        preferredHeight: flickable.height
-        contentsScale: 1
+        //preferredWidth: flickable.width
+        //preferredHeight: flickable.height
+        //contentsScale: 1
 
         /*
         onContentsSizeChanged: {

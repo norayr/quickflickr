@@ -31,16 +31,18 @@ int main(int argc, char *argv[])
     QmlLoader loader;
 
     // Platform specific stuff. Not so nice, but should work
-#ifdef Q_WS_MAEMO_5
+#ifdef defined(Q_WS_MAEMO_5)
         //app.setGraphicsSystem("raster");
         loader.showFullScreen();
         return app.exec();
-#endif
-#ifdef Q_OS_SYMBIAN
+#elif defined(Q_OS_SYMBIAN)
         loader.showFullScreen();
         return app.exec();
-#endif
-#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+#elif defined(Q_WS_MAC) || defined(Q_WS_X11)
+        loader.resize(360,640);
+        loader.show();
+        return app.exec();
+#else
         loader.resize(360,640);
         loader.show();
         return app.exec();

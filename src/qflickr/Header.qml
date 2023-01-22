@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.15
+import QtQuick 2
 
 
 BorderImage {
@@ -53,7 +53,7 @@ BorderImage {
     signal closeClicked
     
     smooth: true   
-    source: "qrc:/gfx/toolbutton.sci";
+    source: "qrc:///images/toolbutton.sci";
         
 
     x: webView.contentX < 0 ? -webView.contentX : webView.contentX > webView.contentWidth-webView.width

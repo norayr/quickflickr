@@ -72,5 +72,7 @@
         <file>gfx/button.sci</file>
         <file>gfx/polaroid-bg.png</file>
         <file>gfx/d-pointer-logo.png</file>
+        <file>images/toolbutton.sci</file>
+        <file>images/toolbutton.png</file>
     </qresource>
 </RCC>

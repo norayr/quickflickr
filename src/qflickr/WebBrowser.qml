@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.15
-import QtWebKit 1.0
+import QtQuick 2
+import QtWebKit 3
 
 
 Rectangle {
