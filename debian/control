@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: quickflickr
 Architecture: any
-Depends: qtdeclarative5-dev, libqt5qml5, qml-module-qtquick2, qml-module-qtwebkit, libqt5webkit5, libqt5script5, libqt5quickwidgets5, libqt5widgets5, libqt5webenginewidgets5, libqwt-qt5-6, libqt5opengl5, libqt5network5, qml-module-qtquick-xmllistmodel, qml-module-qtquick-controls2, qml-module-qtquick-layouts, qml-module-qtquick-window2, qml-module-qtquick-dialogs, qml-module-qtquick-privatewidgets, qml-module-qtquick-localstorage, qml-module-qtquick-extras
+Depends: qtdeclarative5-dev, libqt5qml5, qml-module-qtquick2, qml-module-qtwebkit, libqt5webkit5, libqt5script5, libqt5quickwidgets5, libqt5widgets5, libqt5webenginewidgets5, libqwt-qt5-6, libqt5opengl5, libqt5network5, qml-module-qtquick-xmllistmodel, qml-module-qtquick-controls2, qml-module-qtquick-layouts, qml-module-qtquick-window2, qml-module-qtquick-dialogs, qml-module-qtquick-privatewidgets
 Description: Flickr client for Maemo
  Simple Qt Quick based Flickr client for Maemo.
 XB-Maemo-Icon-26:
